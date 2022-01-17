@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.AnalogInput;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
@@ -9,11 +8,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Robot;
-import frc.robot.util.MathUtil;
 
 public class SwerveWheelModuleSubsystem extends SubsystemBase {
-    private final double MAX_VOLTS = 4.95; // Voltage for the Andymark Absolute Encoders used in the SDS kit.
     private final double P = .008;
 
     private TalonFX angleMotor;
@@ -29,12 +25,12 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         // We're using TalonFX motors on CAN.
         this.angleMotor = new TalonFX(angleMotorChannel);
         this.speedMotor = new TalonFX(speedMotorChannel);
-        this.angleEncoder = new CANCoder(angleEncoderChannel);
+        this.angleEncoder = new CANCoder(angleEncoderChannel); //CANCoder Encoder
         this.angleEncoderChannel = angleEncoderChannel;
         this.encoderOffset = encoderOffset;
 
         pidController = new PIDController(P, 0, 0); // This is the PID constant, we're not using any
-        // Integral/Derivative control but changing the P value will make
+        // Integral/Derivative control but increasing the P value will make
         // the motors more aggressive to changing to angles.
 
         angleEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
@@ -42,7 +38,7 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         pidController.setTolerance(20); //sets tolerance, shouldn't be needed.
 
         pidController.enableContinuousInput(0, 360); // This makes the PID controller understand the fact that for
-        // our setup, 360 degrees is the same as 0 since the wheel loops.
+        //our setup, 360 degrees is the same as 0 since the wheel loops.
 
         SendableRegistry.addChild(this, angleMotor);
         SendableRegistry.addChild(this, speedMotor);
@@ -61,9 +57,8 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         double currentEncoderValue = angleEncoder.getAbsolutePosition(); // Combines reading from
         // encoder
 
-        // Optimization offset can be calculated here.
-        double setpoint = angle * 180 + 180 + encoderOffset; // Optimization offset can be calculated here.
-        // setpoint += 360;
+        // Optimal offset can be calculated here.
+        double setpoint = angle * 180 + 180 + encoderOffset;
         setpoint %= 360; // ensure setpoint is on scale 0-360
 
         // if the setpoint is more than 90 degrees away form the current position, then
@@ -73,35 +68,22 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         //     setpoint = (setpoint + 180) % 360;
         // }
 
-        speedMotor.set(ControlMode.PercentOutput, speed); // sets motor speed. Set back to speed
+        speedMotor.set(ControlMode.PercentOutput, speed); // sets motor speed
+        
+        //Sets angle motor to angle
         pidController.setSetpoint(setpoint);
-
         double pidOut = pidController.calculate(currentEncoderValue, setpoint);
-
-        //if (angleMotor.getDeviceID() == 3)
-            angleMotor.set(ControlMode.PercentOutput, pidOut);
-        //else
-            //angleMotor.set(ControlMode.PercentOutput, -pidOut);
+        angleMotor.set(ControlMode.PercentOutput, pidOut);
 
         SmartDashboard.putNumber("Encoder [" + angleEncoderChannel + "] currentEncoderValue", currentEncoderValue);
         SmartDashboard.putNumber("Encoder [" + angleEncoderChannel + "] setpoint", setpoint);
         SmartDashboard.putNumber("Encoder [" + angleEncoderChannel + "] pidOut", pidOut);
-
-        // This is for testing to find the max value of an encoder. The encoders we use
-        // (and most encoders) give values from 0 - 4.95.
-        /*
-         * if (angleEncoder.getChannel() == 0) { if (angleEncoder.getVoltage() > maxVal)
-         * { maxVal = angleEncoder.getVoltage();
-         * Robot.prefs.putDouble("Encoder ["+angleEncoder.getChannel()+"] getVoltageMax"
-         * , maxVal); } }
-         */
-
     }
 
-    // this method outputs voltages of the encoder to the smartDashBoard, useful for
+    // this method outputs position of the encoder to the smartDashBoard, useful for
     // calibrating the encoder offsets
-    public double getVoltages() {
-        return angleEncoder.getPosition() * 4.95 / 360;
+    public double getPosition() {
+        return angleEncoder.getPosition() * 180;
     }
 
     public void stop() {
@@ -115,7 +97,5 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        // Robot.PREFS.putDouble("Encoder [" + angleEncoder.getChannel() + "]
-        // getVoltage", angleEncoder.getVoltage());
     }
 }

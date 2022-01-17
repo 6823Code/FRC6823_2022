@@ -14,11 +14,11 @@ public class MathUtil {
         return ret;
     }
 
-    public static double mod(double a, double b) {
+    public static double mod(double a, double b) { //Returns a positive mod of a values in [-b, b]
         return ((a % b) + b) % b;
     }
-
-    public static double clipToZero(double val, double min) {
+    
+    public static double clipToZero(double val, double min) { //Returns zero if val is in [-min, min], otherwise returns val
         return val > min || val < -min ? val : 0;
     }
 }

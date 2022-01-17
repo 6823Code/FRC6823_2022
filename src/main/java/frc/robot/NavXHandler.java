@@ -1,7 +1,5 @@
 package frc.robot;
 
-//import edu.wpi.first.wpilibj.Preferences;
-//import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -36,7 +34,7 @@ public class NavXHandler {
         }
     }
 
-    public void printEverythingDammit() {
+    public void printEverything() {
         SmartDashboard.putNumber("getAngle()", ahrs.getAngle());
 
         SmartDashboard.putNumber("getDisplacementX()", ahrs.getDisplacementX());
@@ -60,7 +58,7 @@ public class NavXHandler {
         ahrs.reset();
     }
 
-    public double yeetPerSecond() {
+    public double getVelocity() {
         return Math.sqrt(Math.pow(ahrs.getVelocityX(), 2) + Math.pow(ahrs.getVelocityY(), 2));
     }
 }

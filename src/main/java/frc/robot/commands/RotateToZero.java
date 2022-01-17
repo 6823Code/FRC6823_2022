@@ -5,19 +5,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.NavXHandler;
 import frc.robot.subsystems.SwerveDriveSubsystem;
+import frc.robot.util.MathUtil;
 
 public class RotateToZero extends CommandBase {
+    //Declare subsystem, NavX, PID Controller, and necessary variables
     private SwerveDriveSubsystem swerveDriveSubsystem;
     private NavXHandler navXHandler;
     private boolean isFinished = false;
-    private double margin = 0.1; // margin of Radians
+    private final double MARGIN = 0.1; // margin in radians
     private PIDController angleController;
-    public static final double kToleranceDegrees = 2.0f;
 
     private static double initialDegrees;
 
     public RotateToZero(SwerveDriveSubsystem swerveDriveSubsystem, NavXHandler navXHandler) {
-
+        //Instantiate subsystem, NavX, and angle
         this.swerveDriveSubsystem = swerveDriveSubsystem;
         this.navXHandler = navXHandler;
         addRequirements(swerveDriveSubsystem);
@@ -25,23 +26,28 @@ public class RotateToZero extends CommandBase {
     }
 
     public static void setInitialAngle(double angle) {
-        RotateToZero.initialDegrees = ((angle % (2 * Math.PI) + (2 * Math.PI)) % (2 * Math.PI));
+        RotateToZero.initialDegrees = MathUtil.mod(angle, 2 * Math.PI);
     }
 
     @Override
     public void execute() {
-        double currentAngle = ((navXHandler.getAngleRad() % (2 * Math.PI) + (2 * Math.PI)) % (2 * Math.PI));
+        //Get angle and power proportional to angle left to travel
+        double currentAngle = MathUtil.mod(navXHandler.getAngleRad(), 2 * Math.PI);
         double rotateCommand = angleController.calculate(currentAngle);
 
+        //Bound power on {-0.4, 0,4]
         if (rotateCommand > 0.4) {
             rotateCommand = 0.4;
         } else if (rotateCommand < -0.4) {
             rotateCommand = -0.4;
         }
 
+        //Print rotate power and rotate at that power
         SmartDashboard.putNumber("ROTATE", rotateCommand);
         swerveDriveSubsystem.drive(0, 0, rotateCommand);
-        if (Math.abs(rotateCommand) < 0.05) {
+
+        //If within margin of error, set isFinished to true
+        if (Math.abs((currentAngle - (initialDegrees)) % (2 * Math.PI)) < MARGIN) {
             isFinished = true;
         }
 
@@ -64,5 +70,4 @@ public class RotateToZero extends CommandBase {
         swerveDriveSubsystem.drive(0, 0, 0);
         isFinished = false;
     }
-
 }
