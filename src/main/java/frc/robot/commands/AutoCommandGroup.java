@@ -1,10 +1,5 @@
 package frc.robot.commands;
 
-//Imports for sending and receiving data with Shuffleboard
-import edu.wpi.first.wpilibj.Preferences;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 //Imports for commands and subsystems used
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.NavXHandler;
@@ -25,9 +20,6 @@ public class AutoCommandGroup extends SequentialCommandGroup {
         swerveDriveSubsystem = robotContainer.getSwervedriveSubsystem();
         limeLightSubsystem.setPipeline(1);
         navXHandler = robotContainer.getNavXHandler();
-
-        //Setup for Autonomous
-        double initialAngle = navXHandler.getAngle();
 
         RotateToZero.setInitialAngle(navXHandler.getAngleRad());
         RotateToAngle.setInitialAngle(navXHandler.getAngleRad());
