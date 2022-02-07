@@ -12,8 +12,8 @@ public class JoystickHandler {
     private Joystick joystick;
     private double deadZone;
 
-    public JoystickHandler() {
-        this.joystick = new Joystick(3); //Joystick is on port 3
+    public JoystickHandler(int joyNum) {
+        this.joystick = new Joystick(joyNum); //Joystick is on port 3
         this.deadZone = 0.05; //set dead zone
 	}
 
@@ -60,8 +60,24 @@ public class JoystickHandler {
         return MathUtil.clipToZero(getRawAxis1(), deadZone);
     }
 
+    public double getAxis2() {
+        return MathUtil.clipToZero(getRawAxis2(), deadZone);
+    }
+
+    public double getAxis3() {
+        return MathUtil.clipToZero(getRawAxis3(), deadZone);
+    }
+
+    public double getAxis4() {
+        return MathUtil.clipToZero(getRawAxis4(), deadZone);
+    }
+
     public double getAxis5() {
         return MathUtil.clipToZero(getRawAxis5(), deadZone);
+    }
+
+    public double getAxis6() {
+        return MathUtil.clipToZero(getRawAxis6(), deadZone);
     }
 
     public Joystick joystick() {
