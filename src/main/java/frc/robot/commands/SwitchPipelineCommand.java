@@ -1,17 +1,17 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.LimeLightSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SwitchPipelineCommand extends CommandBase {
+    //Declare subsystem, isFinished, and intended pipeline
     private LimeLightSubsystem limeLightSubsystem;
     private boolean isFinished = false;
     private int pipeline;
 
     public SwitchPipelineCommand(LimeLightSubsystem limeLightSubsystem, int pipeline) {
+        //Instantiate subsystem, isFinished, and intended pipeline
         this.limeLightSubsystem = limeLightSubsystem;
         this.pipeline = pipeline;
         limeLightSubsystem.setPipeline(pipeline);
@@ -20,6 +20,7 @@ public class SwitchPipelineCommand extends CommandBase {
     @Override
     public void execute() {
         limeLightSubsystem.setPipeline(pipeline);
+        //Adjusts servo to angle appropriate for selected pipeline
         if (pipeline == 0)
             limeLightSubsystem.setServoAngle(65);
         else if (pipeline == 1)
@@ -38,7 +39,7 @@ public class SwitchPipelineCommand extends CommandBase {
         if (pipeline == 0)
             limeLightSubsystem.setServoAngle(65);
         else if (pipeline == 1)
-        limeLightSubsystem.setServoAngle(15);
+            limeLightSubsystem.setServoAngle(15);
         SmartDashboard.putNumber("The Servo Angle", limeLightSubsystem.getPipeline());
 
     }

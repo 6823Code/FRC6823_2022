@@ -4,7 +4,6 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-//hey look it's some code! Incredible
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -14,8 +13,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Robot extends TimedRobot {
     public static Preferences PREFS = Preferences.getInstance();
-    // public static RGB rgb1;
-    // public static RGB rgb2;
     private RobotContainer robotContainer;
 
     @Override
