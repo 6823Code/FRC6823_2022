@@ -8,12 +8,14 @@ import frc.robot.commands.RotateToZero;
 import frc.robot.commands.Shoot;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimeLightSubsystem;
 
 public class RobotContainer {
     public SwerveDriveSubsystem swerveDriveSubsystem;
     public NavXHandler navX;
     public ShooterSubsystem shooterSubsystem;
+    public IntakeSubsystem intakeSubsystem;
 
     public FieldSpaceDrive fieldSpaceDriveCommand;
     private RobotSpaceDrive robotSpaceDriveCommand;
@@ -39,12 +41,17 @@ public class RobotContainer {
         return shooterSubsystem;
     }
 
+    public IntakeSubsystem getIntakeSubsystem() {
+        return intakeSubsystem;
+    }
+
     public RobotContainer() {
         swerveDriveSubsystem = new SwerveDriveSubsystem();
         shooterSubsystem = new ShooterSubsystem();
         joystickHandler3 = new JoystickHandler(3);
         joystickHandler4 = new JoystickHandler(4);
         limeLightSubsystem = new LimeLightSubsystem(0);
+        intakeSubsystem = new IntakeSubsystem();
 
         navX = new NavXHandler(); // navx input
 
@@ -85,5 +92,14 @@ public class RobotContainer {
 
         joystickHandler4.button(6).whileActiveContinuous(() -> shooterSubsystem.backLoad(0.3), shooterSubsystem)
         .whenInactive(shooterSubsystem::loadStop);
+
+        joystickHandler4.button(1).whileActiveContinuous(() -> intakeSubsystem.backAngle(), intakeSubsystem)
+                .whenInactive(intakeSubsystem::stopAngle);
+        joystickHandler4.button(2).whileActiveContinuous(() -> intakeSubsystem.intake(), intakeSubsystem)
+                .whenInactive(intakeSubsystem::stopIntake);
+        joystickHandler4.button(3).whileActiveContinuous(() -> intakeSubsystem.backIntake(), intakeSubsystem)
+                .whenInactive(intakeSubsystem::stopIntake);
+        joystickHandler4.button(4).whileActiveContinuous(() -> intakeSubsystem.angle(), intakeSubsystem)
+                .whenInactive(intakeSubsystem::stopAngle);
     }
 }
