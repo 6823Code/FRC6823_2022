@@ -19,7 +19,7 @@ public class Shoot extends CommandBase {
 
     @Override
     public void execute() {
-        double aimRate = joystickHandler.getAxis1()*0.5;
+        double aimRate = joystickHandler.getAxis1()*0.7;
         double loadRate;
         double shootRate;
         if(joystickHandler.getAxis3() != 0){

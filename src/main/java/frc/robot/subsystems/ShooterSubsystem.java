@@ -30,8 +30,8 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void prep(double angle, double load) {
-        angleMotor.set(angle);
-        loadMotor.set(-load);
+        angleMotor.set(-angle);
+        loadMotor.set(load);
     }
 
     public void loadStop() {
@@ -39,7 +39,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void backLoad(double power) {
-        loadMotor.set(power);
+        loadMotor.set(-power);
     }
 
 }
