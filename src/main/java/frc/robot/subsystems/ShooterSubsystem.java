@@ -16,10 +16,10 @@ public class ShooterSubsystem extends SubsystemBase {
     private CANSparkMax loadMotor;
 
     public ShooterSubsystem() {
-        this.leftMotor = new TalonFX(1);
-        this.rightMotor = new TalonFX(2);
-        this.angleMotor = new CANSparkMax(4, CANSparkMaxLowLevel.MotorType.kBrushed);
-        this.loadMotor = new CANSparkMax(3, CANSparkMaxLowLevel.MotorType.kBrushless);
+        this.leftMotor = new TalonFX(11);
+        this.rightMotor = new TalonFX(12);
+        this.angleMotor = new CANSparkMax(14, CANSparkMaxLowLevel.MotorType.kBrushed);
+        this.loadMotor = new CANSparkMax(13, CANSparkMaxLowLevel.MotorType.kBrushless);
 
         SendableRegistry.addLW(this, "Shooter Subsystem");
     }

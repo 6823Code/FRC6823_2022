@@ -9,9 +9,9 @@ public class IntakeSubsystem extends SubsystemBase {
 
     private CANSparkMax angleMotor;
     private CANSparkMax intakeMotor;
-    private double inTakePower = 0.433;
+    private double inTakePower = -0.433;
 
-    private double anglePower = 0.4;
+    private double anglePower = -0.4;
 
     public IntakeSubsystem() {
         this.angleMotor = new CANSparkMax(10, CANSparkMaxLowLevel.MotorType.kBrushless);
