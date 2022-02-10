@@ -33,10 +33,10 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     }
 
     public SwerveDriveSubsystem() {
-        backRight = new SwerveWheelModuleSubsystem(7, 6, 3, 90);// These are the motors and encoder ports for swerve drive
-        backLeft = new SwerveWheelModuleSubsystem(5, 4, 2, 90);
-        frontRight = new SwerveWheelModuleSubsystem(3, 2, 1, 45);
-        frontLeft = new SwerveWheelModuleSubsystem(1, 8, 0, 270);//The order is angle, speed, encoder, offset 
+        backRight = new SwerveWheelModuleSubsystem(1, 8, 0, 90);// These are the motors and encoder ports for swerve drive
+        backLeft = new SwerveWheelModuleSubsystem(3, 2, 1, 90);
+        frontRight = new SwerveWheelModuleSubsystem(5, 4, 2, 45);
+        frontLeft = new SwerveWheelModuleSubsystem(7, 6, 3, 270);//The order is angle, speed, encoder, offset 
         //(offset gets changed by calibration.)
 
         SendableRegistry.addChild(this, backRight);
@@ -99,9 +99,9 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     public void periodic() {
         //Do NOT make negative!!!!
         //adding is counter clockwise, subtratcting is clockwise?
-        backRight.setZero(80);
-        backLeft.setZero(175);
-        frontRight.setZero(280);
-        frontLeft.setZero(340);
+        backRight.setZero(165);
+        backLeft.setZero(100);
+        frontRight.setZero(355);
+        frontLeft.setZero(260);
     }
 }
