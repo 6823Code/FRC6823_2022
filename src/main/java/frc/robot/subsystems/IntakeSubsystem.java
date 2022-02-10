@@ -2,20 +2,28 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.util.sendable.SendableRegistry;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeSubsystem extends SubsystemBase {
 
     private CANSparkMax angleMotor;
     private CANSparkMax intakeMotor;
+    private RelativeEncoder angleEncoder;
     private double inTakePower = -0.433;
-
     private double anglePower = -0.4;
+    private int offset = 0;
+    private DigitalInput frontLimit;
+    private DigitalInput backLimit;
 
     public IntakeSubsystem() {
         this.angleMotor = new CANSparkMax(10, CANSparkMaxLowLevel.MotorType.kBrushless);
         this.intakeMotor = new CANSparkMax(9, CANSparkMaxLowLevel.MotorType.kBrushless);
+        this.angleEncoder = angleMotor.getEncoder();
+        this.frontLimit = new DigitalInput(0);
+        this.backLimit = new DigitalInput(1);
 
         SendableRegistry.addChild(this, angleMotor);
         SendableRegistry.addChild(this, intakeMotor);
@@ -28,7 +36,11 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void backAngle() {
-        angleMotor.set(-anglePower);
+        //if (angleEncoder.getPosition() > offset && !backLimit.get()){
+            angleMotor.set(-anglePower);
+        //}else{
+            //stopAngle();
+        //}
     }
 
     public void intake() {
@@ -36,7 +48,11 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void angle() {
-        angleMotor.set(anglePower);
+        //if (angleEncoder.getPosition() < offset + 100 && !frontLimit.get()){
+            angleMotor.set(anglePower);
+        //}else{
+            //stopAngle();
+        //}
     }
 
     public void stopIntake() {
