@@ -2,19 +2,22 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.JoystickHandler;
+import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class Shoot extends CommandBase {
     private ShooterSubsystem shooter;
+    private ConveyorSubsystem conveyor;
     private JoystickHandler joystickHandler;
 
-    public Shoot(ShooterSubsystem subsystem, 
+    public Shoot(ShooterSubsystem shooter, ConveyorSubsystem conveyor,
     JoystickHandler joystickHandler) {
         //Instantiate subsystem, Joystick Handler
-        this.shooter = subsystem;
+        this.shooter = shooter;
+        this.conveyor = conveyor;
         this.joystickHandler = joystickHandler;
 
-        addRequirements(shooter);
+        addRequirements(this.shooter);
     }
 
     @Override
@@ -30,9 +33,11 @@ public class Shoot extends CommandBase {
         if(joystickHandler.getAxis3() != 0){
             loadRate = 0.5;
             shootRate = 0.75;
+            conveyor.convey();
         }else{
             loadRate = 0;
             shootRate = 0;
+            conveyor.stopConvey();
         }
         shooter.prep(aimRate, loadRate);
         shooter.shoot(shootRate);

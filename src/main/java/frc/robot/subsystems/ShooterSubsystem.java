@@ -30,9 +30,8 @@ public class ShooterSubsystem extends SubsystemBase {
         this.loadMotor = new CANSparkMax(13, CANSparkMaxLowLevel.MotorType.kBrushless);
         this.angleEncoder = new AnalogInput(0); //Change later
         this.speedController = new PIDController(0.0001, 0, 0);
-        //this.encoder = new Encoder(11, 12, false, Encoder.EncodingType.k1X);
 
-        SendableRegistry.addLW(this, "Shooter Subsystem");
+        SendableRegistry.addLW(this, "Shooter");
     }
 
     public void shoot(double shootVal) {

@@ -12,9 +12,9 @@ public class IntakeSubsystem extends SubsystemBase {
     private CANSparkMax angleMotor;
     private CANSparkMax intakeMotor;
     private RelativeEncoder angleEncoder;
-    private double inTakePower = -0.433;
-    private double anglePower = -0.4;
-    private int offset = 0;
+    private double inTakePower;
+    private double anglePower;
+    private int offset;
     private DigitalInput frontLimit;
     private DigitalInput backLimit;
 
@@ -25,9 +25,13 @@ public class IntakeSubsystem extends SubsystemBase {
         this.frontLimit = new DigitalInput(0);
         this.backLimit = new DigitalInput(1);
 
+        inTakePower = -0.433;
+        anglePower = -0.4;
+        offset = 0;
+
         SendableRegistry.addChild(this, angleMotor);
         SendableRegistry.addChild(this, intakeMotor);
-        SendableRegistry.addLW(this, "Swerve Wheel Module");
+        SendableRegistry.addLW(this, "Intake");
 
     }
 
