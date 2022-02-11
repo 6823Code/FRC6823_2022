@@ -99,9 +99,9 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     public void periodic() {
         //Do NOT make negative!!!!
         //adding is counter clockwise, subtratcting is clockwise?
-        backRight.setZero(165);
-        backLeft.setZero(100);
-        frontRight.setZero(355);
-        frontLeft.setZero(260);
+        backRight.setZero(350);
+        backLeft.setZero(285);
+        frontRight.setZero(180);
+        frontLeft.setZero(85);
     }
 }

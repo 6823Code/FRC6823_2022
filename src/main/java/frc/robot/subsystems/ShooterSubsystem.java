@@ -4,7 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
-
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -20,7 +20,8 @@ public class ShooterSubsystem extends SubsystemBase {
     private int offset;
     private DigitalInput frontLimit;
     private DigitalInput backLimit;
-
+    private PIDController speedController;
+    //private Encoder encoder;
 
     public ShooterSubsystem() {
         this.leftMotor = new TalonFX(11);
@@ -28,6 +29,8 @@ public class ShooterSubsystem extends SubsystemBase {
         this.angleMotor = new CANSparkMax(14, CANSparkMaxLowLevel.MotorType.kBrushed);
         this.loadMotor = new CANSparkMax(13, CANSparkMaxLowLevel.MotorType.kBrushless);
         this.angleEncoder = new AnalogInput(0); //Change later
+        this.speedController = new PIDController(0.0001, 0, 0);
+        //this.encoder = new Encoder(11, 12, false, Encoder.EncodingType.k1X);
 
         SendableRegistry.addLW(this, "Shooter Subsystem");
     }
@@ -35,6 +38,7 @@ public class ShooterSubsystem extends SubsystemBase {
     public void shoot(double shootVal) {
         leftMotor.set(ControlMode.PercentOutput, -shootVal);
         rightMotor.set(ControlMode.PercentOutput, shootVal);
+        //leftMotor.getSelectedSensorVelocity();
     }
 
     public void prep(double anglePower, double load) {
