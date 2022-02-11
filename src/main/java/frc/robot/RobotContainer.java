@@ -11,6 +11,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LiftSubsystem;
 import frc.robot.subsystems.LimeLightSubsystem;
 
 public class RobotContainer {
@@ -19,6 +20,7 @@ public class RobotContainer {
     public ShooterSubsystem shooterSubsystem;
     public IntakeSubsystem intakeSubsystem;
     public ConveyorSubsystem conveyorSubsystem;
+    public LiftSubsystem liftSubsystem;
 
     public FieldSpaceDrive fieldSpaceDriveCommand;
     private RobotSpaceDrive robotSpaceDriveCommand;
@@ -53,6 +55,10 @@ public class RobotContainer {
         return conveyorSubsystem;
     }
 
+    public LiftSubsystem getLiftSubsystem() {
+        return liftSubsystem;
+    }
+
     public RobotContainer() {
         swerveDriveSubsystem = new SwerveDriveSubsystem();
         shooterSubsystem = new ShooterSubsystem();
@@ -60,6 +66,7 @@ public class RobotContainer {
         joystickHandler4 = new JoystickHandler(4);
         limeLightSubsystem = new LimeLightSubsystem(0);
         intakeSubsystem = new IntakeSubsystem();
+        liftSubsystem = new LiftSubsystem();
 
         navX = new NavXHandler(); // navx input
 
@@ -111,5 +118,11 @@ public class RobotContainer {
                 .whenInactive(intakeSubsystem::stopIntake);
         joystickHandler4.button(4).whileActiveContinuous(() -> intakeSubsystem.angle(), intakeSubsystem)
                 .whenInactive(intakeSubsystem::stopAngle);
+
+        joystickHandler3.button(2).whileActiveContinuous(() -> liftSubsystem.liftUp(), liftSubsystem)
+                .whenInactive(liftSubsystem::liftStop);
+
+        joystickHandler3.button(6).whileActiveContinuous(() -> liftSubsystem.liftDown(), liftSubsystem)
+                .whenInactive(liftSubsystem::liftStop);
     }
 }
