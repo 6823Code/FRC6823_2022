@@ -40,7 +40,7 @@ public class Shoot extends CommandBase {
             conveyor.stopConvey();
         }
         shooter.prep(aimRate, loadRate);
-        shooter.shoot(shootRate);
+        shooter.shoot(shootRate, 500);
     }
 
     public void zero() { //Zeroes direction
