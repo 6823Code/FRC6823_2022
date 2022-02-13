@@ -29,10 +29,11 @@ public class Shoot extends CommandBase {
             aimRate *= 0.7;
         }
         double loadRate;
-        double shootRate;
+        int shootRate;
         if(joystickHandler.getAxis3() != 0){
-            loadRate = 0.5;
-            shootRate = 0.75;
+            loadRate = 0.6;
+            shootRate = 6000;
+            //shootRate = 1.0;
             conveyor.convey();
         }else{
             loadRate = 0;
@@ -40,7 +41,7 @@ public class Shoot extends CommandBase {
             conveyor.stopConvey();
         }
         shooter.prep(aimRate, loadRate);
-        shooter.shoot(shootRate, 500);
+        shooter.shoot(shootRate);
     }
 
     public void zero() { //Zeroes direction

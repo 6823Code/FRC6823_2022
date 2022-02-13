@@ -66,6 +66,7 @@ public class RobotContainer {
         joystickHandler4 = new JoystickHandler(4);
         limeLightSubsystem = new LimeLightSubsystem(0);
         intakeSubsystem = new IntakeSubsystem();
+        conveyorSubsystem = new ConveyorSubsystem();
         //liftSubsystem = new LiftSubsystem();
 
         navX = new NavXHandler(); // navx input

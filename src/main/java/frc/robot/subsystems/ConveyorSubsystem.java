@@ -20,11 +20,11 @@ public class ConveyorSubsystem extends SubsystemBase {
     }
 
     public void backConvey() {
-        conveyorMotor.set(-conveyorPower);
+        conveyorMotor.set(conveyorPower);
     }
 
     public void convey() {
-        conveyorMotor.set(conveyorPower);
+        conveyorMotor.set(-conveyorPower);
     }
 
     public void stopConvey() {
