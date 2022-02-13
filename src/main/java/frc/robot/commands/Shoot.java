@@ -35,11 +35,16 @@ public class Shoot extends CommandBase {
             shootRate = 6000;
             //shootRate = 1.0;
             conveyor.convey();
+        }else if (joystickHandler.getAxis2() != 0){
+            loadRate = 0;
+            shootRate = 0;
+            conveyor.convey();
         }else{
             loadRate = 0;
             shootRate = 0;
             conveyor.stopConvey();
         }
+        
         shooter.prep(aimRate, loadRate);
         shooter.shoot(shootRate);
     }

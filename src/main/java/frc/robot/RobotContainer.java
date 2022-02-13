@@ -78,7 +78,7 @@ public class RobotContainer {
         swerveDriveSubsystem.setDefaultCommand(fieldSpaceDriveCommand);
 
         shoot = new Shoot(shooterSubsystem, conveyorSubsystem, joystickHandler4);
-        shooterSubsystem.setDefaultCommand(shoot);
+        shooterSubsystem.setDefaultCommand(shoot); //Check shoot for shoot button mapping
 
         limeLightSubsystem.setServoAngle(35);
         limeLightSubsystem.setPipeline(1);

@@ -38,8 +38,8 @@ public class FieldSpaceDrive extends CommandBase {
         }
 
         //Set xval, yval, spinval to the scaled values from the joystick, bounded on [-1, 1]
-        double xval = Math.max(Math.min(joystickHandler.getAxis1() * speedRate, 1), -1);
-        double yval = Math.max(Math.min(joystickHandler.getAxis0() * speedRate, 1), -1);
+        double xval = Math.max(Math.min(joystickHandler.getAxis0() * -speedRate, 1), -1);
+        double yval = Math.max(Math.min(joystickHandler.getAxis1() * speedRate, 1), -1);
         double spinval = Math.max(Math.min(joystickHandler.getAxis5() * turnRate, 1), -1);
         
 
@@ -61,7 +61,7 @@ public class FieldSpaceDrive extends CommandBase {
     }
 
     public void zero() { //Zeroes direction
-        this.fieldAngle = navXHandler.getAngleRad();
+        this.fieldAngle = navXHandler.getAngleRad() + Math.PI;
         swerveDrive.setFieldAngle(fieldAngle);
     }
 }

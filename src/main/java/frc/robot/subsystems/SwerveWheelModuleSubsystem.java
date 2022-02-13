@@ -67,13 +67,16 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         //     speed *= -1;
         //     setpoint = (setpoint + 180) % 360;
         // }
+        speed *= 6000 * 4096 * 600;
 
-        speedMotor.set(ControlMode.PercentOutput, speed); // sets motor speed
+        speedMotor.set(ControlMode.Velocity, speed); // sets motor speed
         
         //Sets angle motor to angle
         pidController.setSetpoint(setpoint);
         double pidOut = pidController.calculate(currentEncoderValue, setpoint);
-        angleMotor.set(ControlMode.PercentOutput, pidOut);
+        pidOut *= 6000 * 4096 * 600;
+        angleMotor.set(ControlMode.Velocity, pidOut);
+        //angleMotor.set(ControlMode.PercentOutput, 0);
 
         SmartDashboard.putNumber("Encoder [" + angleEncoderChannel + "] currentEncoderValue", currentEncoderValue);
         SmartDashboard.putNumber("Encoder [" + angleEncoderChannel + "] setpoint", setpoint);
