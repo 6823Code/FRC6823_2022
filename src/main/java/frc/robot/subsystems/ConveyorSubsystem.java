@@ -12,7 +12,7 @@ public class ConveyorSubsystem extends SubsystemBase {
 
     public ConveyorSubsystem() {
         this.conveyorMotor = new CANSparkMax(15, CANSparkMaxLowLevel.MotorType.kBrushless);
-        conveyorPower = 0.5;
+        conveyorPower = 0.3;
 
         SendableRegistry.addChild(this, conveyorMotor);
         SendableRegistry.addLW(this, "Conveyor");

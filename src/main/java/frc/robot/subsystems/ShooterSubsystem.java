@@ -23,6 +23,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private AnalogInput angleEncoder;
     private int offset;
     private int velocity;
+    private int test;
     private DigitalInput frontLimit;
     private DigitalInput backLimit;
     private PIDController speedController;
@@ -38,15 +39,18 @@ public class ShooterSubsystem extends SubsystemBase {
         this.speedController = new PIDController(0.0001, 0, 0);
         velocity = 0;
         offset = 0;
+        test = 0;
 
         SendableRegistry.addLW(this, "Shooter");
     }
 
     public void shoot(int rpm) {
         velocity = rpm * 4096 * 600; //rpm * 4096 units/rotation * intervals of 100 ms per minute
+        velocity *= -1;
         leftMotor.set(ControlMode.Velocity, velocity); //velocity in encoder units per 100 ms
         rightMotor.set(ControlMode.Velocity, -velocity);
         //leftMotor.getSelectedSensorVelocity();
+        //test += 100;
     }
 
     public void shoot(double power) {

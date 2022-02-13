@@ -32,7 +32,7 @@ public class Shoot extends CommandBase {
         int shootRate;
         if(joystickHandler.getAxis3() != 0){
             loadRate = 0.6;
-            shootRate = 6000;
+            shootRate = 3000;
             //shootRate = 1.0;
             conveyor.convey();
         }else if (joystickHandler.getAxis2() != 0){
