@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class SwerveWheelModuleSubsystem extends SubsystemBase {
     private final double P = .008;
+    private final double I = .00001;
 
     private TalonFX angleMotor;
     private TalonFX speedMotor;
@@ -20,16 +21,14 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
     private double encoderOffset;
     private int angleEncoderChannel;
 
-    public SwerveWheelModuleSubsystem(int angleMotorChannel, int speedMotorChannel, int angleEncoderChannel,
-            double encoderOffset) {
+    public SwerveWheelModuleSubsystem(int angleMotorChannel, int speedMotorChannel, int angleEncoderChannel) {
         // We're using TalonFX motors on CAN.
         this.angleMotor = new TalonFX(angleMotorChannel);
         this.speedMotor = new TalonFX(speedMotorChannel);
         this.angleEncoder = new CANCoder(angleEncoderChannel); //CANCoder Encoder
         this.angleEncoderChannel = angleEncoderChannel;
-        this.encoderOffset = encoderOffset;
 
-        pidController = new PIDController(P, 0, 0); // This is the PID constant, we're not using any
+        pidController = new PIDController(P, I, 0); // This is the PID constant, we're not using any
         // Integral/Derivative control but increasing the P value will make
         // the motors more aggressive to changing to angles.
 
@@ -74,9 +73,9 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         //Sets angle motor to angle
         pidController.setSetpoint(setpoint);
         double pidOut = pidController.calculate(currentEncoderValue, setpoint);
-        pidOut *= 6000 * 4096 * 600;
-        angleMotor.set(ControlMode.Velocity, pidOut);
-        //angleMotor.set(ControlMode.PercentOutput, 0);
+        //pidOut *= 3000 * 4096 * 600; //pidOut is on [-1, 1], pidOut * 3000 (Max rpm) * 4096 units/revolution * (600*100)ms/min
+        //angleMotor.set(ControlMode.Velocity, pidOut); //Sends new pidOut (in units/100 ms) to velocity control
+        angleMotor.set(ControlMode.PercentOutput, pidOut);
 
         SmartDashboard.putNumber("Encoder [" + angleEncoderChannel + "] currentEncoderValue", currentEncoderValue);
         SmartDashboard.putNumber("Encoder [" + angleEncoderChannel + "] setpoint", setpoint);
@@ -91,11 +90,13 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
 
     public void stop() {
         pidController.setP(0);
+        pidController.setI(0);
         speedMotor.set(ControlMode.PercentOutput, 0);
     }
 
     public void restart() {
         pidController.setP(P);
+        pidController.setP(I);
     }
 
     @Override
