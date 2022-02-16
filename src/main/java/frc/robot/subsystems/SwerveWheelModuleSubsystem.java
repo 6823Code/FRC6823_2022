@@ -66,9 +66,8 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         //     speed *= -1;
         //     setpoint = (setpoint + 180) % 360;
         // }
-        speed *= 6000 * 4096 * 600;
 
-        speedMotor.set(ControlMode.Velocity, speed); // sets motor speed //22150 units/100 ms at 12.4V
+        speedMotor.set(ControlMode.PercentOutput, speed); // sets motor speed //22150 units/100 ms at 12.4V
         
         //Sets angle motor to angle
         pidController.setSetpoint(setpoint);
