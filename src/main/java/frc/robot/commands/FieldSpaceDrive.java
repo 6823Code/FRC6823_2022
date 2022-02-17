@@ -41,6 +41,8 @@ public class FieldSpaceDrive extends CommandBase {
         double xval = Math.max(Math.min(joystickHandler.getAxis0() * -speedRate, 1), -1);
         double yval = Math.max(Math.min(joystickHandler.getAxis1() * speedRate, 1), -1);
         double spinval = Math.max(Math.min(joystickHandler.getAxis5() * turnRate, 1), -1);
+
+        //xval *= -1; //Left right swap
         
 
         double robotAngle = navXHandler.getAngleRad() - fieldAngle;

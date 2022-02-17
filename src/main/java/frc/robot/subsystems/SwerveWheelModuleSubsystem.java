@@ -68,7 +68,8 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         // }
 
         speedMotor.set(ControlMode.PercentOutput, speed); // sets motor speed //22150 units/100 ms at 12.4V
-        
+        SmartDashboard.putNumber("Speed " + angleEncoderChannel, speed);
+
         //Sets angle motor to angle
         pidController.setSetpoint(setpoint);
         double pidOut = pidController.calculate(currentEncoderValue, setpoint);
