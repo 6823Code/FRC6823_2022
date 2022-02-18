@@ -53,7 +53,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public void angle() {
         //if (angleEncoder.getPosition() < offset + 100 && !frontLimit.get()){
-            angleMotor.set(anglePower);
+            angleMotor.set(anglePower * 1.5);
         //}else{
             //stopAngle();
         //}
