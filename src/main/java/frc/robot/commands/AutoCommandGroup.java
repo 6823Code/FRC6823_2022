@@ -30,6 +30,7 @@ public class AutoCommandGroup extends SequentialCommandGroup {
         RotateToAngle.setInitialAngle(navXHandler.getAngleRad());
 
         //Add each command you want the robot to do in order
+        addCommands(new GoBackwards(swerveDriveSubsystem));
         addCommands(new AutoShoot(shooterSubsystem));
         addCommands(new Wait(1));
         addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));

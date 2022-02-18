@@ -1,8 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.NavXHandler;
-import frc.robot.subsystems.*;
+import frc.robot.subsystems.SwerveDriveSubsystem;
 
 import edu.wpi.first.wpilibj.Timer;
 
@@ -11,7 +10,7 @@ public class GoBackwards extends CommandBase {
     private boolean isFinished = false;
     private Timer timer;
 
-    public GoBackwards(SwerveDriveSubsystem swerveDriveSubsystem, NavXHandler navx) {
+    public GoBackwards(SwerveDriveSubsystem swerveDriveSubsystem) {
         this.swerveDriveSubsystem = swerveDriveSubsystem;
         addRequirements(swerveDriveSubsystem);
         timer = new Timer();
