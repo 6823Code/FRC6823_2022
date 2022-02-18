@@ -34,7 +34,7 @@ public class AutoCommandGroup extends SequentialCommandGroup {
             addCommands(new AutoShoot(shooterSubsystem));
             addCommands(new Wait(1));
             addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
-            addCommands(new RotateToAngle(swerveDriveSubsystem, navXHandler, Math.PI/2));
+            addCommands(new RotateToAngle(swerveDriveSubsystem, navXHandler, 3 * Math.PI/2));
         }
     }
 
