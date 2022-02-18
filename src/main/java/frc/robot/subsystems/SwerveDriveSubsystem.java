@@ -2,6 +2,8 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.util.sendable.SendableRegistry;
+import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.util.MathUtil;
@@ -39,7 +41,6 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         frontRight = new SwerveWheelModuleSubsystem(5, 4, 2);
         frontLeft = new SwerveWheelModuleSubsystem(7, 6, 3);//The order is angle, speed, encoder, offset 
         //(offset gets changed by calibration.)
-
         SendableRegistry.addChild(this, backRight);
         SendableRegistry.addChild(this, backLeft);
         SendableRegistry.addChild(this, frontRight);

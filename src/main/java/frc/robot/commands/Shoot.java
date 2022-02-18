@@ -24,15 +24,15 @@ public class Shoot extends CommandBase {
     public void execute() {
         double aimRate = joystickHandler.getAxis1();
         if (aimRate > 0){
-            aimRate *= 0.3;
+            aimRate *= shooter.getShooterAnglePercentForward();
         }else{
-            aimRate *= 0.7;
+            aimRate *= shooter.getShooterAnglePercentBack();
         }
         double loadRate;
         int shootRate;
         if(joystickHandler.getAxis3() != 0){
-            loadRate = 0.6;
-            shootRate = 3000;
+            loadRate = shooter.getLoadPercent();
+            shootRate = shooter.getShooterRPM();
             //shootRate = 1.0;
             conveyor.convey();
         }else if (joystickHandler.getAxis2() != 0){

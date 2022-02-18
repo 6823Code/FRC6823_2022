@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
+import edu.wpi.first.wpilibj.Preferences;
 //import com.revrobotics.SparkMaxAlternateEncoder;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -29,7 +30,10 @@ public class ShooterSubsystem extends SubsystemBase {
     private PIDController speedController;
     //private SparkMaxAlternateEncoder.Type altEncoderType = SparkMaxAlternateEncoder.Type.kQuadrature;
     //private Encoder encoder;
-
+    private int shooterRPM;
+    private double shooterAnglePercentBack;
+    private double shooterAnglePercentForward;
+    private double loadPercent;
     public ShooterSubsystem() {
         this.leftMotor = new TalonFX(11);
         this.rightMotor = new TalonFX(12);
@@ -40,7 +44,18 @@ public class ShooterSubsystem extends SubsystemBase {
         velocity = 0;
         offset = 0;
         test = 0;
-
+        if (!Preferences.containsKey("shooterRPM") || Preferences.getDouble("shooterRPM", -1) == -1)
+            Preferences.setDouble("shooterRPM", 3000);
+        shooterRPM = (int)Preferences.getDouble("shooterRPM", -1);
+        if (!Preferences.containsKey("sAnglePercentBack") || Preferences.getDouble("sAnglePercentBack", -1) == -1)
+            Preferences.setDouble("sAnglePercentBack", 0.7);
+        shooterAnglePercentBack = Preferences.getDouble("sAnglePercentBack", -1);
+        if (!Preferences.containsKey("sAnglePercentForward") || Preferences.getDouble("sAnglePercentForward", -1) == -1)
+            Preferences.setDouble("sAnglePercentForward", 0.3);
+        shooterAnglePercentForward = Preferences.getDouble("sAnglePercentForward", -1);
+        if (!Preferences.containsKey("feederPercent") || Preferences.getDouble("feederPercent", -1) == -1)
+            Preferences.setDouble("feederPercent", 0.6);
+        loadPercent = Preferences.getDouble("feederPercent", -1);
         SendableRegistry.addLW(this, "Shooter");
     }
 
@@ -75,5 +90,20 @@ public class ShooterSubsystem extends SubsystemBase {
     public void backLoad(double power) {
         loadMotor.set(-power);
     }
-
+    public int getShooterRPM()
+    {
+        return shooterRPM;
+    }
+    public double getShooterAnglePercentBack()
+    {
+        return shooterAnglePercentBack;
+    }
+    public double getShooterAnglePercentForward()
+    {
+        return shooterAnglePercentForward;
+    }
+    public double getLoadPercent()
+    {
+        return loadPercent;
+    }
 }
