@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Preferences;
 //Imports for commands and subsystems used
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.NavXHandler;
@@ -23,7 +24,8 @@ public class AutoCommandGroup extends SequentialCommandGroup {
         shooterSubsystem = robotContainer.getShooterSubsystem();
         
         //Add each command you want the robot to do in order
-        if (Robot.PREFS.getString("allianceColor", "red").toUpperCase().equals("red")){
+        if (Preferences.getString("allianceColor", "red").toUpperCase().equals("red")){
+
             addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 1));
             addCommands(new AutoShoot(shooterSubsystem, 0, 0.6, 3000));
             addCommands(new Wait(1));
