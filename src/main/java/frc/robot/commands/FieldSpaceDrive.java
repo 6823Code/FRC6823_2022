@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.JoystickHandler;
 import frc.robot.NavXHandler;
@@ -28,13 +29,13 @@ public class FieldSpaceDrive extends CommandBase {
         navXHandler.printEverything();
 
         //Set speed and turn rates for full throttle and not full throttle
-        double speedRate = 0.5;
-        double turnRate = 0.1;
+        double speedRate = Preferences.getDouble("Speed Rate", 0.5);
+        double turnRate = Preferences.getDouble("Turn Rate", 0.1);
 
-        if (joystickHandler.isFullThrottle()) {
-            speedRate = 1;
-            turnRate = .6;
-        }
+        // if (joystickHandler.isFullThrottle()) {
+        //     speedRate = 1;
+        //     turnRate = .6;
+        // }
 
         //Set xval, yval, spinval to the scaled values from the joystick, bounded on [-1, 1]
         double xval = Math.max(Math.min(joystickHandler.getAxis0() * -speedRate, 1), -1);
