@@ -7,20 +7,25 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class GoBackwards extends CommandBase {
     private SwerveDriveSubsystem swerveDriveSubsystem;
-    private boolean isFinished = false;
+    private boolean isFinished;
+    private double percent;
+    private double seconds;
     private Timer timer;
 
-    public GoBackwards(SwerveDriveSubsystem swerveDriveSubsystem) {
+    public GoBackwards(SwerveDriveSubsystem swerveDriveSubsystem, double percentPower, double seconds) {
         this.swerveDriveSubsystem = swerveDriveSubsystem;
         addRequirements(swerveDriveSubsystem);
         timer = new Timer();
+        isFinished = false;
+        this.percent = percentPower;
+        this.seconds = seconds;
     }
 
     @Override
     public void execute() {
-        swerveDriveSubsystem.drive(0, -1, 0);
+        swerveDriveSubsystem.drive(0, -percent, 0);
 
-        if (timer.hasElapsed(1.5)) {
+        if (timer.hasElapsed(seconds)) {
             isFinished = true;
         }
     }
