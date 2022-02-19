@@ -12,9 +12,10 @@ public class AutoShoot extends CommandBase {
     private int shootRate;
     private boolean isFinished;
 
-    public AutoShoot(ShooterSubsystem shooter, double aimRate, double loadRate, int shootRate) {
+    public AutoShoot(ShooterSubsystem shooter, ConveyorSubsystem conveyor, double aimRate, double loadRate, int shootRate) {
         //Instantiate subsystem, Joystick Handler
         this.shooter = shooter;
+        this.conveyor = conveyor;
         this.aimRate = aimRate;
         this.loadRate = loadRate;
         this.shootRate = shootRate;
