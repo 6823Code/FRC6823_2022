@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.JoystickHandler;
 import frc.robot.subsystems.ConveyorSubsystem;
@@ -44,7 +45,6 @@ public class Shoot extends CommandBase {
             shootRate = 0;
             conveyor.stopConvey();
         }
-        
         shooter.prep(aimRate, loadRate);
         shooter.shoot(shootRate);
     }
