@@ -23,7 +23,7 @@ public class Halt extends CommandBase {
 
     @Override
     public void execute() {
-        swerveDrive.drive(0, 0, 0);
+        swerveDrive.stop();
         shooter.prep(0, 0);
         shooter.shoot(0);
         conveyor.stopConvey();
