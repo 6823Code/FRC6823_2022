@@ -108,14 +108,14 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("fl speed", frontLeftSpeed);
 
         if (frontRightSpeed != 0 && x2 == 0){
-            frontRight.drive(frontRightSpeed + 0.022, -frontRightAngle);
+            frontRight.drive(-frontRightSpeed, -frontRightAngle);
             SmartDashboard.putBoolean("FR offset", true);
         }else{
-            frontRight.drive(frontRightSpeed, -frontRightAngle);
+            frontRight.drive(-frontRightSpeed, -frontRightAngle);
             SmartDashboard.putBoolean("FR offset", false);
         }
         if (frontLeftSpeed != 0 && x2 == 0){
-            frontLeft.drive(-frontLeftSpeed - 0.022, -frontLeftAngle);
+            frontLeft.drive(-frontLeftSpeed, -frontLeftAngle);
             SmartDashboard.putBoolean("FL offset", true);
         }else{
             frontLeft.drive(-frontLeftSpeed, -frontLeftAngle);
@@ -131,6 +131,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         }else{
             backLeft.drive(-backLeftSpeed, -backLeftAngle);
         }
+        // backLeft.drive(-backLeftSpeed, -backLeftAngle);
+        // backRight.drive(-backRightSpeed, -backRightAngle);
         // frontRight.drive(frontRightSpeed, -frontRightAngle);
         // frontLeft.drive(-frontLeftSpeed, -frontLeftAngle);
 
@@ -169,5 +171,14 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         backLeft.stop();
         frontRight.stop();
         frontLeft.stop();
+    }
+
+    public void autoCali(){
+        if (frontLeft.autoCali() != -2){
+            Preferences.setDouble("FLAngle", frontLeft.autoCali());
+            Preferences.setDouble("FRAngle", frontRight.autoCali());
+            Preferences.setDouble("BLAngle", backLeft.autoCali());
+            Preferences.setDouble("BRAngle", backRight.autoCali());
+        }
     }
 }

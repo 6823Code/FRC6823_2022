@@ -33,7 +33,7 @@ public class Shoot extends CommandBase {
         int shootRate;
         if(joystickHandler.getAxis3() != 0){
             loadRate = shooter.getLoadPercent();
-            shootRate = shooter.getShooterRPM();
+            shootRate = shooter.getShooterRPM()*20;
             //shootRate = 1.0;
             conveyor.convey();
         }else if (joystickHandler.getAxis2() != 0){

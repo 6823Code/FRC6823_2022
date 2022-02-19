@@ -60,19 +60,20 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void shoot(int rpm) {
-        velocity = rpm * 4096 * 600; //rpm * 4096 units/rotation * intervals of 100 ms per minute
+        velocity = rpm; //rpm * 2048 units/rotation * intervals of 100 ms per minute
         velocity *= -1;
-        leftMotor.set(ControlMode.Velocity, velocity); //velocity in encoder units per 100 ms
-        rightMotor.set(ControlMode.Velocity, -velocity);
+        leftMotor.set(ControlMode.Velocity, -velocity); //velocity in encoder units per 100 ms
+        rightMotor.set(ControlMode.Velocity, velocity);
+        SmartDashboard.putNumber("velocity target", velocity);
         //leftMotor.getSelectedSensorVelocity();
         //test += 100;
     }
 
-    public void shoot(double power) {
-        leftMotor.set(ControlMode.PercentOutput, -power); //velocity in encoder units per 100 ms
-        rightMotor.set(ControlMode.PercentOutput, power);
-        //leftMotor.getSelectedSensorVelocity();
-    }
+    // public void shoot(double power) {
+    //     leftMotor.set(ControlMode.PercentOutput, -power); //velocity in encoder units per 100 ms
+    //     rightMotor.set(ControlMode.PercentOutput, power);
+    //     //leftMotor.getSelectedSensorVelocity();
+    // }
 
     public void prep(double anglePower, double load) {
         //if(((angleEncoder.getValue() > offset && anglePower > 0) || (angleEncoder.getValue() < offset + 90 && anglePower <= 0)) && !frontLimit.get() && !backLimit.get()){
@@ -121,5 +122,10 @@ public class ShooterSubsystem extends SubsystemBase {
         if (!Preferences.containsKey("feederPercent") || Preferences.getDouble("feederPercent", -1) == -1)
             Preferences.setDouble("feederPercent", 0.6);
         loadPercent = Preferences.getDouble("feederPercent", -1);
+
+        // SmartDashboard.putNumber("Left shoot rpm", leftMotor.getSelectedSensorVelocity() / 600 / 2048);
+        // SmartDashboard.putNumber("Right shoot rpm", rightMotor.getSelectedSensorVelocity() / 600 / 2048);
+        SmartDashboard.putNumber("Left shoot rpm", leftMotor.getSelectedSensorVelocity());
+        SmartDashboard.putNumber("Right shoot rpm", rightMotor.getSelectedSensorVelocity());
     }
 }

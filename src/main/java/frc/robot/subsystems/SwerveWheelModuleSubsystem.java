@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
@@ -29,6 +30,8 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         this.speedMotor = new TalonFX(speedMotorChannel);
         this.angleEncoder = new CANCoder(angleEncoderChannel); //CANCoder Encoder
         this.angleEncoderChannel = angleEncoderChannel;
+
+        this.speedMotor.setNeutralMode(NeutralMode.Brake);
 
         pidController = new PIDController(P, I, 0); // This is the PID constant, we're not using any
         // Integral/Derivative control but increasing the P value will make
@@ -115,5 +118,16 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         if (!Preferences.containsKey("calibrate?"))
             Preferences.setBoolean("calibrate?", false);
         calibrateMode = Preferences.getBoolean("calibrate?", false);
+    }
+
+    public double autoCali(){
+        double offset;
+        if (!calibrateMode){
+            offset = (angleEncoder.getAbsolutePosition() + 180) % 360;
+            setZero(offset);
+            return offset;
+        }else{
+            return -2;
+        }
     }
 }
