@@ -4,6 +4,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
+
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.util.sendable.SendableRegistry;
@@ -17,7 +19,7 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
     private TalonFX speedMotor;
     private PIDController pidController;
     private CANCoder angleEncoder;
-
+    private boolean calibrateMode;
     private double encoderOffset;
     private int angleEncoderChannel;
 
@@ -43,6 +45,9 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         SendableRegistry.addChild(this, speedMotor);
         SendableRegistry.addChild(this, angleEncoder);
         SendableRegistry.addLW(this, "Swerve Wheel Module");
+        if (!Preferences.containsKey("calibrate?"))
+            Preferences.setBoolean("calibrate?", false);
+        calibrateMode = Preferences.getBoolean("calibrate?", false);
 
     }
 
@@ -74,10 +79,15 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         pidController.setSetpoint(setpoint);
         double pidOut = pidController.calculate(currentEncoderValue, setpoint);
         //pidOut *= 3000 * 4096 * 600; //pidOut is on [-1, 1], pidOut * 3000 (Max rpm) * 4096 units/revolution * (600*100)ms/min
-        //angleMotor.set(ControlMode.Velocity, pidOut); //Sends new pidOut (in units/100 ms) to velocity control
-        angleMotor.set(ControlMode.PercentOutput, pidOut);
+        
+        if (calibrateMode)
+            angleMotor.set(ControlMode.PercentOutput, 0); //Sends new pidOut (in units/100 ms) to velocity control
+        else
+            angleMotor.set(ControlMode.PercentOutput, pidOut);
+         
+        
 
-        SmartDashboard.putNumber("Encoder [" + angleEncoderChannel + "] currentEncoderValue", currentEncoderValue);
+        SmartDashboard.putNumber("Encoder [" + angleEncoderChannel + "]", currentEncoderValue);
         SmartDashboard.putNumber("Encoder [" + angleEncoderChannel + "] setpoint", setpoint);
         SmartDashboard.putNumber("Encoder [" + angleEncoderChannel + "] pidOut", pidOut);
     }
@@ -101,5 +111,8 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
+        if (!Preferences.containsKey("calibrate?"))
+            Preferences.setBoolean("calibrate?", false);
+        calibrateMode = Preferences.getBoolean("calibrate?", false);
     }
 }

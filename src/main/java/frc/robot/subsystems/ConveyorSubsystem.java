@@ -31,4 +31,11 @@ public class ConveyorSubsystem extends SubsystemBase {
     public void stopConvey() {
         conveyorMotor.set(0);
     }
+
+    @Override
+    public void periodic(){
+        if (!Preferences.containsKey("conveyorPower") || Preferences.getDouble("conveyPower", -1) == -1)
+            Preferences.setDouble("conveyorPower", 0.3);
+        conveyorPower = Preferences.getDouble("conveyPower", -1);
+    }
 }

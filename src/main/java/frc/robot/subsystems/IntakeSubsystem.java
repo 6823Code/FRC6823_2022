@@ -70,4 +70,14 @@ public class IntakeSubsystem extends SubsystemBase {
     public void stopAngle(){
         angleMotor.set(0);
     }
+
+    @Override
+    public void periodic(){
+        if (!Preferences.containsKey("intakePercent") || Preferences.getDouble("intakePercent", -1) == -1)
+            Preferences.setDouble("intakePercent", 0.433);
+        inTakePower = -Preferences.getDouble("intakePercent", -1);
+        if (!Preferences.containsKey("hammerPercent") || Preferences.getDouble("hammerPercent", -1) == -1)
+            Preferences.setDouble("hammerPercent", 0.4);
+        anglePower = -Preferences.getDouble("hammerPercent", -1);
+    }
 }
