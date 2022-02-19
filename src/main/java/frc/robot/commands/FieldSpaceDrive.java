@@ -30,7 +30,7 @@ public class FieldSpaceDrive extends CommandBase {
 
         //Set speed and turn rates for full throttle and not full throttle
         double speedRate = Preferences.getDouble("Speed Rate", 0.5);
-        double turnRate = Preferences.getDouble("Turn Rate", 0.1);
+        double turnRate = Preferences.getDouble("Turn Rate", 0.5);
 
         // if (joystickHandler.isFullThrottle()) {
         //     speedRate = 1;

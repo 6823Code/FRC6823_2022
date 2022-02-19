@@ -84,6 +84,7 @@ public class RobotContainer {
         limeLightSubsystem.setPipeline(1);
         RotateToZero.setInitialAngle(navX.getAngleRad());
         navX.setInitialAngle();
+        fieldSpaceDriveCommand.zero();
 
         configureButtonBindings();
     }

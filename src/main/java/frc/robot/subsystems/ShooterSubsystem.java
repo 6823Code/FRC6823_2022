@@ -47,12 +47,12 @@ public class ShooterSubsystem extends SubsystemBase {
         if (!Preferences.containsKey("shooterRPM") || Preferences.getDouble("shooterRPM", -1) == -1)
             Preferences.setDouble("shooterRPM", 3000);
         shooterRPM = (int)Preferences.getDouble("shooterRPM", -1);
-        if (!Preferences.containsKey("sAnglePercentBack") || Preferences.getDouble("sAnglePercentBack", -1) == -1)
-            Preferences.setDouble("sAnglePercentBack", 0.7);
-        shooterAnglePercentBack = Preferences.getDouble("sAnglePercentBack", -1);
-        if (!Preferences.containsKey("sAnglePercentForward") || Preferences.getDouble("sAnglePercentForward", -1) == -1)
-            Preferences.setDouble("sAnglePercentForward", 0.3);
-        shooterAnglePercentForward = Preferences.getDouble("sAnglePercentForward", -1);
+        if (!Preferences.containsKey("sAPercentBack") || Preferences.getDouble("sAPercentBack", -1) == -1)
+            Preferences.setDouble("sAPercentBack", 0.7);
+        shooterAnglePercentBack = Preferences.getDouble("sAPercentBack", -1);
+        if (!Preferences.containsKey("sAPercentForward") || Preferences.getDouble("sAPercentForward", -1) == -1)
+            Preferences.setDouble("sAPercentForward", 0.3);
+        shooterAnglePercentForward = Preferences.getDouble("sAPercentForward", -1);
         if (!Preferences.containsKey("feederPercent") || Preferences.getDouble("feederPercent", -1) == -1)
             Preferences.setDouble("feederPercent", 0.6);
         loadPercent = Preferences.getDouble("feederPercent", -1);

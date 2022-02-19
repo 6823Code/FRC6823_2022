@@ -24,19 +24,21 @@ public class AutoCommandGroup extends SequentialCommandGroup {
         shooterSubsystem = robotContainer.getShooterSubsystem();
         
         //Add each command you want the robot to do in order
-        if (Preferences.getString("allianceColor", "red").toUpperCase().equals("red")){
+        if (Preferences.getString("allianceColor", "red").toUpperCase().equals("RED")){
 
             addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 1));
-            addCommands(new AutoShoot(shooterSubsystem, 0, 0.6, 3000));
-            addCommands(new Wait(1));
-            addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
-            addCommands(new RotateToAngle(swerveDriveSubsystem, navXHandler, Math.PI/2));
+            addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem)); //Causing problem
+            //addCommands(new AutoShoot(shooterSubsystem, 0, 0.6, 3000));
+            //addCommands(new Wait(1));
+            //addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
+            //addCommands(new RotateToAngle(swerveDriveSubsystem, navXHandler, Math.PI/2));
         }else{
             addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 1));
-            addCommands(new AutoShoot(shooterSubsystem, 0, 0.6, 3000));
-            addCommands(new Wait(1));
             addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
-            addCommands(new RotateToAngle(swerveDriveSubsystem, navXHandler, 3 * Math.PI/2));
+            //addCommands(new AutoShoot(shooterSubsystem, 0, 0.6, 3000));
+            //addCommands(new Wait(1));
+            //addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
+            //addCommands(new RotateToAngle(swerveDriveSubsystem, navXHandler, 3 * Math.PI/2));
         }
     }
 
