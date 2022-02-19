@@ -2,8 +2,6 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.util.sendable.SendableRegistry;
-import edu.wpi.first.wpilibj.Preferences;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.util.MathUtil;
@@ -140,5 +138,12 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     private boolean inDeadZone(double val){
         return MathUtil.clipToZero(val, 0.02) != 0;
+    }
+
+    public void stop(){
+        backRight.stop();
+        backLeft.stop();
+        frontRight.stop();
+        frontLeft.stop();
     }
 }

@@ -92,6 +92,7 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         pidController.setP(0);
         pidController.setI(0);
         speedMotor.set(ControlMode.PercentOutput, 0);
+        angleMotor.set(ControlMode.PercentOutput, 0);
     }
 
     public void restart() {
