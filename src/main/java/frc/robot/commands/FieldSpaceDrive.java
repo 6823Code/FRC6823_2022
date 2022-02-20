@@ -29,7 +29,11 @@ public class FieldSpaceDrive extends CommandBase {
         navXHandler.printEverything();
 
         //Set speed and turn rates for full throttle and not full throttle
+        if (!Preferences.containsKey("Speed Rate") || Preferences.getDouble("Speed Rate", -2) == -2)
+            Preferences.setDouble("Speed Rate", 0.5);
         double speedRate = Preferences.getDouble("Speed Rate", 0.5);
+        if (!Preferences.containsKey("Turn Rate") || Preferences.getDouble("Turn Rate", -2) == -2)
+            Preferences.setDouble("Turn Rate", 0.5);
         double turnRate = Preferences.getDouble("Turn Rate", 0.5);
 
         // if (joystickHandler.isFullThrottle()) {

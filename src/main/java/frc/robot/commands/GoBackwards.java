@@ -44,6 +44,6 @@ public class GoBackwards extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         isFinished = false;
-        swerveDriveSubsystem.stop();
+        //swerveDriveSubsystem.stop();
     }
 }
