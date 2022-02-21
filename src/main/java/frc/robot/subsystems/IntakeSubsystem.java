@@ -16,15 +16,11 @@ public class IntakeSubsystem extends SubsystemBase {
     private double inTakePower;
     private double anglePower;
     private int offset;
-    private DigitalInput frontLimit;
-    private DigitalInput backLimit;
 
     public IntakeSubsystem() {
         this.angleMotor = new CANSparkMax(10, CANSparkMaxLowLevel.MotorType.kBrushless);
         this.intakeMotor = new CANSparkMax(9, CANSparkMaxLowLevel.MotorType.kBrushless);
         this.angleEncoder = angleMotor.getEncoder();
-        this.frontLimit = new DigitalInput(0);
-        this.backLimit = new DigitalInput(1);
         if (!Preferences.containsKey("intakePercent") || Preferences.getDouble("intakePercent", -1) == -1)
             Preferences.setDouble("intakePercent", 0.433);
         inTakePower = -Preferences.getDouble("intakePercent", -1);

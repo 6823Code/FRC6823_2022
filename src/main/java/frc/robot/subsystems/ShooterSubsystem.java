@@ -12,6 +12,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -34,6 +35,8 @@ public class ShooterSubsystem extends SubsystemBase {
     private double shooterAnglePercentBack;
     private double shooterAnglePercentForward;
     private double loadPercent;
+    private DutyCycleEncoder encoder;
+    
     public ShooterSubsystem() {
         this.leftMotor = new TalonFX(11);
         this.rightMotor = new TalonFX(12);
@@ -41,6 +44,7 @@ public class ShooterSubsystem extends SubsystemBase {
         this.loadMotor = new CANSparkMax(13, CANSparkMaxLowLevel.MotorType.kBrushless);
         this.angleEncoder = new AnalogInput(0);
         this.speedController = new PIDController(0.0001, 0, 0);
+        this.encoder = new DutyCycleEncoder(1);
         velocity = 0;
         offset = 0;
         test = 0;
@@ -127,5 +131,6 @@ public class ShooterSubsystem extends SubsystemBase {
         // SmartDashboard.putNumber("Right shoot rpm", rightMotor.getSelectedSensorVelocity() / 600 / 2048);
         SmartDashboard.putNumber("Left shoot rpm", leftMotor.getSelectedSensorVelocity());
         SmartDashboard.putNumber("Right shoot rpm", rightMotor.getSelectedSensorVelocity());
+        SmartDashboard.putNumber("encoder 0", encoder.get());
     }
 }
