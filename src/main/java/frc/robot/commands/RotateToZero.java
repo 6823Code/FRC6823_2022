@@ -67,7 +67,7 @@ public class RotateToZero extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        swerveDriveSubsystem.drive(0, 0, 0);
+        swerveDriveSubsystem.stop();
         isFinished = false;
     }
 }

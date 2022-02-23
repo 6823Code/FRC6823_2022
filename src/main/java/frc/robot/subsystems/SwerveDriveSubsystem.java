@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.util.sendable.SendableRegistry;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.util.MathUtil;
@@ -26,6 +27,10 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     private PIDController angleController;
     private double fieldangle = 0; //
+    private int FLAngle;
+    private int FRAngle;
+    private int BLAngle;
+    private int BRAngle;
 
     public void setFieldAngle(double fieldangle) {
         this.fieldangle = fieldangle;
@@ -39,7 +44,6 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         frontRight = new SwerveWheelModuleSubsystem(5, 4, 2);
         frontLeft = new SwerveWheelModuleSubsystem(7, 6, 3);//The order is angle, speed, encoder, offset 
         //(offset gets changed by calibration.)
-
         SendableRegistry.addChild(this, backRight);
         SendableRegistry.addChild(this, backLeft);
         SendableRegistry.addChild(this, frontRight);
@@ -51,7 +55,18 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         angleController.enableContinuousInput(0, Math.PI * 2);
         angleController.setSetpoint(0);
         SmartDashboard.putString("Ready Call", "Autobots, Roll Out!");
-
+        if (!Preferences.containsKey("FLAngle") || Preferences.getDouble("FLAngle", -2) == -2)
+            Preferences.setDouble("FLAngle", 346);
+        FLAngle = (int)Preferences.getDouble("FLAngle", -2);
+        if (!Preferences.containsKey("FRAngle") || Preferences.getDouble("FRAngle", -2) == -2)
+            Preferences.setDouble("FRAngle", 250);
+        FRAngle = (int)Preferences.getDouble("FRAngle", -2);
+        if (!Preferences.containsKey("BLAngle") || Preferences.getDouble("BLAngle", -2) == -2)
+            Preferences.setDouble("BLAngle", 163);
+        BLAngle = (int)Preferences.getDouble("BLAngle", -2);
+        if (!Preferences.containsKey("BRAngle") || Preferences.getDouble("BRAngle", -2) == -2)
+            Preferences.setDouble("BRAngle", 252);
+        BRAngle = (int)Preferences.getDouble("BRAngle", -2);
     }
 
     public void drive(double x1, double y1, double x2) {
@@ -93,14 +108,14 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("fl speed", frontLeftSpeed);
 
         if (frontRightSpeed != 0 && x2 == 0){
-            frontRight.drive(frontRightSpeed + 0.022, -frontRightAngle);
+            frontRight.drive(-frontRightSpeed, -frontRightAngle);
             SmartDashboard.putBoolean("FR offset", true);
         }else{
-            frontRight.drive(frontRightSpeed, -frontRightAngle);
+            frontRight.drive(-frontRightSpeed, -frontRightAngle);
             SmartDashboard.putBoolean("FR offset", false);
         }
         if (frontLeftSpeed != 0 && x2 == 0){
-            frontLeft.drive(-frontLeftSpeed - 0.022, -frontLeftAngle);
+            frontLeft.drive(-frontLeftSpeed, -frontLeftAngle);
             SmartDashboard.putBoolean("FL offset", true);
         }else{
             frontLeft.drive(-frontLeftSpeed, -frontLeftAngle);
@@ -116,6 +131,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         }else{
             backLeft.drive(-backLeftSpeed, -backLeftAngle);
         }
+        // backLeft.drive(-backLeftSpeed, -backLeftAngle);
+        // backRight.drive(-backRightSpeed, -backRightAngle);
         // frontRight.drive(frontRightSpeed, -frontRightAngle);
         // frontLeft.drive(-frontLeftSpeed, -frontLeftAngle);
 
@@ -131,13 +148,37 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     public void periodic() {
         //Do NOT make negative!!!!
         //adding is counter clockwise, subtratcting is clockwise?
-        backRight.setZero(252);
-        backLeft.setZero(163);
-        frontRight.setZero(250);
-        frontLeft.setZero(346);
+        if (!Preferences.containsKey("FLAngle") || Preferences.getDouble("FLAngle", -2) == -2)
+            Preferences.setDouble("FLAngle", 346);
+        frontLeft.setZero(Preferences.getDouble("FLAngle", -2));
+        if (!Preferences.containsKey("FRAngle") || Preferences.getDouble("FRAngle", -2) == -2)
+            Preferences.setDouble("FRAngle", 250);
+        frontRight.setZero(Preferences.getDouble("FRAngle", -2));
+        if (!Preferences.containsKey("BLAngle") || Preferences.getDouble("BLAngle", -2) == -2)
+            Preferences.setDouble("BLAngle", 163);
+        backLeft.setZero(Preferences.getDouble("BLAngle", -2));
+        if (!Preferences.containsKey("BRAngle") || Preferences.getDouble("BRAngle", -2) == -2)
+            Preferences.setDouble("BRAngle", 252);
+        backRight.setZero(Preferences.getDouble("BRAngle", -2));
     }
 
     private boolean inDeadZone(double val){
         return MathUtil.clipToZero(val, 0.02) != 0;
+    }
+    
+    public void stop(){
+        backRight.stop();
+        backLeft.stop();
+        frontRight.stop();
+        frontLeft.stop();
+    }
+
+    public void autoCali(){
+        if (frontLeft.autoCali() != -2){
+            Preferences.setDouble("FLAngle", frontLeft.autoCali());
+            Preferences.setDouble("FRAngle", frontRight.autoCali());
+            Preferences.setDouble("BLAngle", backLeft.autoCali());
+            Preferences.setDouble("BRAngle", backRight.autoCali());
+        }
     }
 }

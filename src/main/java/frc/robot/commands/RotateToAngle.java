@@ -69,7 +69,6 @@ public class RotateToAngle extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        swerveDriveSubsystem.drive(0, 0, 0);
-        isFinished = false;
+        swerveDriveSubsystem.stop();
     }
 }

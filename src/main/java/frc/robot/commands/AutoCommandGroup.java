@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Preferences;
 //Imports for commands and subsystems used
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.NavXHandler;
@@ -21,20 +22,21 @@ public class AutoCommandGroup extends SequentialCommandGroup {
         //Instantiate subsystems and NavX; set limelight to desired pipeline
         swerveDriveSubsystem = robotContainer.getSwervedriveSubsystem();
         shooterSubsystem = robotContainer.getShooterSubsystem();
+        conveyorSubsystem = robotContainer.getConveyorSubsystem();
         
         //Add each command you want the robot to do in order
-        if (Robot.PREFS.getString("Alliance Color", "Red").toUpperCase().equals("RED")){
-            addCommands(new GoBackwards(swerveDriveSubsystem));
-            addCommands(new AutoShoot(shooterSubsystem));
-            addCommands(new Wait(1));
-            addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
-            addCommands(new RotateToAngle(swerveDriveSubsystem, navXHandler, Math.PI/2));
+        if (Preferences.getString("allianceColor", "red").toUpperCase().equals("RED")){
+            addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, 4000));
+            addCommands(new Wait(5));
+            //addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
+            addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 1));
+            //addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
         }else{
-            addCommands(new GoBackwards(swerveDriveSubsystem));
-            addCommands(new AutoShoot(shooterSubsystem));
-            addCommands(new Wait(1));
-            addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
-            addCommands(new RotateToAngle(swerveDriveSubsystem, navXHandler, Math.PI/2));
+            addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, 4000));
+            addCommands(new Wait(5));
+            //addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
+            addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 1));
+            //addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
         }
     }
 

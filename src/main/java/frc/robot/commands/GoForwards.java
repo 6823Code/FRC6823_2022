@@ -5,14 +5,14 @@ import frc.robot.subsystems.SwerveDriveSubsystem;
 
 import edu.wpi.first.wpilibj.Timer;
 
-public class GoBackwards extends CommandBase {
+public class GoForwards extends CommandBase {
     private SwerveDriveSubsystem swerveDriveSubsystem;
     private boolean isFinished;
     private double percent;
     private double seconds;
     private Timer timer;
 
-    public GoBackwards(SwerveDriveSubsystem swerveDriveSubsystem, double percentPower, double seconds) {
+    public GoForwards(SwerveDriveSubsystem swerveDriveSubsystem, double percentPower, double seconds) {
         this.swerveDriveSubsystem = swerveDriveSubsystem;
         addRequirements(swerveDriveSubsystem);
         timer = new Timer();
@@ -23,7 +23,7 @@ public class GoBackwards extends CommandBase {
 
     @Override
     public void execute() {
-        swerveDriveSubsystem.drive(0, -percent, 0);
+        swerveDriveSubsystem.drive(0, percent, 0);
 
         if (timer.hasElapsed(seconds)) {
             isFinished = true;
@@ -44,6 +44,6 @@ public class GoBackwards extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         isFinished = false;
-        //swerveDriveSubsystem.stop();
+        swerveDriveSubsystem.stop();
     }
 }

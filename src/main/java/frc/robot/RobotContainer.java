@@ -84,6 +84,7 @@ public class RobotContainer {
         limeLightSubsystem.setPipeline(1);
         RotateToZero.setInitialAngle(navX.getAngleRad());
         navX.setInitialAngle();
+        fieldSpaceDriveCommand.zero();
 
         configureButtonBindings();
     }
@@ -119,6 +120,8 @@ public class RobotContainer {
                 .whenInactive(intakeSubsystem::stopIntake);
         joystickHandler4.button(4).whileActiveContinuous(() -> intakeSubsystem.angle(), intakeSubsystem)
                 .whenInactive(intakeSubsystem::stopAngle);
+
+        joystickHandler4.button(5).whenPressed(() -> swerveDriveSubsystem.autoCali(), swerveDriveSubsystem);
 
         // joystickHandler3.button(2).whileActiveContinuous(() -> liftSubsystem.liftUp(), liftSubsystem)
         //         .whenInactive(liftSubsystem::liftStop);

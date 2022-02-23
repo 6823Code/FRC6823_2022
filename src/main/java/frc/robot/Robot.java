@@ -7,19 +7,15 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Robot extends TimedRobot {
-    public static Preferences PREFS = Preferences.getInstance();
     private RobotContainer robotContainer;
 
     @Override
     public void robotInit() {
         robotContainer = new RobotContainer();
-
-        PREFS = Preferences.getInstance();
 
         // rgb1 = new RGB(9);
         // rgb2 = new RGB(9);

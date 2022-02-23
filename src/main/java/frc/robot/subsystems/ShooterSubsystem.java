@@ -5,12 +5,14 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
+import edu.wpi.first.wpilibj.Preferences;
 //import com.revrobotics.SparkMaxAlternateEncoder;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -29,7 +31,12 @@ public class ShooterSubsystem extends SubsystemBase {
     private PIDController speedController;
     //private SparkMaxAlternateEncoder.Type altEncoderType = SparkMaxAlternateEncoder.Type.kQuadrature;
     //private Encoder encoder;
-
+    private int shooterRPM;
+    private double shooterAnglePercentBack;
+    private double shooterAnglePercentForward;
+    private double loadPercent;
+    private DutyCycleEncoder encoder;
+    
     public ShooterSubsystem() {
         this.leftMotor = new TalonFX(11);
         this.rightMotor = new TalonFX(12);
@@ -37,27 +44,40 @@ public class ShooterSubsystem extends SubsystemBase {
         this.loadMotor = new CANSparkMax(13, CANSparkMaxLowLevel.MotorType.kBrushless);
         this.angleEncoder = new AnalogInput(0);
         this.speedController = new PIDController(0.0001, 0, 0);
+        this.encoder = new DutyCycleEncoder(1);
         velocity = 0;
         offset = 0;
         test = 0;
-
+        if (!Preferences.containsKey("shooterRPM") || Preferences.getDouble("shooterRPM", -1) == -1)
+            Preferences.setDouble("shooterRPM", 3000);
+        shooterRPM = (int)Preferences.getDouble("shooterRPM", -1);
+        if (!Preferences.containsKey("sAPercentBack") || Preferences.getDouble("sAPercentBack", -2) == -2)
+            Preferences.setDouble("sAPercentBack", 0.7);
+        shooterAnglePercentBack = Preferences.getDouble("sAPercentBack", -1);
+        if (!Preferences.containsKey("sAPercentForward") || Preferences.getDouble("sAPercentForward", -2) == -2)
+            Preferences.setDouble("sAPercentForward", 0.3);
+        shooterAnglePercentForward = Preferences.getDouble("sAPercentForward", -1);
+        if (!Preferences.containsKey("feederPercent") || Preferences.getDouble("feederPercent", -1) == -1)
+            Preferences.setDouble("feederPercent", 0.6);
+        loadPercent = Preferences.getDouble("feederPercent", -1);
         SendableRegistry.addLW(this, "Shooter");
     }
 
     public void shoot(int rpm) {
-        velocity = rpm * 4096 * 600; //rpm * 4096 units/rotation * intervals of 100 ms per minute
+        velocity = rpm; //rpm * 2048 units/rotation * intervals of 100 ms per minute
         velocity *= -1;
-        leftMotor.set(ControlMode.Velocity, velocity); //velocity in encoder units per 100 ms
-        rightMotor.set(ControlMode.Velocity, -velocity);
+        leftMotor.set(ControlMode.Velocity, -velocity); //velocity in encoder units per 100 ms
+        rightMotor.set(ControlMode.Velocity, velocity);
+        SmartDashboard.putNumber("velocity target", velocity);
         //leftMotor.getSelectedSensorVelocity();
         //test += 100;
     }
 
-    public void shoot(double power) {
-        leftMotor.set(ControlMode.PercentOutput, -power); //velocity in encoder units per 100 ms
-        rightMotor.set(ControlMode.PercentOutput, power);
-        //leftMotor.getSelectedSensorVelocity();
-    }
+    // public void shoot(double power) {
+    //     leftMotor.set(ControlMode.PercentOutput, -power); //velocity in encoder units per 100 ms
+    //     rightMotor.set(ControlMode.PercentOutput, power);
+    //     //leftMotor.getSelectedSensorVelocity();
+    // }
 
     public void prep(double anglePower, double load) {
         //if(((angleEncoder.getValue() > offset && anglePower > 0) || (angleEncoder.getValue() < offset + 90 && anglePower <= 0)) && !frontLimit.get() && !backLimit.get()){
@@ -75,5 +95,42 @@ public class ShooterSubsystem extends SubsystemBase {
     public void backLoad(double power) {
         loadMotor.set(-power);
     }
+    public int getShooterRPM()
+    {
+        return shooterRPM;
+    }
+    public double getShooterAnglePercentBack()
+    {
+        return shooterAnglePercentBack;
+    }
+    public double getShooterAnglePercentForward()
+    {
+        return shooterAnglePercentForward;
+    }
+    public double getLoadPercent()
+    {
+        return loadPercent;
+    }
 
+    @Override
+    public void periodic(){
+        if (!Preferences.containsKey("shooterRPM") || Preferences.getDouble("shooterRPM", -1) == -1)
+            Preferences.setDouble("shooterRPM", 3000);
+        shooterRPM = (int)Preferences.getDouble("shooterRPM", -1);
+        if (!Preferences.containsKey("sAPercentBack") || Preferences.getDouble("sAPercentBack", -2) == -2)
+            Preferences.setDouble("sAPercentBack", 0.7);
+        shooterAnglePercentBack = Preferences.getDouble("sAPercentBack", -1);
+        if (!Preferences.containsKey("sAPercentForward") || Preferences.getDouble("sAPercentForward", -2) == -2)
+            Preferences.setDouble("sAPercentForward", 0.3);
+        shooterAnglePercentForward = Preferences.getDouble("sAPercentForward", -1);
+        if (!Preferences.containsKey("feederPercent") || Preferences.getDouble("feederPercent", -1) == -1)
+            Preferences.setDouble("feederPercent", 0.6);
+        loadPercent = Preferences.getDouble("feederPercent", -1);
+
+        // SmartDashboard.putNumber("Left shoot rpm", leftMotor.getSelectedSensorVelocity() / 600 / 2048);
+        // SmartDashboard.putNumber("Right shoot rpm", rightMotor.getSelectedSensorVelocity() / 600 / 2048);
+        SmartDashboard.putNumber("Left shoot rpm", leftMotor.getSelectedSensorVelocity());
+        SmartDashboard.putNumber("Right shoot rpm", rightMotor.getSelectedSensorVelocity());
+        SmartDashboard.putNumber("encoder 0", encoder.get());
+    }
 }

@@ -2,14 +2,23 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.ConveyorSubsystem;
 
 public class AutoShoot extends CommandBase {
     private ShooterSubsystem shooter;
+    private ConveyorSubsystem conveyor;
+    private double aimRate;
+    private double loadRate;
+    private int shootRate;
     private boolean isFinished;
 
-    public AutoShoot(ShooterSubsystem shooter) {
+    public AutoShoot(ShooterSubsystem shooter, ConveyorSubsystem conveyor, double aimRate, double loadRate, int shootRate) {
         //Instantiate subsystem, Joystick Handler
         this.shooter = shooter;
+        this.conveyor = conveyor;
+        this.aimRate = aimRate;
+        this.loadRate = loadRate;
+        this.shootRate = shootRate;
         isFinished = false;
 
         addRequirements(this.shooter);
@@ -17,11 +26,9 @@ public class AutoShoot extends CommandBase {
 
     @Override
     public void execute() {
-        double aimRate = 0;
-        double loadRate = 0.6;
-        int shootRate = 3000;
         shooter.prep(aimRate, loadRate);
-        shooter.shoot(shootRate);
+        shooter.shoot(-50 * shootRate);
+        conveyor.convey();
         isFinished = true;
     }
 
