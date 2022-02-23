@@ -132,11 +132,15 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
     public double autoCali(){
         double offset;
         if (calibrateMode){
-            offset = (angleEncoder.getAbsolutePosition() + 180) % 360;
+            offset = (unitsToDegrees(angleMotor.getSelectedSensorPosition()) + 180) % 360;
             setZero(offset);
             return offset;
         }else{
             return -2;
         }
+    }
+
+    private double unitsToDegrees(double units){
+        return units / 26227 * 360;
     }
 }
