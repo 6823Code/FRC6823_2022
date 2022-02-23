@@ -23,8 +23,9 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
     private boolean calibrateMode;
     private double encoderOffset;
     private int angleEncoderChannel;
+    private String motorName;
 
-    public SwerveWheelModuleSubsystem(int angleMotorChannel, int speedMotorChannel, int angleEncoderChannel) {
+    public SwerveWheelModuleSubsystem(int angleMotorChannel, int speedMotorChannel, int angleEncoderChannel, String motorName) {
         // We're using TalonFX motors on CAN.
         this.angleMotor = new TalonFX(angleMotorChannel);
         this.speedMotor = new TalonFX(speedMotorChannel);
@@ -32,7 +33,7 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         this.angleEncoderChannel = angleEncoderChannel;
 
         this.speedMotor.setNeutralMode(NeutralMode.Brake);
-
+        this.motorName = motorName;
         pidController = new PIDController(P, I, 0); // This is the PID constant, we're not using any
         // Integral/Derivative control but increasing the P value will make
         // the motors more aggressive to changing to angles.
@@ -90,9 +91,9 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
          
         
 
-        SmartDashboard.putNumber("Encoder [" + angleEncoderChannel + "]", currentEncoderValue);
+        SmartDashboard.putNumber("Encoder " + motorName, currentEncoderValue);
         SmartDashboard.putNumber("Encoder [" + angleEncoderChannel + "] setpoint", setpoint);
-        SmartDashboard.putNumber("Encoder [" + angleEncoderChannel + "] pidOut", pidOut);
+        //SmartDashboard.putNumber("Encoder [" + angleEncoderChannel + "] pidOut", pidOut);
     }
 
     // this method outputs position of the encoder to the smartDashBoard, useful for
@@ -122,7 +123,7 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
 
     public double autoCali(){
         double offset;
-        if (!calibrateMode){
+        if (calibrateMode){
             offset = (angleEncoder.getAbsolutePosition() + 180) % 360;
             setZero(offset);
             return offset;
