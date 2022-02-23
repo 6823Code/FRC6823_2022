@@ -24,14 +24,16 @@ public class ShooterSubsystem extends SubsystemBase {
     private CANSparkMax loadMotor;
     private AnalogInput angleEncoder;
     private int offset;
-    private int velocity;
+    private int velocityLeft;
+    private int velocityRight;
     private int test;
     private DigitalInput frontLimit;
     private DigitalInput backLimit;
     private PIDController speedController;
     //private SparkMaxAlternateEncoder.Type altEncoderType = SparkMaxAlternateEncoder.Type.kQuadrature;
     //private Encoder encoder;
-    private int shooterRPM;
+    private int shooterRPMLeft;
+    private int shooterRPMRight;
     private double shooterAnglePercentBack;
     private double shooterAnglePercentForward;
     private double loadPercent;
@@ -45,12 +47,16 @@ public class ShooterSubsystem extends SubsystemBase {
         this.angleEncoder = new AnalogInput(0);
         this.speedController = new PIDController(0.0001, 0, 0);
         this.encoder = new DutyCycleEncoder(1);
-        velocity = 0;
+        velocityLeft = 0;
+        velocityRight = 0;
         offset = 0;
         test = 0;
-        if (!Preferences.containsKey("shooterRPM") || Preferences.getDouble("shooterRPM", -1) == -1)
-            Preferences.setDouble("shooterRPM", 3000);
-        shooterRPM = (int)Preferences.getDouble("shooterRPM", -1);
+        if (!Preferences.containsKey("shooterRPMLeft") || Preferences.getDouble("shooterRPMLeft", -1) == -1)
+            Preferences.setDouble("shooterRPMLeft", 3000);
+        shooterRPMLeft = (int)Preferences.getDouble("shooterRPMLeft", -1);
+        if (!Preferences.containsKey("shooterRPMRight") || Preferences.getDouble("shooterRPMRight", -1) == -1)
+            Preferences.setDouble("shooterRPMRight", 3000);
+        shooterRPMRight = (int)Preferences.getDouble("shooterRPMRight", -1);
         if (!Preferences.containsKey("sAPercentBack") || Preferences.getDouble("sAPercentBack", -2) == -2)
             Preferences.setDouble("sAPercentBack", 0.7);
         shooterAnglePercentBack = Preferences.getDouble("sAPercentBack", -1);
@@ -63,12 +69,15 @@ public class ShooterSubsystem extends SubsystemBase {
         SendableRegistry.addLW(this, "Shooter");
     }
 
-    public void shoot(int rpm) {
-        velocity = rpm; //rpm * 2048 units/rotation * intervals of 100 ms per minute
-        velocity *= -1;
-        leftMotor.set(ControlMode.Velocity, -velocity); //velocity in encoder units per 100 ms
-        rightMotor.set(ControlMode.Velocity, velocity);
-        SmartDashboard.putNumber("velocity target", velocity);
+    public void shoot(int rpmLeft, int rpmRight) {
+        velocityLeft = rpmLeft; //rpm * 2048 units/rotation * intervals of 100 ms per minute
+        velocityRight = rpmRight; //rpm * 2048 units/rotation * intervals of 100 ms per minute
+        velocityLeft *= -1;
+        velocityRight *= -1;
+        leftMotor.set(ControlMode.Velocity, -velocityLeft); //velocity in encoder units per 100 ms
+        rightMotor.set(ControlMode.Velocity, velocityRight);
+        SmartDashboard.putNumber("velocityLeft target", velocityLeft);
+        SmartDashboard.putNumber("velocityRight target", velocityRight);
         //leftMotor.getSelectedSensorVelocity();
         //test += 100;
     }
@@ -95,9 +104,13 @@ public class ShooterSubsystem extends SubsystemBase {
     public void backLoad(double power) {
         loadMotor.set(-power);
     }
-    public int getShooterRPM()
+    public int getShooterRPMLeft()
     {
-        return shooterRPM;
+        return shooterRPMLeft;
+    }
+    public int getShooterRPMRight()
+    {
+        return shooterRPMRight;
     }
     public double getShooterAnglePercentBack()
     {
@@ -114,9 +127,12 @@ public class ShooterSubsystem extends SubsystemBase {
 
     @Override
     public void periodic(){
-        if (!Preferences.containsKey("shooterRPM") || Preferences.getDouble("shooterRPM", -1) == -1)
-            Preferences.setDouble("shooterRPM", 3000);
-        shooterRPM = (int)Preferences.getDouble("shooterRPM", -1);
+        if (!Preferences.containsKey("shooterRPMLeft") || Preferences.getDouble("shooterRPMLeft", -1) == -1)
+            Preferences.setDouble("shooterRPMLeft", 3000);
+        shooterRPMLeft = (int)Preferences.getDouble("shooterRPMLeft", -1);
+        if (!Preferences.containsKey("shooterRPMRight") || Preferences.getDouble("shooterRPMRight", -1) == -1)
+            Preferences.setDouble("shooterRPMRight", 3000);
+        shooterRPMRight = (int)Preferences.getDouble("shooterRPMRight", -1);
         if (!Preferences.containsKey("sAPercentBack") || Preferences.getDouble("sAPercentBack", -2) == -2)
             Preferences.setDouble("sAPercentBack", 0.7);
         shooterAnglePercentBack = Preferences.getDouble("sAPercentBack", -1);
