@@ -22,12 +22,6 @@ public class Shoot extends CommandBase {
 
     @Override
     public void execute() {
-        double aimRate = joystickHandler.getAxis1();
-        if (aimRate > 0){
-            aimRate *= shooter.getShooterAnglePercentForward();
-        }else{
-            aimRate *= shooter.getShooterAnglePercentBack();
-        }
         double loadRate;
         int shootRate;
         if(joystickHandler.getAxis3() != 0){
@@ -44,7 +38,16 @@ public class Shoot extends CommandBase {
             shootRate = 0;
             conveyor.stopConvey();
         }
-        shooter.prep(aimRate, loadRate);
+        if (joystickHandler.getAxis1() < 0){
+            shooter.setShooterAngle(70);
+        }else if (joystickHandler.getAxis1() > 0){
+            shooter.setShooterAngle(0);
+        }else if (joystickHandler.getAxis0() < 0){
+            shooter.setShooterAngle(50);
+        }else if (joystickHandler.getAxis0() > 0){
+            shooter.setShooterAngle(30);
+        }
+        shooter.prep(loadRate);
         shooter.shoot(shootRate);
     }
 
