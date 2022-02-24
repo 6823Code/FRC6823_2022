@@ -8,7 +8,7 @@ import com.ctre.phoenix.sensors.CANCoder;
 
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.math.controller.PIDController;
+//import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.util.MathUtil;
@@ -75,10 +75,10 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         // if the setpoint is more than 90 degrees away form the current position, then
         // just reverse the speed
         // Set a variable to hold wheel position in degrees or one to hold units/rotation
-        // if (MathUtil.getCyclicalDistance(currentEncoderValue, angle, 360) > 90) {
-        //     speed *= -1;
-        //     angle = (angle + 180) % 360;
-        // }
+        if (MathUtil.getCyclicalDistance(unitsToDegrees(currentEncoderValue), angle, 360) > 90) {
+            speed *= -1;
+            angle = (angle + 180) % 360;
+        }
 
         speedMotor.set(ControlMode.PercentOutput, speed); // sets motor speed //22150 units/100 ms at 12.4V
         SmartDashboard.putNumber("Speed " + angleEncoderChannel, speed);
