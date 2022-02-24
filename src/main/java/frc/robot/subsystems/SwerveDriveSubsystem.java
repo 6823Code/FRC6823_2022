@@ -39,10 +39,10 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     }
 
     public SwerveDriveSubsystem() {
-        backRight = new SwerveWheelModuleSubsystem(1, 8, 0);// These are the motors and encoder ports for swerve drive
-        backLeft = new SwerveWheelModuleSubsystem(3, 2, 1);
-        frontRight = new SwerveWheelModuleSubsystem(5, 4, 2);
-        frontLeft = new SwerveWheelModuleSubsystem(7, 6, 3);//The order is angle, speed, encoder, offset 
+        backRight = new SwerveWheelModuleSubsystem(1, 8, 0, "BR");// These are the motors and encoder ports for swerve drive
+        backLeft = new SwerveWheelModuleSubsystem(3, 2, 1, "BL");
+        frontRight = new SwerveWheelModuleSubsystem(5, 4, 2, "FR");
+        frontLeft = new SwerveWheelModuleSubsystem(7, 6, 3, "FL");//The order is angle, speed, encoder, offset 
         //(offset gets changed by calibration.)
         SendableRegistry.addChild(this, backRight);
         SendableRegistry.addChild(this, backLeft);
@@ -108,10 +108,10 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("fl speed", frontLeftSpeed);
 
         if (frontRightSpeed != 0 && x2 == 0){
-            frontRight.drive(-frontRightSpeed, -frontRightAngle);
+            frontRight.drive(frontRightSpeed, -frontRightAngle);
             SmartDashboard.putBoolean("FR offset", true);
         }else{
-            frontRight.drive(-frontRightSpeed, -frontRightAngle);
+            frontRight.drive(frontRightSpeed, -frontRightAngle);
             SmartDashboard.putBoolean("FR offset", false);
         }
         if (frontLeftSpeed != 0 && x2 == 0){
@@ -122,9 +122,9 @@ public class SwerveDriveSubsystem extends SubsystemBase {
             SmartDashboard.putBoolean("FL offset", false);
         }
         if (!inDeadZone(backRightSpeed) && !inDeadZone(x2)){
-            backRight.drive(-backRightSpeed, -backRightAngle);
+            backRight.drive(backRightSpeed, -backRightAngle);
         }else{
-            backRight.drive(-backRightSpeed, -backRightAngle);
+            backRight.drive(backRightSpeed, -backRightAngle);
         }
         if (!inDeadZone(backLeftSpeed) && !inDeadZone(x2)){
             backLeft.drive(-backLeftSpeed, -backLeftAngle);
