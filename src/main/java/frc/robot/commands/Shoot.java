@@ -29,23 +29,27 @@ public class Shoot extends CommandBase {
             aimRate *= shooter.getShooterAnglePercentBack();
         }
         double loadRate;
-        int shootRate;
+        int shootRateLeft;
+        int shootRateRight;
         if(joystickHandler.getAxis3() != 0){
             loadRate = shooter.getLoadPercent();
-            shootRate = shooter.getShooterRPM()*20;
+            shootRateLeft = shooter.getShooterRPMLeft()*20;
+            shootRateRight = shooter.getShooterRPMRight()*20;
             //shootRate = 1.0;
             conveyor.convey();
         }else if (joystickHandler.getAxis2() != 0){
             loadRate = 0;
-            shootRate = 0;
+            shootRateLeft = 0;
+            shootRateRight = 0;
             conveyor.convey();
         }else{
             loadRate = 0;
-            shootRate = 0;
+            shootRateLeft = 0;
+            shootRateRight = 0;
             conveyor.stopConvey();
         }
         shooter.prep(aimRate, loadRate);
-        shooter.shoot(shootRate);
+        shooter.shoot(shootRateLeft, shootRateRight);
     }
 
     public void zero() { //Zeroes direction
