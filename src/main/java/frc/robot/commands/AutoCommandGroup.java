@@ -1,10 +1,9 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Preferences;
-//Imports for commands and subsystems used
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.NavXHandler;
-import frc.robot.Robot;
+// import frc.robot.NavXHandler;
+// import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -16,7 +15,7 @@ public class AutoCommandGroup extends SequentialCommandGroup {
     private SwerveDriveSubsystem swerveDriveSubsystem;
     private ShooterSubsystem shooterSubsystem;
     private ConveyorSubsystem conveyorSubsystem;
-    private NavXHandler navXHandler;
+    // private NavXHandler navXHandler;
 
     public AutoCommandGroup(RobotContainer robotContainer) {
         //Instantiate subsystems and NavX; set limelight to desired pipeline
