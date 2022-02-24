@@ -26,7 +26,7 @@ public class AutoShoot extends CommandBase {
 
     @Override
     public void execute() {
-        shooter.prep(aimRate, loadRate);
+        shooter.prep(loadRate);
         shooter.shoot(-50 * shootRate);
         conveyor.convey();
         isFinished = true;
