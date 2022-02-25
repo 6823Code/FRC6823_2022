@@ -2,9 +2,13 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.util.sendable.SendableRegistry;
-import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
+//import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import java.util.Map;
 import frc.robot.util.MathUtil;
 
 public class SwerveDriveSubsystem extends SubsystemBase {
@@ -27,10 +31,10 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     private PIDController angleController;
     private double fieldangle = 0; //
-    // private int FLAngle;
-    // private int FRAngle;
-    // private int BLAngle;
-    // private int BRAngle;
+    private SimpleWidget FLAngle;
+    private SimpleWidget FRAngle;
+    private SimpleWidget BLAngle;
+    private SimpleWidget BRAngle;
 
     public void setFieldAngle(double fieldangle) {
         this.fieldangle = fieldangle;
@@ -55,7 +59,10 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         angleController.enableContinuousInput(0, Math.PI * 2);
         angleController.setSetpoint(0);
         SmartDashboard.putString("Ready Call", "Autobots, Roll Out!");
-        periodic();
+        FLAngle = Shuffleboard.getTab("Prefrences").add("FLAngle", 0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 360));
+        FRAngle = Shuffleboard.getTab("Prefrences").add("FRAngle", 0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 360));
+        BLAngle = Shuffleboard.getTab("Prefrences").add("BLAngle", 0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 360));
+        BRAngle = Shuffleboard.getTab("Prefrences").add("BRAngle", 0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 360));
     }
 
     public void drive(double x1, double y1, double x2) {
@@ -137,18 +144,10 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     public void periodic() {
         //Do NOT make negative!!!!
         //adding is counter clockwise, subtratcting is clockwise?
-        if (!Preferences.containsKey("FLAngle") || Preferences.getDouble("FLAngle", -2) == -2)
-            Preferences.setDouble("FLAngle", 346);
-        frontLeft.setZero(Preferences.getDouble("FLAngle", -2));
-        if (!Preferences.containsKey("FRAngle") || Preferences.getDouble("FRAngle", -2) == -2)
-            Preferences.setDouble("FRAngle", 250);
-        frontRight.setZero(Preferences.getDouble("FRAngle", -2));
-        if (!Preferences.containsKey("BLAngle") || Preferences.getDouble("BLAngle", -2) == -2)
-            Preferences.setDouble("BLAngle", 163);
-        backLeft.setZero(Preferences.getDouble("BLAngle", -2));
-        if (!Preferences.containsKey("BRAngle") || Preferences.getDouble("BRAngle", -2) == -2)
-            Preferences.setDouble("BRAngle", 252);
-        backRight.setZero(Preferences.getDouble("BRAngle", -2));
+        frontLeft.setZero(FLAngle.getEntry().getDouble(0));
+        frontRight.setZero(FRAngle.getEntry().getDouble(0));
+        backLeft.setZero(BLAngle.getEntry().getDouble(0));
+        backRight.setZero(BRAngle.getEntry().getDouble(0));
     }
 
     private boolean inDeadZone(double val){
@@ -164,10 +163,10 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     public void autoCali(){
         if (frontLeft.autoCali() != -2){
-            Preferences.setDouble("FLAngle", frontLeft.autoCali());
-            Preferences.setDouble("FRAngle", frontRight.autoCali());
-            Preferences.setDouble("BLAngle", backLeft.autoCali());
-            Preferences.setDouble("BRAngle", backRight.autoCali());
+            FLAngle.getEntry().setDouble(frontLeft.autoCali());
+            FRAngle.getEntry().setDouble(frontRight.autoCali());
+            BLAngle.getEntry().setDouble(backLeft.autoCali());
+            BRAngle.getEntry().setDouble(backRight.autoCali());
         }
     }
 }

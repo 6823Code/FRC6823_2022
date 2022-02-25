@@ -1,18 +1,17 @@
 package frc.robot.subsystems;
 
+import java.util.Map;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
-//import com.revrobotics.RelativeEncoder;
-import edu.wpi.first.wpilibj.Preferences;
-//import com.revrobotics.SparkMaxAlternateEncoder;
-//import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.util.sendable.SendableRegistry;
-//import edu.wpi.first.wpilibj.AnalogInput;
-//import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -39,6 +38,8 @@ public class ShooterSubsystem extends SubsystemBase {
     private double loadPercent;
     private DutyCycleEncoder encoder;
     private PIDController pidController;
+    private SimpleWidget RPM;
+    private SimpleWidget loadWidget;
 
     public ShooterSubsystem() {
         this.leftMotor = new TalonFX(11);
@@ -53,7 +54,8 @@ public class ShooterSubsystem extends SubsystemBase {
         velocity = 0;
         // offset = 0;
         // test = 0;
-        periodic();
+        RPM = Shuffleboard.getTab("Preferences").add("shooterRPM", 3000).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 6000));
+        loadWidget = Shuffleboard.getTab("Preferences").add("LoadRate", 0.6).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", -1, "max", 1));
         SendableRegistry.addLW(this, "Shooter");
     }
 
@@ -123,13 +125,9 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     @Override
-    public void periodic(){
-        if (!Preferences.containsKey("shooterRPM") || Preferences.getDouble("shooterRPM", -1) == -1)
-            Preferences.setDouble("shooterRPM", 3000);
-        shooterRPM = (int)Preferences.getDouble("shooterRPM", -1);
-        if (!Preferences.containsKey("feederPercent") || Preferences.getDouble("feederPercent", -1) == -1)
-            Preferences.setDouble("feederPercent", 0.6);
-        loadPercent = Preferences.getDouble("feederPercent", -1);
+    public void periodic() {
+        shooterRPM = RPM.getEntry().getNumber(-2).intValue();
+        loadPercent = loadWidget.getEntry().getDouble(-1);
 
         // SmartDashboard.putNumber("Left shoot rpm", leftMotor.getSelectedSensorVelocity() / 600 / 2048);
         // SmartDashboard.putNumber("Right shoot rpm", rightMotor.getSelectedSensorVelocity() / 600 / 2048);

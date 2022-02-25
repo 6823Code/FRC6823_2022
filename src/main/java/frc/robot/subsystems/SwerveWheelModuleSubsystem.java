@@ -6,9 +6,10 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
 
-import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-//import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.util.MathUtil;
@@ -25,6 +26,7 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
     private double encoderOffset;
     private int angleEncoderChannel;
     private String motorName;
+    private SimpleWidget calibrateState;
 
     public SwerveWheelModuleSubsystem(int angleMotorChannel, int speedMotorChannel, int angleEncoderChannel, String motorName) {
         // We're using TalonFX motors on CAN.
@@ -50,7 +52,7 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         SendableRegistry.addChild(this, speedMotor);
         SendableRegistry.addChild(this, angleEncoder);
         SendableRegistry.addLW(this, "Swerve Wheel Module");
-        periodic();
+        calibrateState = Shuffleboard.getTab("Prefrences").add("Calibrate?", false).withWidget(BuiltInWidgets.kBooleanBox);
 
     }
 
@@ -122,9 +124,7 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        if (!Preferences.containsKey("calibrate?"))
-            Preferences.setBoolean("calibrate?", false);
-        calibrateMode = Preferences.getBoolean("calibrate?", false);
+        calibrateMode = calibrateState.getEntry().getBoolean(false);
     }
 
     public double autoCali(){

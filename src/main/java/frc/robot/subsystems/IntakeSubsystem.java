@@ -4,9 +4,13 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 //import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.util.sendable.SendableRegistry;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 //import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.Preferences;
+//import edu.wpi.first.wpilibj.Preferences;
+import java.util.Map;
 
 public class IntakeSubsystem extends SubsystemBase {
 
@@ -16,12 +20,19 @@ public class IntakeSubsystem extends SubsystemBase {
     private double inTakePower;
     private double anglePower;
     //private int offset;
+    private SimpleWidget intakeWidget;
+    private SimpleWidget angleWidget;
 
     public IntakeSubsystem() {
         this.angleMotor = new CANSparkMax(10, CANSparkMaxLowLevel.MotorType.kBrushless);
         this.intakeMotor = new CANSparkMax(9, CANSparkMaxLowLevel.MotorType.kBrushless);
         //this.angleEncoder = angleMotor.getEncoder();
-        periodic();
+        intakeWidget = Shuffleboard.getTab("Preferences").add("intakePercent", -0.433)
+        .withWidget(BuiltInWidgets.kNumberSlider)
+        .withProperties(Map.of("min", 0, "max", 1));
+        angleWidget = Shuffleboard.getTab("Preferences").add("hammerPercent", -0.4)
+        .withWidget(BuiltInWidgets.kNumberSlider)
+        .withProperties(Map.of("min", 0, "max", 1));
         //offset = 0;
 
         SendableRegistry.addChild(this, angleMotor);
@@ -63,12 +74,8 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     @Override
-    public void periodic(){
-        if (!Preferences.containsKey("intakePercent") || Preferences.getDouble("intakePercent", -1) == -1)
-            Preferences.setDouble("intakePercent", 0.433);
-        inTakePower = -Preferences.getDouble("intakePercent", -1);
-        if (!Preferences.containsKey("hammerPercent") || Preferences.getDouble("hammerPercent", -1) == -1)
-            Preferences.setDouble("hammerPercent", 0.4);
-        anglePower = -Preferences.getDouble("hammerPercent", -1);
+    public void periodic() {
+        inTakePower = intakeWidget.getEntry().getDouble(-2);
+        anglePower = angleWidget.getEntry().getDouble(-2);
     }
 }
