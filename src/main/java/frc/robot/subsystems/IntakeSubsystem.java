@@ -21,12 +21,7 @@ public class IntakeSubsystem extends SubsystemBase {
         this.angleMotor = new CANSparkMax(10, CANSparkMaxLowLevel.MotorType.kBrushless);
         this.intakeMotor = new CANSparkMax(9, CANSparkMaxLowLevel.MotorType.kBrushless);
         //this.angleEncoder = angleMotor.getEncoder();
-        if (!Preferences.containsKey("intakePercent") || Preferences.getDouble("intakePercent", -1) == -1)
-            Preferences.setDouble("intakePercent", 0.433);
-        inTakePower = -Preferences.getDouble("intakePercent", -1);
-        if (!Preferences.containsKey("hammerPercent") || Preferences.getDouble("hammerPercent", -1) == -1)
-            Preferences.setDouble("hammerPercent", 0.4);
-        anglePower = -Preferences.getDouble("hammerPercent", -1);
+        periodic();
         //offset = 0;
 
         SendableRegistry.addChild(this, angleMotor);

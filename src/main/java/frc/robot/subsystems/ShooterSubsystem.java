@@ -53,12 +53,7 @@ public class ShooterSubsystem extends SubsystemBase {
         velocity = 0;
         // offset = 0;
         // test = 0;
-        if (!Preferences.containsKey("shooterRPM") || Preferences.getDouble("shooterRPM", -1) == -1)
-            Preferences.setDouble("shooterRPM", 3000);
-        shooterRPM = (int)Preferences.getDouble("shooterRPM", -1);
-        if (!Preferences.containsKey("feederPercent") || Preferences.getDouble("feederPercent", -1) == -1)
-            Preferences.setDouble("feederPercent", 0.6);
-        loadPercent = Preferences.getDouble("feederPercent", -1);
+        periodic();
         SendableRegistry.addLW(this, "Shooter");
     }
 

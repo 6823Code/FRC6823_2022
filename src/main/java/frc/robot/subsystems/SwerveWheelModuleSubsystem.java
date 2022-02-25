@@ -50,9 +50,7 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         SendableRegistry.addChild(this, speedMotor);
         SendableRegistry.addChild(this, angleEncoder);
         SendableRegistry.addLW(this, "Swerve Wheel Module");
-        if (!Preferences.containsKey("calibrate?"))
-            Preferences.setBoolean("calibrate?", false);
-        calibrateMode = Preferences.getBoolean("calibrate?", false);
+        periodic();
 
     }
 
