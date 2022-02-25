@@ -106,7 +106,7 @@ public class RobotContainer {
         joystickHandler3.button(3).whenPressed(fieldSpaceDriveCommand::zero);
 
         // Holding 7 will enable robot space drive, instead of field space
-        joystickHandler3.button(7).whenHeld(robotSpaceDriveCommand);
+        joystickHandler3.button(1).whenHeld(robotSpaceDriveCommand);
 
         joystickHandler4.button(6).whileHeld(backLoad);
 
@@ -121,9 +121,8 @@ public class RobotContainer {
         joystickHandler4.button(4).whileActiveContinuous(() -> intakeSubsystem.angle(), intakeSubsystem)
                 .whenInactive(intakeSubsystem::stopAngle);
 
-        joystickHandler4.button(5).whenPressed(() -> swerveDriveSubsystem.autoCali(), swerveDriveSubsystem);
-        //joystickHandler4.button(8).whileHeld(() -> shooterSubsystem.setShooterAngle(30), shooterSubsystem);
-        joystickHandler4.button(8).whenReleased(() -> shooterSubsystem.temp(), shooterSubsystem);
+        joystickHandler3.button(7).whenPressed(() -> swerveDriveSubsystem.autoCali(), swerveDriveSubsystem);
+        
         // joystickHandler3.button(2).whileActiveContinuous(() -> liftSubsystem.liftUp(), liftSubsystem)
         //         .whenInactive(liftSubsystem::liftStop);
 
