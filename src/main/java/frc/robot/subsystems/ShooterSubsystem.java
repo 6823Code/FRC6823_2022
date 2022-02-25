@@ -105,6 +105,11 @@ public class ShooterSubsystem extends SubsystemBase {
     {
         return loadPercent;
     }
+    
+    public void shootStop(){
+        leftMotor.set(ControlMode.PercentOutput, 0);
+        rightMotor.set(ControlMode.PercentOutput, 0);
+    }
 
     public void setShooterAngle(double angle)
     {
