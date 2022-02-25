@@ -86,5 +86,7 @@ public class LimeLightSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Servo_Angle", getServoAngle());
+        SmartDashboard.putNumber("tx", getTx());
+        SmartDashboard.putNumber("ty", getTy());
     }
 }
