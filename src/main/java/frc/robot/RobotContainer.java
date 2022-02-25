@@ -15,18 +15,20 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimeLightSubsystem;
 
 public class RobotContainer {
+    // test commit
     public SwerveDriveSubsystem swerveDriveSubsystem;
     public NavXHandler navX;
     public ShooterSubsystem shooterSubsystem;
     public IntakeSubsystem intakeSubsystem;
     public ConveyorSubsystem conveyorSubsystem;
-    //public LiftSubsystem liftSubsystem;
+    public Shoot shoot;
+    public Load backLoad;
+    // public LiftSubsystem liftSubsystem;
 
     public FieldSpaceDrive fieldSpaceDriveCommand;
     private RobotSpaceDrive robotSpaceDriveCommand;
-    private AutoCommandGroup auton; 
-    public Shoot shoot;
-    public Load backLoad;
+    private AutoCommandGroup auton;
+
     private JoystickHandler joystickHandler3;
     private JoystickHandler joystickHandler4;
     public LimeLightSubsystem limeLightSubsystem;
@@ -56,7 +58,7 @@ public class RobotContainer {
     }
 
     // public LiftSubsystem getLiftSubsystem() {
-    //     return liftSubsystem;
+    // return liftSubsystem;
     // }
 
     public RobotContainer() {
@@ -67,18 +69,18 @@ public class RobotContainer {
         limeLightSubsystem = new LimeLightSubsystem(0);
         intakeSubsystem = new IntakeSubsystem();
         conveyorSubsystem = new ConveyorSubsystem();
-        //liftSubsystem = new LiftSubsystem();
+        // liftSubsystem = new LiftSubsystem();
 
         navX = new NavXHandler(); // navx input
 
-        //Field space uses navx to get its angle
+        // Field space uses navx to get its angle
         fieldSpaceDriveCommand = new FieldSpaceDrive(swerveDriveSubsystem, joystickHandler3, navX);
         robotSpaceDriveCommand = new RobotSpaceDrive(swerveDriveSubsystem, joystickHandler3);
         backLoad = new Load(shooterSubsystem, conveyorSubsystem);
         swerveDriveSubsystem.setDefaultCommand(fieldSpaceDriveCommand);
 
         shoot = new Shoot(shooterSubsystem, conveyorSubsystem, joystickHandler4);
-        shooterSubsystem.setDefaultCommand(shoot); //Check shoot for shoot button mapping
+        shooterSubsystem.setDefaultCommand(shoot); // Check shoot for shoot button mapping
 
         limeLightSubsystem.setServoAngle(35);
         limeLightSubsystem.setPipeline(1);
@@ -99,8 +101,8 @@ public class RobotContainer {
         RotateToZero.setInitialAngle(navX.getAngleRad());
         // Hold button 8 to set the swerve just forward, this is for calibration
         // purposes
-        joystickHandler3.button(8).whileHeld(() -> swerveDriveSubsystem.drive(0, 
-        0.1, 0), swerveDriveSubsystem);
+        joystickHandler3.button(8).whileHeld(() -> swerveDriveSubsystem.drive(0,
+                0.1, 0), swerveDriveSubsystem);
 
         // This will set the current orientation to be "forward" for field drive
         joystickHandler3.button(3).whenPressed(fieldSpaceDriveCommand::zero);
@@ -122,12 +124,15 @@ public class RobotContainer {
                 .whenInactive(intakeSubsystem::stopAngle);
 
         joystickHandler4.button(5).whenPressed(() -> swerveDriveSubsystem.autoCali(), swerveDriveSubsystem);
-        //joystickHandler4.button(8).whileHeld(() -> shooterSubsystem.setShooterAngle(30), shooterSubsystem);
+        // joystickHandler4.button(8).whileHeld(() ->
+        // shooterSubsystem.setShooterAngle(30), shooterSubsystem);
         joystickHandler4.button(8).whenReleased(() -> shooterSubsystem.temp(), shooterSubsystem);
-        // joystickHandler3.button(2).whileActiveContinuous(() -> liftSubsystem.liftUp(), liftSubsystem)
-        //         .whenInactive(liftSubsystem::liftStop);
+        // joystickHandler3.button(2).whileActiveContinuous(() ->
+        // liftSubsystem.liftUp(), liftSubsystem)
+        // .whenInactive(liftSubsystem::liftStop);
 
-        // joystickHandler3.button(6).whileActiveContinuous(() -> liftSubsystem.liftDown(), liftSubsystem)
-        //         .whenInactive(liftSubsystem::liftStop);
+        // joystickHandler3.button(6).whileActiveContinuous(() ->
+        // liftSubsystem.liftDown(), liftSubsystem)
+        // .whenInactive(liftSubsystem::liftStop);
     }
 }
