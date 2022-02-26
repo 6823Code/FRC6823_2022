@@ -27,10 +27,10 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     private PIDController angleController;
     private double fieldangle = 0; //
-    private int FLAngle;
-    private int FRAngle;
-    private int BLAngle;
-    private int BRAngle;
+    // private int FLAngle;
+    // private int FRAngle;
+    // private int BLAngle;
+    // private int BRAngle;
 
     public void setFieldAngle(double fieldangle) {
         this.fieldangle = fieldangle;
@@ -39,10 +39,10 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     }
 
     public SwerveDriveSubsystem() {
-        backRight = new SwerveWheelModuleSubsystem(1, 8, 0);// These are the motors and encoder ports for swerve drive
-        backLeft = new SwerveWheelModuleSubsystem(3, 2, 1);
-        frontRight = new SwerveWheelModuleSubsystem(5, 4, 2);
-        frontLeft = new SwerveWheelModuleSubsystem(7, 6, 3);//The order is angle, speed, encoder, offset 
+        backRight = new SwerveWheelModuleSubsystem(1, 8, 0, "BR");// These are the motors and encoder ports for swerve drive
+        backLeft = new SwerveWheelModuleSubsystem(3, 2, 1, "BL");
+        frontRight = new SwerveWheelModuleSubsystem(5, 4, 2, "FR");
+        frontLeft = new SwerveWheelModuleSubsystem(7, 6, 3, "FL");//The order is angle, speed, encoder, offset 
         //(offset gets changed by calibration.)
         SendableRegistry.addChild(this, backRight);
         SendableRegistry.addChild(this, backLeft);
@@ -55,18 +55,18 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         angleController.enableContinuousInput(0, Math.PI * 2);
         angleController.setSetpoint(0);
         SmartDashboard.putString("Ready Call", "Autobots, Roll Out!");
-        if (!Preferences.containsKey("FLAngle") || Preferences.getDouble("FLAngle", -2) == -2)
-            Preferences.setDouble("FLAngle", 346);
-        FLAngle = (int)Preferences.getDouble("FLAngle", -2);
-        if (!Preferences.containsKey("FRAngle") || Preferences.getDouble("FRAngle", -2) == -2)
-            Preferences.setDouble("FRAngle", 250);
-        FRAngle = (int)Preferences.getDouble("FRAngle", -2);
-        if (!Preferences.containsKey("BLAngle") || Preferences.getDouble("BLAngle", -2) == -2)
-            Preferences.setDouble("BLAngle", 163);
-        BLAngle = (int)Preferences.getDouble("BLAngle", -2);
-        if (!Preferences.containsKey("BRAngle") || Preferences.getDouble("BRAngle", -2) == -2)
-            Preferences.setDouble("BRAngle", 252);
-        BRAngle = (int)Preferences.getDouble("BRAngle", -2);
+        // if (!Preferences.containsKey("FLAngle") || Preferences.getDouble("FLAngle", -2) == -2)
+        //     Preferences.setDouble("FLAngle", 346);
+        // FLAngle = (int)Preferences.getDouble("FLAngle", -2);
+        // if (!Preferences.containsKey("FRAngle") || Preferences.getDouble("FRAngle", -2) == -2)
+        //     Preferences.setDouble("FRAngle", 250);
+        // FRAngle = (int)Preferences.getDouble("FRAngle", -2);
+        // if (!Preferences.containsKey("BLAngle") || Preferences.getDouble("BLAngle", -2) == -2)
+        //     Preferences.setDouble("BLAngle", 163);
+        // BLAngle = (int)Preferences.getDouble("BLAngle", -2);
+        // if (!Preferences.containsKey("BRAngle") || Preferences.getDouble("BRAngle", -2) == -2)
+        //     Preferences.setDouble("BRAngle", 252);
+        // BRAngle = (int)Preferences.getDouble("BRAngle", -2);
     }
 
     public void drive(double x1, double y1, double x2) {
@@ -108,10 +108,10 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("fl speed", frontLeftSpeed);
 
         if (frontRightSpeed != 0 && x2 == 0){
-            frontRight.drive(-frontRightSpeed, -frontRightAngle);
+            frontRight.drive(frontRightSpeed, -frontRightAngle);
             SmartDashboard.putBoolean("FR offset", true);
         }else{
-            frontRight.drive(-frontRightSpeed, -frontRightAngle);
+            frontRight.drive(frontRightSpeed, -frontRightAngle);
             SmartDashboard.putBoolean("FR offset", false);
         }
         if (frontLeftSpeed != 0 && x2 == 0){
@@ -122,9 +122,9 @@ public class SwerveDriveSubsystem extends SubsystemBase {
             SmartDashboard.putBoolean("FL offset", false);
         }
         if (!inDeadZone(backRightSpeed) && !inDeadZone(x2)){
-            backRight.drive(-backRightSpeed, -backRightAngle);
+            backRight.drive(backRightSpeed, -backRightAngle);
         }else{
-            backRight.drive(-backRightSpeed, -backRightAngle);
+            backRight.drive(backRightSpeed, -backRightAngle);
         }
         if (!inDeadZone(backLeftSpeed) && !inDeadZone(x2)){
             backLeft.drive(-backLeftSpeed, -backLeftAngle);
