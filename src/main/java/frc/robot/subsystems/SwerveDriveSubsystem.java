@@ -107,34 +107,34 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("fr speed", frontRightSpeed);
         SmartDashboard.putNumber("fl speed", frontLeftSpeed);
 
-        if (frontRightSpeed != 0 && x2 == 0){
-            frontRight.drive(frontRightSpeed, -frontRightAngle);
-            SmartDashboard.putBoolean("FR offset", true);
-        }else{
-            frontRight.drive(frontRightSpeed, -frontRightAngle);
-            SmartDashboard.putBoolean("FR offset", false);
-        }
-        if (frontLeftSpeed != 0 && x2 == 0){
-            frontLeft.drive(-frontLeftSpeed, -frontLeftAngle);
-            SmartDashboard.putBoolean("FL offset", true);
-        }else{
-            frontLeft.drive(-frontLeftSpeed, -frontLeftAngle);
-            SmartDashboard.putBoolean("FL offset", false);
-        }
-        if (!inDeadZone(backRightSpeed) && !inDeadZone(x2)){
-            backRight.drive(backRightSpeed, -backRightAngle);
-        }else{
-            backRight.drive(backRightSpeed, -backRightAngle);
-        }
-        if (!inDeadZone(backLeftSpeed) && !inDeadZone(x2)){
-            backLeft.drive(-backLeftSpeed, -backLeftAngle);
-        }else{
-            backLeft.drive(-backLeftSpeed, -backLeftAngle);
-        }
-        // backLeft.drive(-backLeftSpeed, -backLeftAngle);
-        // backRight.drive(-backRightSpeed, -backRightAngle);
-        // frontRight.drive(frontRightSpeed, -frontRightAngle);
-        // frontLeft.drive(-frontLeftSpeed, -frontLeftAngle);
+        // if (frontRightSpeed != 0 && x2 == 0){
+        //     frontRight.drive(-frontRightSpeed, -frontRightAngle);
+        //     SmartDashboard.putBoolean("FR offset", true);
+        // }else{
+        //     frontRight.drive(-frontRightSpeed, -frontRightAngle);
+        //     SmartDashboard.putBoolean("FR offset", false);
+        // }
+        // if (frontLeftSpeed != 0 && x2 == 0){
+        //     frontLeft.drive(-frontLeftSpeed, -frontLeftAngle);
+        //     SmartDashboard.putBoolean("FL offset", true);
+        // }else{
+        //     frontLeft.drive(-frontLeftSpeed, -frontLeftAngle);
+        //     SmartDashboard.putBoolean("FL offset", false);
+        // }
+        // if (!inDeadZone(backRightSpeed) && !inDeadZone(x2)){
+        //     backRight.drive(backRightSpeed, -backRightAngle);
+        // }else{
+        //     backRight.drive(backRightSpeed, -backRightAngle);
+        // }
+        // if (!inDeadZone(backLeftSpeed) && !inDeadZone(x2)){
+        //     backLeft.drive(backLeftSpeed, -backLeftAngle);
+        // }else{
+        //     backLeft.drive(backLeftSpeed, -backLeftAngle);
+        // }
+        backLeft.drive(backLeftSpeed, -backLeftAngle);
+        backRight.drive(backRightSpeed, -backRightAngle);
+        frontRight.drive(-frontRightSpeed, -frontRightAngle);
+        frontLeft.drive(-frontLeftSpeed, -frontLeftAngle);
 
         //Print speed values
         SmartDashboard.putNumber("Backright Speed", backRightSpeed);

@@ -141,6 +141,7 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
     }
 
     private double unitsToDegrees(double units){
-        return units / 26227 * 360;
+        units = units / 26227 * 360 ;
+        return MathUtil.mod(units, 360);
     }
 }
