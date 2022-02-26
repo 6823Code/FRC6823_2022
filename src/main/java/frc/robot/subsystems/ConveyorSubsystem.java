@@ -13,9 +13,7 @@ public class ConveyorSubsystem extends SubsystemBase {
 
     public ConveyorSubsystem() {
         this.conveyorMotor = new CANSparkMax(15, CANSparkMaxLowLevel.MotorType.kBrushless);
-        if (!Preferences.containsKey("conveyorPower") || Preferences.getDouble("conveyPower", -1) == -1)
-            Preferences.setDouble("conveyorPower", 0.3);
-        conveyorPower = Preferences.getDouble("conveyPower", -1);
+        periodic();
         SendableRegistry.addChild(this, conveyorMotor);
         SendableRegistry.addLW(this, "Conveyor");
     }

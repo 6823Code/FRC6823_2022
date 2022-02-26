@@ -55,18 +55,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         angleController.enableContinuousInput(0, Math.PI * 2);
         angleController.setSetpoint(0);
         SmartDashboard.putString("Ready Call", "Autobots, Roll Out!");
-        // if (!Preferences.containsKey("FLAngle") || Preferences.getDouble("FLAngle", -2) == -2)
-        //     Preferences.setDouble("FLAngle", 346);
-        // FLAngle = (int)Preferences.getDouble("FLAngle", -2);
-        // if (!Preferences.containsKey("FRAngle") || Preferences.getDouble("FRAngle", -2) == -2)
-        //     Preferences.setDouble("FRAngle", 250);
-        // FRAngle = (int)Preferences.getDouble("FRAngle", -2);
-        // if (!Preferences.containsKey("BLAngle") || Preferences.getDouble("BLAngle", -2) == -2)
-        //     Preferences.setDouble("BLAngle", 163);
-        // BLAngle = (int)Preferences.getDouble("BLAngle", -2);
-        // if (!Preferences.containsKey("BRAngle") || Preferences.getDouble("BRAngle", -2) == -2)
-        //     Preferences.setDouble("BRAngle", 252);
-        // BRAngle = (int)Preferences.getDouble("BRAngle", -2);
+        periodic();
     }
 
     public void drive(double x1, double y1, double x2) {
