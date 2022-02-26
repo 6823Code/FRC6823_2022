@@ -83,8 +83,8 @@ public class ShooterSubsystem extends SubsystemBase {
     public void shoot(int rpmLeft, int rpmRight) {
         velocityLeft = rpmLeft; //rpm * 2048 units/rotation * intervals of 100 ms per minute
         velocityRight = rpmRight; //rpm * 2048 units/rotation * intervals of 100 ms per minute
-        velocityLeft *= -1;
-        velocityRight *= -1;
+        // velocityLeft *= -1;
+        // velocityRight *= -1;
         leftMotor.set(ControlMode.Velocity, -velocityLeft); //velocity in encoder units per 100 ms
         rightMotor.set(ControlMode.Velocity, velocityRight);
         SmartDashboard.putNumber("velocityLeft target", velocityLeft);
