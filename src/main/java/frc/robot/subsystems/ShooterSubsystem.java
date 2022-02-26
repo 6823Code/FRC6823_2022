@@ -24,14 +24,14 @@ public class ShooterSubsystem extends SubsystemBase {
     private TalonFX rightMotor;
     private CANSparkMax angleMotor;
     private CANSparkMax loadMotor;
-    private AnalogInput angleEncoder;
-    private int offset;
+    //private AnalogInput angleEncoder;
+    //private int offset;
     private int velocityLeft;
     private int velocityRight;
-    private int test;
-    private DigitalInput frontLimit;
-    private DigitalInput backLimit;
-    private PIDController speedController;
+    //private int test;
+    //private DigitalInput frontLimit;
+    //private DigitalInput backLimit;
+    //private PIDController speedController;
 
     //private SparkMaxAlternateEncoder.Type altEncoderType = SparkMaxAlternateEncoder.Type.kQuadrature;
     //private Encoder encoder;
@@ -55,8 +55,8 @@ public class ShooterSubsystem extends SubsystemBase {
         pidController.setTolerance(20);
         velocityLeft = 0;
         velocityRight = 0;
-        offset = 0;
-        test = 0;
+        //offset = 0;
+        //test = 0;
         if (!Preferences.containsKey("shooterRPMLeft") || Preferences.getDouble("shooterRPMLeft", -1) == -1)
             Preferences.setDouble("shooterRPMLeft", 3000);
         shooterRPMLeft = (int)Preferences.getDouble("shooterRPMLeft", -1);
