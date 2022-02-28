@@ -5,7 +5,6 @@ import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.util.MathUtil;
 
 public class SwerveDriveSubsystem extends SubsystemBase {
     /**
@@ -88,42 +87,10 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         frontLeftAngle = Math.atan2(b, d) / Math.PI;
         backLeftAngle = Math.atan2(a, d) / Math.PI;
 
-        x2 = MathUtil.clipToZero(x2, 0.02);
-        SmartDashboard.putNumber("x2", x2);
-        
-        frontRightSpeed = MathUtil.clipToZero(frontRightSpeed, 0.02);
-        frontLeftSpeed = MathUtil.clipToZero(frontLeftSpeed, 0.02);
-        SmartDashboard.putNumber("fr speed", frontRightSpeed);
-        SmartDashboard.putNumber("fl speed", frontLeftSpeed);
-
-        if (frontRightSpeed != 0 && x2 == 0){
-            frontRight.drive(frontRightSpeed, -frontRightAngle);
-            SmartDashboard.putBoolean("FR offset", true);
-        }else{
-            frontRight.drive(frontRightSpeed, -frontRightAngle);
-            SmartDashboard.putBoolean("FR offset", false);
-        }
-        if (frontLeftSpeed != 0 && x2 == 0){
-            frontLeft.drive(-frontLeftSpeed, -frontLeftAngle);
-            SmartDashboard.putBoolean("FL offset", true);
-        }else{
-            frontLeft.drive(-frontLeftSpeed, -frontLeftAngle);
-            SmartDashboard.putBoolean("FL offset", false);
-        }
-        if (!inDeadZone(backRightSpeed) && !inDeadZone(x2)){
-            backRight.drive(backRightSpeed, -backRightAngle);
-        }else{
-            backRight.drive(backRightSpeed, -backRightAngle);
-        }
-        if (!inDeadZone(backLeftSpeed) && !inDeadZone(x2)){
-            backLeft.drive(-backLeftSpeed, -backLeftAngle);
-        }else{
-            backLeft.drive(-backLeftSpeed, -backLeftAngle);
-        }
-        // backLeft.drive(-backLeftSpeed, -backLeftAngle);
-        // backRight.drive(-backRightSpeed, -backRightAngle);
-        // frontRight.drive(frontRightSpeed, -frontRightAngle);
-        // frontLeft.drive(-frontLeftSpeed, -frontLeftAngle);
+        backLeft.drive(-backLeftSpeed, -backLeftAngle);
+        backRight.drive(backRightSpeed, -backRightAngle);
+        frontRight.drive(frontRightSpeed, -frontRightAngle);
+        frontLeft.drive(-frontLeftSpeed, -frontLeftAngle);
 
         //Print speed values
         SmartDashboard.putNumber("Backright Speed", backRightSpeed);
@@ -149,10 +116,6 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         if (!Preferences.containsKey("BRAngle") || Preferences.getDouble("BRAngle", -2) == -2)
             Preferences.setDouble("BRAngle", 252);
         backRight.setZero(Preferences.getDouble("BRAngle", -2));
-    }
-
-    private boolean inDeadZone(double val){
-        return MathUtil.clipToZero(val, 0.02) != 0;
     }
     
     public void stop(){

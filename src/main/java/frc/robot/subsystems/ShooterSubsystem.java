@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.Preferences;
 //import com.revrobotics.SparkMaxAlternateEncoder;
 //import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.util.sendable.SendableRegistry;
+//import edu.wpi.first.util.sendable.SendableRegistry;
 //import edu.wpi.first.wpilibj.AnalogInput;
 //import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
@@ -57,16 +57,7 @@ public class ShooterSubsystem extends SubsystemBase {
         velocityRight = 0;
         //offset = 0;
         //test = 0;
-        if (!Preferences.containsKey("shooterRPMLeft") || Preferences.getDouble("shooterRPMLeft", -1) == -1)
-            Preferences.setDouble("shooterRPMLeft", 3000);
-        shooterRPMLeft = (int)Preferences.getDouble("shooterRPMLeft", -1);
-        if (!Preferences.containsKey("shooterRPMRight") || Preferences.getDouble("shooterRPMRight", -1) == -1)
-            Preferences.setDouble("shooterRPMRight", 3000);
-        shooterRPMRight = (int)Preferences.getDouble("shooterRPMRight", -1);
-        if (!Preferences.containsKey("feederPercent") || Preferences.getDouble("feederPercent", -1) == -1)
-            Preferences.setDouble("feederPercent", 0.6);
-        loadPercent = Preferences.getDouble("feederPercent", -1);
-        SendableRegistry.addLW(this, "Shooter");
+        periodic();
     }
 
     public void shoot(int rpm) {

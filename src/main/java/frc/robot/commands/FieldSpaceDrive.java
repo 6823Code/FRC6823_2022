@@ -28,6 +28,7 @@ public class FieldSpaceDrive extends CommandBase {
     @Override
     public void execute() {
         navXHandler.printEverything();
+        joystickHandler.updateDeadZone();
 
         //Set speed and turn rates for full throttle and not full throttle
         if (!Preferences.containsKey("Speed Rate") || Preferences.getDouble("Speed Rate", -2) == -2)
