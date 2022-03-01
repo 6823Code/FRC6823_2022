@@ -48,7 +48,7 @@ public class Shoot extends CommandBase {
             shooter.setShooterAngle(30);
         }
         shooter.prep(loadRate);
-        shooter.shoot(shootRate);
+        shooter.shoot(-shootRate);
     }
 
     public void zero() { //Zeroes direction

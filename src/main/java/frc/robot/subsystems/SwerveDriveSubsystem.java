@@ -35,6 +35,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     private SimpleWidget FRAngle;
     private SimpleWidget BLAngle;
     private SimpleWidget BRAngle;
+    private SimpleWidget calibrateWidget;
 
     public void setFieldAngle(double fieldangle) {
         this.fieldangle = fieldangle;
@@ -43,10 +44,11 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     }
 
     public SwerveDriveSubsystem() {
-        backRight = new SwerveWheelModuleSubsystem(1, 8, 0, "BR");// These are the motors and encoder ports for swerve drive
-        backLeft = new SwerveWheelModuleSubsystem(3, 2, 1, "BL");
-        frontRight = new SwerveWheelModuleSubsystem(5, 4, 2, "FR");
-        frontLeft = new SwerveWheelModuleSubsystem(7, 6, 3, "FL");//The order is angle, speed, encoder, offset 
+        calibrateWidget = Shuffleboard.getTab("Prefrences").add("Calibrate?", false).withWidget(BuiltInWidgets.kBooleanBox);
+        backRight = new SwerveWheelModuleSubsystem(1, 8, 0, "BR", calibrateWidget);// These are the motors and encoder ports for swerve drive
+        backLeft = new SwerveWheelModuleSubsystem(3, 2, 1, "BL", calibrateWidget);
+        frontRight = new SwerveWheelModuleSubsystem(5, 4, 2, "FR", calibrateWidget);
+        frontLeft = new SwerveWheelModuleSubsystem(7, 6, 3, "FL", calibrateWidget);//The order is angle, speed, encoder, offset 
         //(offset gets changed by calibration.)
         SendableRegistry.addChild(this, backRight);
         SendableRegistry.addChild(this, backLeft);
