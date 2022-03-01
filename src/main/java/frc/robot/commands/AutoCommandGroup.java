@@ -25,13 +25,13 @@ public class AutoCommandGroup extends SequentialCommandGroup {
         
         //Add each command you want the robot to do in order
         if (Preferences.getString("allianceColor", "red").toUpperCase().equals("RED")){
-            addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, 4000, 4000));
+            addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, shooterSubsystem.getShooterRPMLeft()*20, shooterSubsystem.getShooterRPMRight()*20));
             addCommands(new Wait(5));
             //addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
             addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 1));
             //addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
         }else{
-            addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, 4000, 4000));
+            addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, shooterSubsystem.getShooterRPMLeft()*20, shooterSubsystem.getShooterRPMRight()*20));
             addCommands(new Wait(5));
             //addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
             addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 1));
