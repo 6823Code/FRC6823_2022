@@ -35,7 +35,7 @@ public class AutoCommandGroup extends SequentialCommandGroup {
             addCommands(new AutoSearchLeft(swerveDriveSubsystem, limeLightSubsystem, 0));
             addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, shooterSubsystem.getShooterRPMLeft()*20, shooterSubsystem.getShooterRPMRight()*20));
             addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 1));
-        }else{
+        }else if (Preferences.getString("allianceColor", "blue").toUpperCase().equals("BLUE")){
             addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, shooterSubsystem.getShooterRPMLeft()*20, shooterSubsystem.getShooterRPMRight()*20));
             addCommands(new AutoSearchRight(swerveDriveSubsystem, limeLightSubsystem, 2));
             addCommands(new PickUpBall(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem));
