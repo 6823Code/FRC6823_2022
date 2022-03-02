@@ -22,6 +22,7 @@ public class Shoot extends CommandBase {
 
     @Override
     public void execute() {
+        joystickHandler.updateDeadZone();
         double loadRate;
         int shootRateLeft;
         int shootRateRight;
