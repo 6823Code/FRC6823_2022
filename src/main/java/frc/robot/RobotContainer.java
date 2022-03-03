@@ -86,7 +86,7 @@ public class RobotContainer {
         shooterSubsystem.setDefaultCommand(shoot); //Check shoot for shoot button mapping
 
         //limeLightSubsystem.setServoAngle(35);
-        limeLightSubsystem.setPipeline(2);
+        limeLightSubsystem.setPipeline(0);
         RotateToZero.setInitialAngle(navX.getAngleRad());
         navX.setInitialAngle();
         fieldSpaceDriveCommand.zero();
