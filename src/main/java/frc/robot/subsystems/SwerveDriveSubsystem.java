@@ -44,7 +44,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     }
 
     public SwerveDriveSubsystem() {
-        calibrateWidget = Shuffleboard.getTab("Prefrences").add("Calibrate?", false).withWidget(BuiltInWidgets.kBooleanBox);
+        calibrateWidget = Shuffleboard.getTab("Preferences").add("Calibrate?", false).withWidget(BuiltInWidgets.kBooleanBox);
         backRight = new SwerveWheelModuleSubsystem(1, 8, 0, "BR", calibrateWidget);// These are the motors and encoder ports for swerve drive
         backLeft = new SwerveWheelModuleSubsystem(3, 2, 1, "BL", calibrateWidget);
         frontRight = new SwerveWheelModuleSubsystem(5, 4, 2, "FR", calibrateWidget);
@@ -61,10 +61,10 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         angleController.enableContinuousInput(0, Math.PI * 2);
         angleController.setSetpoint(0);
         SmartDashboard.putString("Ready Call", "Autobots, Roll Out!");
-        FLAngle = Shuffleboard.getTab("Prefrences").add("FLAngle", 0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 360));
-        FRAngle = Shuffleboard.getTab("Prefrences").add("FRAngle", 0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 360));
-        BLAngle = Shuffleboard.getTab("Prefrences").add("BLAngle", 0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 360));
-        BRAngle = Shuffleboard.getTab("Prefrences").add("BRAngle", 0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 360));
+        FLAngle = Shuffleboard.getTab("Preferences").add("FLAngle", 0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 360));
+        FRAngle = Shuffleboard.getTab("Preferences").add("FRAngle", 0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 360));
+        BLAngle = Shuffleboard.getTab("Preferences").add("BLAngle", 0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 360));
+        BRAngle = Shuffleboard.getTab("Preferences").add("BRAngle", 0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 360));
     }
 
     public void drive(double x1, double y1, double x2) {
