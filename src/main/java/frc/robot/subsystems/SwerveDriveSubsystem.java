@@ -161,10 +161,6 @@ public class SwerveDriveSubsystem extends SubsystemBase {
             Preferences.setDouble("BRAngle", 252);
         backRight.setZero(Preferences.getDouble("BRAngle", -2));
     }
-
-    private boolean inDeadZone(double val){
-        return MathUtil.clipToZero(val, 0.02) != 0;
-    }
     
     public void stop(){
         backRight.stop();
