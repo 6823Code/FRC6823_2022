@@ -23,16 +23,17 @@ public class ShooterSubsystem extends SubsystemBase {
     private TalonFX rightMotor;
     private CANSparkMax angleMotor;
     private CANSparkMax loadMotor;
-    //private AnalogInput angleEncoder;
-    //private int offset;
+    // private AnalogInput angleEncoder;
+    // private int offset;
     private int velocityLeft;
     private int velocityRight;
-    //private int test;
-    //private DigitalInput frontLimit;
-    //private DigitalInput backLimit;
-    //private PIDController speedController;
-    //private SparkMaxAlternateEncoder.Type altEncoderType = SparkMaxAlternateEncoder.Type.kQuadrature;
-    //private Encoder encoder;
+    // private int test;
+    // private DigitalInput frontLimit;
+    // private DigitalInput backLimit;
+    // private PIDController speedController;
+    // private SparkMaxAlternateEncoder.Type altEncoderType =
+    // SparkMaxAlternateEncoder.Type.kQuadrature;
+    // private Encoder encoder;
     private int shooterRPMLeft;
     private int shooterRPMRight;
     private double shooterAnglePercentBack;
@@ -40,7 +41,6 @@ public class ShooterSubsystem extends SubsystemBase {
     private double loadPercent;
     private DutyCycleEncoder encoder;
     private PIDController pidController;
-    private SimpleWidget RPM; //to be removed
     private SimpleWidget loadWidget;
     private SimpleWidget RPMLeft;
     private SimpleWidget RPMRight;
@@ -57,42 +57,42 @@ public class ShooterSubsystem extends SubsystemBase {
         pidController.setTolerance(20);
         velocityLeft = 0;
         velocityRight = 0;
-        //offset = 0;
-        //test = 0;
-        RPM = Shuffleboard.getTab("Preferences").add("shooterRPM", 3000).withWidget(BuiltInWidgets.kNumberSlider)
-                .withProperties(Map.of("min", 0, "max", 6000));
+        // offset = 0;
+        // test = 0;
         loadWidget = Shuffleboard.getTab("Preferences").add("LoadRate", 0.6).withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", -1, "max", 1));
         SendableRegistry.addLW(this, "Shooter");
-        RPMLeft = Shuffleboard.getTab("Preferences").add("shooterRPMLeft", 3000).withWidget(BuiltInWidgets.kNumberSlider)
+        RPMLeft = Shuffleboard.getTab("Preferences").add("shooterRPMLeft", 3000)
+                .withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 6000));
-        RPMLeft = Shuffleboard.getTab("Preferences").add("shooterRPMRight", 3000).withWidget(BuiltInWidgets.kNumberSlider)
+        RPMLeft = Shuffleboard.getTab("Preferences").add("shooterRPMRight", 3000)
+                .withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 6000));
-      
+
     }
 
     public void shoot(int rpm) {
-        velocityLeft = rpm; //rpm * 2048 units/rotation * intervals of 100 ms per minute
-        velocityRight = rpm; //rpm * 2048 units/rotation * intervals of 100 ms per minute
+        velocityLeft = rpm; // rpm * 2048 units/rotation * intervals of 100 ms per minute
+        velocityRight = rpm; // rpm * 2048 units/rotation * intervals of 100 ms per minute
         velocityLeft *= -1;
         velocityRight *= -1;
-        leftMotor.set(ControlMode.Velocity, -velocityLeft); //velocity in encoder units per 100 ms
+        leftMotor.set(ControlMode.Velocity, -velocityLeft); // velocity in encoder units per 100 ms
         rightMotor.set(ControlMode.Velocity, velocityRight);
         SmartDashboard.putNumber("velocityLeft target", velocityLeft);
         SmartDashboard.putNumber("velocityRight target", velocityRight);
     }
 
     public void shoot(int rpmLeft, int rpmRight) {
-        velocityLeft = rpmLeft; //rpm * 2048 units/rotation * intervals of 100 ms per minute
-        velocityRight = rpmRight; //rpm * 2048 units/rotation * intervals of 100 ms per minute
+        velocityLeft = rpmLeft; // rpm * 2048 units/rotation * intervals of 100 ms per minute
+        velocityRight = rpmRight; // rpm * 2048 units/rotation * intervals of 100 ms per minute
         // velocityLeft *= -1;
         // velocityRight *= -1;
-        leftMotor.set(ControlMode.Velocity, -velocityLeft); //velocity in encoder units per 100 ms
+        leftMotor.set(ControlMode.Velocity, -velocityLeft); // velocity in encoder units per 100 ms
         rightMotor.set(ControlMode.Velocity, velocityRight);
         SmartDashboard.putNumber("velocityLeft target", velocityLeft);
         SmartDashboard.putNumber("velocityRight target", velocityRight);
-        //leftMotor.getSelectedSensorVelocity();
-        //test += 100;
+        // leftMotor.getSelectedSensorVelocity();
+        // test += 100;
     }
 
     // public void shoot(double power) {
@@ -113,12 +113,12 @@ public class ShooterSubsystem extends SubsystemBase {
     public void backLoad(double power) {
         loadMotor.set(-power);
     }
-    public int getShooterRPMLeft()
-    {
+
+    public int getShooterRPMLeft() {
         return shooterRPMLeft;
     }
-    public int getShooterRPMRight()
-    {
+
+    public int getShooterRPMRight() {
         return shooterRPMRight;
     }
 
@@ -154,13 +154,15 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     @Override
-    public void periodic(){
+    public void periodic() {
         shooterRPMLeft = RPMLeft.getEntry().getNumber(-2).intValue();
         shooterRPMRight = RPMRight.getEntry().getNumber(-2).intValue();
         loadPercent = loadWidget.getEntry().getDouble(-1);
 
-        // SmartDashboard.putNumber("Left shoot rpm", leftMotor.getSelectedSensorVelocity() / 600 / 2048);
-        // SmartDashboard.putNumber("Right shoot rpm", rightMotor.getSelectedSensorVelocity() / 600 / 2048);
+        // SmartDashboard.putNumber("Left shoot rpm",
+        // leftMotor.getSelectedSensorVelocity() / 600 / 2048);
+        // SmartDashboard.putNumber("Right shoot rpm",
+        // rightMotor.getSelectedSensorVelocity() / 600 / 2048);
         SmartDashboard.putNumber("Left shoot rpm", leftMotor.getSelectedSensorVelocity());
         SmartDashboard.putNumber("Right shoot rpm", rightMotor.getSelectedSensorVelocity());
         SmartDashboard.putNumber("shooter angle", encoder.get());

@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.util.Map;
-import frc.robot.util.MathUtil;
 
 public class SwerveDriveSubsystem extends SubsystemBase {
     /**
@@ -126,8 +125,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         backLeft.setZero(BLAngle.getEntry().getDouble(0));
         backRight.setZero(BRAngle.getEntry().getDouble(0));
     }
-    
-    public void stop(){
+
+    public void stop() {
         backRight.stop();
         backLeft.stop();
         frontRight.stop();
