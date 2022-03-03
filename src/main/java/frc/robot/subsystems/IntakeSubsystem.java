@@ -4,25 +4,36 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 //import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.util.sendable.SendableRegistry;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 //import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.Preferences;
+//import edu.wpi.first.wpilibj.Preferences;
+import java.util.Map;
 
 public class IntakeSubsystem extends SubsystemBase {
 
     private CANSparkMax angleMotor;
     private CANSparkMax intakeMotor;
-    //private RelativeEncoder angleEncoder;
+    // private RelativeEncoder angleEncoder;
     private double inTakePower;
     private double anglePower;
-    //private int offset;
+    // private int offset;
+    private SimpleWidget intakeWidget;
+    private SimpleWidget angleWidget;
 
     public IntakeSubsystem() {
         this.angleMotor = new CANSparkMax(10, CANSparkMaxLowLevel.MotorType.kBrushless);
         this.intakeMotor = new CANSparkMax(9, CANSparkMaxLowLevel.MotorType.kBrushless);
-        //this.angleEncoder = angleMotor.getEncoder();
-        periodic();
-        //offset = 0;
+        // this.angleEncoder = angleMotor.getEncoder();
+        intakeWidget = Shuffleboard.getTab("Preferences").add("intakePercent", 0.433)
+                .withWidget(BuiltInWidgets.kNumberSlider)
+                .withProperties(Map.of("min", 0, "max", 1));
+        angleWidget = Shuffleboard.getTab("Preferences").add("hammerPercent", 0.4)
+                .withWidget(BuiltInWidgets.kNumberSlider)
+                .withProperties(Map.of("min", 0, "max", 1));
+        // offset = 0;
 
         SendableRegistry.addChild(this, angleMotor);
         SendableRegistry.addChild(this, intakeMotor);
@@ -31,44 +42,40 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void backIntake() {
-        intakeMotor.set(-inTakePower);
-    }
-
-    public void backAngle() {
-        //if (angleEncoder.getPosition() > offset && !backLimit.get()){
-            angleMotor.set(-anglePower);
-        //}else{
-            //stopAngle();
-        //}
-    }
-
-    public void intake() {
         intakeMotor.set(inTakePower);
     }
 
+    public void backAngle() {
+        // if (angleEncoder.getPosition() > offset && !backLimit.get()){
+        angleMotor.set(anglePower);
+        // }else{
+        // stopAngle();
+        // }
+    }
+
+    public void intake() {
+        intakeMotor.set(-inTakePower);
+    }
+
     public void angle() {
-        //if (angleEncoder.getPosition() < offset + 100 && !frontLimit.get()){
-            angleMotor.set(anglePower*1.5);
-        //}else{
-            //stopAngle();
-        //}
+        // if (angleEncoder.getPosition() < offset + 100 && !frontLimit.get()){
+        angleMotor.set(-anglePower * 1.5);
+        // }else{
+        // stopAngle();
+        // }
     }
 
     public void stopIntake() {
         intakeMotor.set(0);
     }
 
-    public void stopAngle(){
+    public void stopAngle() {
         angleMotor.set(0);
     }
 
     @Override
-    public void periodic(){
-        if (!Preferences.containsKey("intakePercent") || Preferences.getDouble("intakePercent", -1) == -1)
-            Preferences.setDouble("intakePercent", 0.433);
-        inTakePower = -Preferences.getDouble("intakePercent", -1);
-        if (!Preferences.containsKey("hammerPercent") || Preferences.getDouble("hammerPercent", -1) == -1)
-            Preferences.setDouble("hammerPercent", 0.4);
-        anglePower = -Preferences.getDouble("hammerPercent", -1);
+    public void periodic() {
+        inTakePower = intakeWidget.getEntry().getDouble(-2);
+        anglePower = angleWidget.getEntry().getDouble(-2);
     }
 }
