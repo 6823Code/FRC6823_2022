@@ -14,7 +14,8 @@ public class TargetSpaceDrive extends CommandBase {
     private NavXHandler navXHandler;
     private LimeLightSubsystem limelight;
 
-    private double fieldAngle = 0; //Angle of away from driver from zero
+    private double fieldAngle; //Angle of away from driver from zero
+    private double tX;
 
     public TargetSpaceDrive(SwerveDriveSubsystem subsystem, 
     JoystickHandler joystickHandler, LimeLightSubsystem limelight, 
@@ -25,12 +26,18 @@ public class TargetSpaceDrive extends CommandBase {
         this.navXHandler = navXHandler;
         this.limelight = limelight;
 
+        fieldAngle = 0;
+        tX = 0;
+
         addRequirements(swerveDrive);
     }
 
     @Override
     public void execute() {
         navXHandler.printEverything();
+        if (limelight.getTxRad() != 0){
+            tX = limelight.getTxRad() / Math.PI;
+        }
 
         //Set speed and turn rates for full throttle and not full throttle
         if (!Preferences.containsKey("Speed Rate") || Preferences.getDouble("Speed Rate", -2) == -2)
@@ -45,7 +52,7 @@ public class TargetSpaceDrive extends CommandBase {
         //Set xval, yval, spinval to the scaled values from the joystick, bounded on [-1, 1]
         double xval = Math.max(Math.min(joystickHandler.getAxis0() * -speedRate, 1), -1);
         double yval = Math.max(Math.min(joystickHandler.getAxis1() * speedRate, 1), -1);
-        double spinval = limelight.getTxRad() / Math.PI;
+        double spinval = tX;
 
         //xval *= -1; //Left right swap
         
