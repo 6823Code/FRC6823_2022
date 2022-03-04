@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.util.LimelightTools;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
@@ -86,5 +87,6 @@ public class LimeLightSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Servo_Angle", getServoAngle());
+        SmartDashboard.putNumber("Dist from tower", LimelightTools.distFromTower(getTyRad() / Math.PI));
     }
 }

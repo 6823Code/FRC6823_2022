@@ -25,9 +25,9 @@ public class FieldSpaceDrive extends CommandBase {
         this.swerveDrive = subsystem;
         this.joystickHandler = joystickHandler;
         this.navXHandler = navXHandler;
-        this.speedRateWidget = Shuffleboard.getTab("Preferences").add("Speed Rate", -0.5)
+        this.speedRateWidget = Shuffleboard.getTab("Preferences").add("Speed Rate", 0.5)
         .withWidget(BuiltInWidgets.kNumberSlider);
-        this.turnRateWidget = Shuffleboard.getTab("Preferences").add("Turn Rate", -0.5)
+        this.turnRateWidget = Shuffleboard.getTab("Preferences").add("Turn Rate", 0.5)
         .withWidget(BuiltInWidgets.kNumberSlider);
         addRequirements(swerveDrive);
     }
