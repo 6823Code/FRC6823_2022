@@ -44,8 +44,9 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     public SwerveDriveSubsystem() {
         calibrateWidget = Shuffleboard.getTab("Preferences").add("Calibrate?", false)
-                .withWidget(BuiltInWidgets.kBooleanBox);
-        // calibrateSettingWidget = Shuffleboard.getTab("calibrate").add("Calibrate?", false)
+                .withWidget(BuiltInWidgets.kToggleButton);
+        // calibrateSettingWidget = Shuffleboard.getTab("calibrate").add("Calibrate?",
+        // false)
         // .withWidget(BuiltInWidgets.kBooleanBox);
         backRight = new SwerveWheelModuleSubsystem(1, 8, 0, "BR", calibrateWidget);// These are the motors and encoder
                                                                                    // ports for swerve drive
@@ -142,8 +143,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         BRAngle.getEntry().setDouble(backRight.autoCali());
     }
 
-    public void calibrateButton()
-    {
-        
+    public void calibrateButton() {
+
     }
 }
