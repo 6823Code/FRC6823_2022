@@ -138,6 +138,11 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         }
     }
 
+    public double zeroCali(){
+        setZero(0);
+        return 0;
+    }
+
     private double unitsToDegrees(double units){
         return units / 26227 * 360;
     }

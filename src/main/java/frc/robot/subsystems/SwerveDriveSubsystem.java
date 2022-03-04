@@ -43,6 +43,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         frontRight = new SwerveWheelModuleSubsystem(5, 4, 2, "FR");
         frontLeft = new SwerveWheelModuleSubsystem(7, 6, 3, "FL");//The order is angle, speed, encoder, offset 
         //(offset gets changed by calibration.)
+        zero();
         SendableRegistry.addChild(this, backRight);
         SendableRegistry.addChild(this, backLeft);
         SendableRegistry.addChild(this, frontRight);
@@ -123,6 +124,15 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         backLeft.stop();
         frontRight.stop();
         frontLeft.stop();
+    }
+
+    public void zero(){
+        if (frontLeft.autoCali() != -2){
+            Preferences.setDouble("FLAngle", frontLeft.zeroCali());
+            Preferences.setDouble("FRAngle", frontRight.zeroCali());
+            Preferences.setDouble("BLAngle", backLeft.zeroCali());
+            Preferences.setDouble("BRAngle", backRight.zeroCali());
+        }
     }
 
     public void autoCali(){
