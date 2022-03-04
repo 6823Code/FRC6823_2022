@@ -127,8 +127,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         backLeft.setZero(BLAngle.getEntry().getDouble(0));
         backRight.setZero(BRAngle.getEntry().getDouble(0));
     }
-    
-    public void stop(){
+
+    public void stop() {
         backRight.stop();
         backLeft.stop();
         frontRight.stop();
