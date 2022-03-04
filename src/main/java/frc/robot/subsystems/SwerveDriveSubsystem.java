@@ -35,7 +35,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     private SimpleWidget BLAngle;
     private SimpleWidget BRAngle;
     private SimpleWidget calibrateWidget;
-    
+
     public void setFieldAngle(double fieldangle) {
         this.fieldangle = fieldangle;
         angleController.setSetpoint(this.fieldangle);
