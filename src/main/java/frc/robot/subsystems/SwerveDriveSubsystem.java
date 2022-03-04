@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.util.Map;
-import frc.robot.util.MathUtil;
 
 public class SwerveDriveSubsystem extends SubsystemBase {
     /**
@@ -36,7 +35,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     private SimpleWidget BLAngle;
     private SimpleWidget BRAngle;
     private SimpleWidget calibrateWidget;
-
+    
     public void setFieldAngle(double fieldangle) {
         this.fieldangle = fieldangle;
         angleController.setSetpoint(this.fieldangle);
@@ -46,6 +45,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     public SwerveDriveSubsystem() {
         calibrateWidget = Shuffleboard.getTab("Preferences").add("Calibrate?", false)
                 .withWidget(BuiltInWidgets.kBooleanBox);
+        // calibrateSettingWidget = Shuffleboard.getTab("calibrate").add("Calibrate?", false)
+        // .withWidget(BuiltInWidgets.kBooleanBox);
         backRight = new SwerveWheelModuleSubsystem(1, 8, 0, "BR", calibrateWidget);// These are the motors and encoder
                                                                                    // ports for swerve drive
         backLeft = new SwerveWheelModuleSubsystem(3, 2, 1, "BL", calibrateWidget);
@@ -64,13 +65,13 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         angleController.enableContinuousInput(0, Math.PI * 2);
         angleController.setSetpoint(0);
         SmartDashboard.putString("Ready Call", "Autobots, Roll Out!");
-        FLAngle = Shuffleboard.getTab("Preferences").add("FLAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
+        FLAngle = Shuffleboard.getTab("Calibrate").add("FLAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 360));
-        FRAngle = Shuffleboard.getTab("Preferences").add("FRAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
+        FRAngle = Shuffleboard.getTab("Calibrate").add("FRAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 360));
-        BLAngle = Shuffleboard.getTab("Preferences").add("BLAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
+        BLAngle = Shuffleboard.getTab("Calibrate").add("BLAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 360));
-        BRAngle = Shuffleboard.getTab("Preferences").add("BRAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
+        BRAngle = Shuffleboard.getTab("Calibrate").add("BRAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 360));
     }
 
@@ -139,5 +140,10 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         FRAngle.getEntry().setDouble(frontRight.autoCali());
         BLAngle.getEntry().setDouble(backLeft.autoCali());
         BRAngle.getEntry().setDouble(backRight.autoCali());
+    }
+
+    public void calibrateButton()
+    {
+        
     }
 }

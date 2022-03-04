@@ -40,7 +40,6 @@ public class ShooterSubsystem extends SubsystemBase {
     private double loadPercent;
     private DutyCycleEncoder encoder;
     private PIDController pidController;
-    private SimpleWidget RPM; //to be removed
     private SimpleWidget loadWidget;
     private SimpleWidget RPMLeft;
     private SimpleWidget RPMRight;
@@ -59,14 +58,12 @@ public class ShooterSubsystem extends SubsystemBase {
         velocityRight = 0;
         //offset = 0;
         //test = 0;
-        RPM = Shuffleboard.getTab("Preferences").add("shooterRPM", 3000).withWidget(BuiltInWidgets.kNumberSlider)
-                .withProperties(Map.of("min", 0, "max", 6000));
         loadWidget = Shuffleboard.getTab("Preferences").add("LoadRate", 0.6).withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", -1, "max", 1));
         SendableRegistry.addLW(this, "Shooter");
         RPMLeft = Shuffleboard.getTab("Preferences").add("shooterRPMLeft", 3000).withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 6000));
-        RPMLeft = Shuffleboard.getTab("Preferences").add("shooterRPMRight", 3000).withWidget(BuiltInWidgets.kNumberSlider)
+        RPMRight = Shuffleboard.getTab("Preferences").add("shooterRPMRight", 3000).withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 6000));
       
     }
