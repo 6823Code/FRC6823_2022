@@ -69,9 +69,8 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
 
         // Optimal offset can be calculated here.
         angle *= 180;
-        angle += 180;
         angle += encoderOffset;
-        angle %= 360; // ensure setpoint is on scale 0-360
+        angle = MathUtil.mod(angle, 360); // ensure setpoint is on scale 0-360
 
         // if the setpoint is more than 90 degrees away form the current position, then
         // just reverse the speed
@@ -137,6 +136,11 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         } else {
             return 0;
         }
+    }
+
+    public double autoCaliZero(){
+        setZero(0);
+        return 0;
     }
 
     private double unitsToDegrees(double units){

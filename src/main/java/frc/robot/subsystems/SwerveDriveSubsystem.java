@@ -54,6 +54,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         frontRight = new SwerveWheelModuleSubsystem(5, 4, 2, "FR", calibrateWidget);
         frontLeft = new SwerveWheelModuleSubsystem(7, 6, 3, "FL", calibrateWidget);// The order is angle, speed,
                                                                                    // encoder, offset
+         autoCaliZero();
         // (offset gets changed by calibration.)
         SendableRegistry.addChild(this, backRight);
         SendableRegistry.addChild(this, backLeft);
@@ -119,7 +120,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     }
 
-    @Override
+    // @Override
     public void periodic() {
         // Do NOT make negative!!!!
         // adding is counter clockwise, subtratcting is clockwise?
@@ -145,5 +146,14 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     public void calibrateButton() {
 
+    }
+
+    public void autoCaliZero(){
+        if (frontLeft.autoCali() != -2){
+            Preferences.setDouble("FLAngle", frontLeft.autoCaliZero());
+            Preferences.setDouble("FRAngle", frontRight.autoCaliZero());
+            Preferences.setDouble("BLAngle", backLeft.autoCaliZero());
+            Preferences.setDouble("BRAngle", backRight.autoCaliZero());
+        }
     }
 }
