@@ -106,12 +106,12 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         frontLeftAngle = Math.atan2(b, d) / Math.PI;
         backLeftAngle = Math.atan2(a, d) / Math.PI;
 
-        backLeft.drive(-backLeftSpeed, -backLeftAngle);
+        backLeft.drive(backLeftSpeed, -backLeftAngle);
         backRight.drive(backRightSpeed, -backRightAngle);
-        frontRight.drive(frontRightSpeed, -frontRightAngle);
+        frontRight.drive(-frontRightSpeed, -frontRightAngle);
         frontLeft.drive(-frontLeftSpeed, -frontLeftAngle);
 
-        // Print speed values
+        //Print speed values
         SmartDashboard.putNumber("Backright Speed", backRightSpeed);
         SmartDashboard.putNumber("Backleft Speed", backLeftSpeed);
         SmartDashboard.putNumber("Frontright Speed", frontRightSpeed);

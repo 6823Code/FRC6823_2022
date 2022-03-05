@@ -44,13 +44,13 @@ public class Shoot extends CommandBase {
             conveyor.stopConvey();
         }
       
-        if (joystickHandler.getAxis1() < 0){
+        if (joystickHandler.getAxis1() < -0.75){
             shooter.setShooterAngle(70);
-        }else if (joystickHandler.getAxis1() > 0){
+        }else if (joystickHandler.getAxis1() > 0.75){
             shooter.setShooterAngle(0);
-        }else if (joystickHandler.getAxis0() < 0){
+        }else if (joystickHandler.getAxis0() < -0.75){
             shooter.setShooterAngle(50);
-        }else if (joystickHandler.getAxis0() > 0){
+        }else if (joystickHandler.getAxis0() > 0.75){
             shooter.setShooterAngle(30);
         }
         shooter.prep(loadRate);
