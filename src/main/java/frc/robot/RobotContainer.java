@@ -6,6 +6,7 @@ import frc.robot.commands.RobotSpaceDrive;
 import frc.robot.commands.RotateToAngle;
 import frc.robot.commands.RotateToZero;
 import frc.robot.commands.Shoot;
+import frc.robot.commands.TargetSpaceDrive;
 import frc.robot.commands.Load;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
@@ -25,7 +26,7 @@ public class RobotContainer {
     public Load backLoad;
     // public LiftSubsystem liftSubsystem;
 
-    public FieldSpaceDrive fieldSpaceDriveCommand;
+    private FieldSpaceDrive fieldSpaceDriveCommand;
     private RobotSpaceDrive robotSpaceDriveCommand;
     private AutoCommandGroup auton;
 
@@ -76,14 +77,16 @@ public class RobotContainer {
         // Field space uses navx to get its angle
         fieldSpaceDriveCommand = new FieldSpaceDrive(swerveDriveSubsystem, joystickHandler3, navX);
         robotSpaceDriveCommand = new RobotSpaceDrive(swerveDriveSubsystem, joystickHandler3);
+        targetSpaceDriveCommand = new TargetSpaceDrive(swerveDriveSubsystem, joystickHandler3, limeLightSubsystem, navX);
         backLoad = new Load(shooterSubsystem, conveyorSubsystem);
-        swerveDriveSubsystem.setDefaultCommand(fieldSpaceDriveCommand);
+        //swerveDriveSubsystem.setDefaultCommand(fieldSpaceDriveCommand);
+        swerveDriveSubsystem.setDefaultCommand(targetSpaceDriveCommand);
 
         shoot = new Shoot(shooterSubsystem, conveyorSubsystem, joystickHandler4);
         shooterSubsystem.setDefaultCommand(shoot); // Check shoot for shoot button mapping
 
-        limeLightSubsystem.setServoAngle(35);
-        limeLightSubsystem.setPipeline(1);
+        //limeLightSubsystem.setServoAngle(35);
+        limeLightSubsystem.setPipeline(0);
         RotateToZero.setInitialAngle(navX.getAngleRad());
         navX.setInitialAngle();
         fieldSpaceDriveCommand.zero();
@@ -109,6 +112,8 @@ public class RobotContainer {
 
         // Holding 7 will enable robot space drive, instead of field space
         joystickHandler3.button(7).whenHeld(robotSpaceDriveCommand);
+
+        joystickHandler3.button(4).whenHeld(targetSpaceDriveCommand);
 
         joystickHandler4.button(6).whileHeld(backLoad);
 
