@@ -1,6 +1,8 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.JoystickHandler;
 import frc.robot.NavXHandler;
@@ -12,6 +14,8 @@ public class FieldSpaceDrive extends CommandBase {
     private SwerveDriveSubsystem swerveDrive;
     private JoystickHandler joystickHandler;
     private NavXHandler navXHandler;
+    private SimpleWidget speedRateWidget;
+    private SimpleWidget turnRateWidget;
 
     private double fieldAngle = 0; //Angle of away from driver from zero
 
@@ -21,21 +25,21 @@ public class FieldSpaceDrive extends CommandBase {
         this.swerveDrive = subsystem;
         this.joystickHandler = joystickHandler;
         this.navXHandler = navXHandler;
-
+        this.speedRateWidget = Shuffleboard.getTab("Preferences").add("Speed Rate", 0.5)
+        .withWidget(BuiltInWidgets.kNumberSlider);
+        this.turnRateWidget = Shuffleboard.getTab("Preferences").add("Turn Rate", 0.5)
+        .withWidget(BuiltInWidgets.kNumberSlider);
         addRequirements(swerveDrive);
     }
 
     @Override
     public void execute() {
         navXHandler.printEverything();
+        joystickHandler.updateDeadZone();
 
         //Set speed and turn rates for full throttle and not full throttle
-        if (!Preferences.containsKey("Speed Rate") || Preferences.getDouble("Speed Rate", -2) == -2)
-            Preferences.setDouble("Speed Rate", 0.5);
-        double speedRate = Preferences.getDouble("Speed Rate", 0.5);
-        if (!Preferences.containsKey("Turn Rate") || Preferences.getDouble("Turn Rate", -2) == -2)
-            Preferences.setDouble("Turn Rate", 0.5);
-        double turnRate = Preferences.getDouble("Turn Rate", 0.5);
+        double speedRate = speedRateWidget.getEntry().getDouble(0.5);
+        double turnRate = turnRateWidget.getEntry().getDouble(0.5);
 
         // if (joystickHandler.isFullThrottle()) {
         //     speedRate = 1;
