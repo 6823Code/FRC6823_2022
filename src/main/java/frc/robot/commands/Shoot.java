@@ -56,8 +56,4 @@ public class Shoot extends CommandBase {
         shooter.prep(loadRate);
         shooter.shoot(shootRateLeft, shootRateRight);
     }
-
-    public void zero() { //Zeroes direction
-
-    }
 }
