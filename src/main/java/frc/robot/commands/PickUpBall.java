@@ -14,8 +14,8 @@ public class PickUpBall extends CommandBase {
 
     private PIDController distController, aimController;
 
-    private long whenStartedGorging;
-    private int stage = -1; // -1= never started before, 0=noteating, 1=spinningwithoutball, 2=chomping
+    private long whenStarted;
+    private int stage = -1;
     private boolean isItFinished = false;
 
     public PickUpBall(SwerveDriveSubsystem swerveDriveSubsystem, IntakeSubsystem intakeSubsystem,
@@ -44,7 +44,6 @@ public class PickUpBall extends CommandBase {
         double aimCommand = aimController.calculate(limeLightSubsystem.getTx());
 
         limeLightSubsystem.setPipeline(1);
-        limeLightSubsystem.setServoAngle(15);
         SmartDashboard.putNumber("Ball Eat Stage", stage);
         SmartDashboard.putNumber("Ball Distance", distanceCommand);
         SmartDashboard.putNumber("Aim Command Ball", aimCommand);
@@ -59,7 +58,7 @@ public class PickUpBall extends CommandBase {
 
             if (Math.abs(distController.getPositionError()) < 5 && hasSeenBall) {
                 stage = 1;
-                whenStartedGorging = System.currentTimeMillis();
+                whenStarted = System.currentTimeMillis();
                 intakeSubsystem.intake();
             }
             if (!hasSeenBall) {
@@ -67,10 +66,10 @@ public class PickUpBall extends CommandBase {
             }
         } else if (stage == 1) {
             // close to ball, move towards it despite not seeing it
-            swerveDriveSubsystem.drive(-.6, 0, 0);
+            swerveDriveSubsystem.drive(0, 0.6, 0);
 
             // stop after 2 seconds
-            if (System.currentTimeMillis() - whenStartedGorging > 4500) {
+            if (System.currentTimeMillis() - whenStarted > 4500) {
                 isItFinished = true;
                 intakeSubsystem.stopIntake();
                 swerveDriveSubsystem.stop();
