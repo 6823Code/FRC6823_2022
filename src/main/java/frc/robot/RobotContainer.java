@@ -28,6 +28,7 @@ public class RobotContainer {
 
     private FieldSpaceDrive fieldSpaceDriveCommand;
     private RobotSpaceDrive robotSpaceDriveCommand;
+    private TargetSpaceDrive targetSpaceDriveCommand;
     private AutoCommandGroup auton;
 
     private JoystickHandler joystickHandler3;
