@@ -15,17 +15,20 @@ public class PickUpBall extends CommandBase {
     private PIDController distController, aimController;
 
     private long whenStartedGorging;
-    private int stage = -1; // -1= never started before, 0=noteating, 1=spinningwithoutball, 2=chomping
-    private boolean isItFinished = false;
+    private int stage;
+    private int pipeline;
+    private boolean isItFinished;
 
     public PickUpBall(SwerveDriveSubsystem swerveDriveSubsystem, IntakeSubsystem intakeSubsystem,
-            LimeLightSubsystem limeLightSubsystem) {
+            LimeLightSubsystem limeLightSubsystem, int pipeline) {
 
         this.swerveDriveSubsystem = swerveDriveSubsystem;
         this.intakeSubsystem = intakeSubsystem;
         this.limeLightSubsystem = limeLightSubsystem;
 
         stage = 0;
+        this.pipeline = pipeline;
+        isItFinished = false;
 
         addRequirements(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem);
     }
@@ -43,8 +46,7 @@ public class PickUpBall extends CommandBase {
         double distanceCommand = distController.calculate(limeLightSubsystem.getTy());
         double aimCommand = aimController.calculate(limeLightSubsystem.getTx());
 
-        limeLightSubsystem.setPipeline(1);
-        limeLightSubsystem.setServoAngle(15);
+        limeLightSubsystem.setPipeline(pipeline);
         SmartDashboard.putNumber("Ball Eat Stage", stage);
         SmartDashboard.putNumber("Ball Distance", distanceCommand);
         SmartDashboard.putNumber("Aim Command Ball", aimCommand);

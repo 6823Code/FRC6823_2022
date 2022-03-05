@@ -150,10 +150,10 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     public void autoCaliZero(){
         if (frontLeft.autoCali() != -2){
-            Preferences.setDouble("FLAngle", frontLeft.autoCaliZero());
-            Preferences.setDouble("FRAngle", frontRight.autoCaliZero());
-            Preferences.setDouble("BLAngle", backLeft.autoCaliZero());
-            Preferences.setDouble("BRAngle", backRight.autoCaliZero());
+            FLAngle.getEntry().setNumber(frontLeft.autoCaliZero());
+            FRAngle.getEntry().setNumber(frontRight.autoCaliZero());
+            BLAngle.getEntry().setNumber(backLeft.autoCaliZero());
+            BRAngle.getEntry().setNumber(backRight.autoCaliZero());
         }
     }
 }
