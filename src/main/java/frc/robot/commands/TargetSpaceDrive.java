@@ -1,45 +1,48 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.JoystickHandler;
 import frc.robot.NavXHandler;
+import frc.robot.subsystems.LimeLightSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
-import frc.robot.util.MathUtil;
 
-public class FieldSpaceDrive extends CommandBase {
+public class TargetSpaceDrive extends CommandBase {
     //Declare subsystem, Joystick Handler, NavX
     private SwerveDriveSubsystem swerveDrive;
     private JoystickHandler joystickHandler;
     private NavXHandler navXHandler;
-    private SimpleWidget speedRateWidget;
-    private SimpleWidget turnRateWidget;
+    private LimeLightSubsystem limelight;
 
-    private double fieldAngle = 0; //Angle of away from driver from zero
+    private double fieldAngle; //Angle of away from driver from zero
+    private double tX;
 
-    public FieldSpaceDrive(SwerveDriveSubsystem subsystem, 
-    JoystickHandler joystickHandler, NavXHandler navXHandler) {
+    public TargetSpaceDrive(SwerveDriveSubsystem subsystem, 
+    JoystickHandler joystickHandler, LimeLightSubsystem limelight, 
+    NavXHandler navXHandler) {
         //Instantiate subsystem, Joystick Handler, NavX
         this.swerveDrive = subsystem;
         this.joystickHandler = joystickHandler;
         this.navXHandler = navXHandler;
-        this.speedRateWidget = Shuffleboard.getTab("Preferences").add("Speed Rate", 0.5)
-        .withWidget(BuiltInWidgets.kNumberSlider);
-        this.turnRateWidget = Shuffleboard.getTab("Preferences").add("Turn Rate", 0.5)
-        .withWidget(BuiltInWidgets.kNumberSlider);
+        this.limelight = limelight;
+
+        fieldAngle = 0;
+        tX = 0;
+
         addRequirements(swerveDrive);
     }
 
     @Override
     public void execute() {
         navXHandler.printEverything();
-        joystickHandler.updateDeadZone();
+        if (limelight.getTxRad() != 0){
+            tX = limelight.getTxRad() / Math.PI;
+        }
 
         //Set speed and turn rates for full throttle and not full throttle
-        double speedRate = speedRateWidget.getEntry().getDouble(0.5);
-        double turnRate = turnRateWidget.getEntry().getDouble(0.5);
+        if (!Preferences.containsKey("Speed Rate") || Preferences.getDouble("Speed Rate", -2) == -2)
+            Preferences.setDouble("Speed Rate", 0.5);
+        double speedRate = Preferences.getDouble("Speed Rate", 0.5);
 
         // if (joystickHandler.isFullThrottle()) {
         //     speedRate = 1;
@@ -49,12 +52,7 @@ public class FieldSpaceDrive extends CommandBase {
         //Set xval, yval, spinval to the scaled values from the joystick, bounded on [-1, 1]
         double xval = Math.max(Math.min(joystickHandler.getAxis0() * -speedRate, 1), -1);
         double yval = Math.max(Math.min(joystickHandler.getAxis1() * speedRate, 1), -1);
-        double spinval = Math.max(Math.min(MathUtil.clipToZero(joystickHandler.getAxis5(), 0.1) * turnRate, 1), -1);
-        if (spinval >= 0){
-            spinval = Math.pow(spinval, 2);
-        }else{
-            spinval = -Math.pow(spinval, 2);
-        }
+        double spinval = tX;
 
         //xval *= -1; //Left right swap
         
