@@ -80,8 +80,8 @@ public class RobotContainer {
         robotSpaceDriveCommand = new RobotSpaceDrive(swerveDriveSubsystem, joystickHandler3);
         targetSpaceDriveCommand = new TargetSpaceDrive(swerveDriveSubsystem, joystickHandler3, limeLightSubsystem, navX);
         backLoad = new Load(shooterSubsystem, conveyorSubsystem);
-        //swerveDriveSubsystem.setDefaultCommand(fieldSpaceDriveCommand);
-        swerveDriveSubsystem.setDefaultCommand(targetSpaceDriveCommand);
+        swerveDriveSubsystem.setDefaultCommand(fieldSpaceDriveCommand);
+        //swerveDriveSubsystem.setDefaultCommand(targetSpaceDriveCommand);
 
         shoot = new Shoot(shooterSubsystem, conveyorSubsystem, joystickHandler4);
         shooterSubsystem.setDefaultCommand(shoot); // Check shoot for shoot button mapping

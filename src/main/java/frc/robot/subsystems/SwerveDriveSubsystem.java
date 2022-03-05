@@ -108,7 +108,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         backLeftAngle = Math.atan2(a, d) / Math.PI;
 
         backLeft.drive(backLeftSpeed, -backLeftAngle);
-        backRight.drive(backRightSpeed, -backRightAngle);
+        backRight.drive(-backRightSpeed, -backRightAngle);
         frontRight.drive(-frontRightSpeed, -frontRightAngle);
         frontLeft.drive(-frontLeftSpeed, -frontLeftAngle);
 
