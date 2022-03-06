@@ -75,8 +75,8 @@ public class ShooterSubsystem extends SubsystemBase {
         velocityRight *= -1;
         leftMotor.set(ControlMode.Velocity, -velocityLeft); // velocity in encoder units per 100 ms
         rightMotor.set(ControlMode.Velocity, velocityRight);
-        SmartDashboard.putNumber("velocityLeft target", velocityLeft);
-        SmartDashboard.putNumber("velocityRight target", velocityRight);
+        //SmartDashboard.putNumber("velocityLeft target", velocityLeft);
+        //SmartDashboard.putNumber("velocityRight target", velocityRight);
     }
 
     public void shoot(int rpmLeft, int rpmRight) {
@@ -86,8 +86,8 @@ public class ShooterSubsystem extends SubsystemBase {
         // velocityRight *= -1;
         leftMotor.set(ControlMode.Velocity, -velocityLeft); // velocity in encoder units per 100 ms
         rightMotor.set(ControlMode.Velocity, velocityRight);
-        SmartDashboard.putNumber("velocityLeft target", velocityLeft);
-        SmartDashboard.putNumber("velocityRight target", velocityRight);
+        //SmartDashboard.putNumber("velocityLeft target", velocityLeft);
+        //SmartDashboard.putNumber("velocityRight target", velocityRight);
         // leftMotor.getSelectedSensorVelocity();
         // test += 100;
     }
@@ -137,17 +137,13 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void setShooterAngle(double angle) {
-        double currentEncoderValue = (encoder.get() - 0.584) * 360;
+        double currentEncoderValue = (encoder.get() - 0.1) * 360;
         double setpoint = -Math.abs(angle);
         pidController.setSetpoint(setpoint);
         double pidOut = pidController.calculate(currentEncoderValue, setpoint);
         angleMotor.set(-pidOut);
-        SmartDashboard.putBoolean("settingSA", true);
-        SmartDashboard.putNumber("shooterPIDout", pidOut);
-    }
-
-    public void temp() {
-        SmartDashboard.putBoolean("settingSA", false);
+        //SmartDashboard.putBoolean("settingSA", true);
+        //SmartDashboard.putNumber("shooterPIDout", pidOut);
     }
 
     @Override

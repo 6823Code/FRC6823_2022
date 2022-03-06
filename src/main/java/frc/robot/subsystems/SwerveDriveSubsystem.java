@@ -35,6 +35,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     private SimpleWidget BLAngle;
     private SimpleWidget BRAngle;
     private SimpleWidget calibrateWidget;
+    private SimpleWidget invertWidget;
 
     public void setFieldAngle(double fieldangle) {
         this.fieldangle = fieldangle;
@@ -45,16 +46,15 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     public SwerveDriveSubsystem() {
         calibrateWidget = Shuffleboard.getTab("Preferences").add("Calibrate?", false)
                 .withWidget(BuiltInWidgets.kToggleButton);
-        // calibrateSettingWidget = Shuffleboard.getTab("calibrate").add("Calibrate?",
-        // false)
-        // .withWidget(BuiltInWidgets.kBooleanBox);
+        invertWidget = Shuffleboard.getTab("Preferences").add("Invert?", false)
+                .withWidget(BuiltInWidgets.kToggleButton);
+
         backRight = new SwerveWheelModuleSubsystem(1, 8, 0, "BR", calibrateWidget);// These are the motors and encoder
                                                                                    // ports for swerve drive
         backLeft = new SwerveWheelModuleSubsystem(3, 2, 1, "BL", calibrateWidget);
         frontRight = new SwerveWheelModuleSubsystem(5, 4, 2, "FR", calibrateWidget);
         frontLeft = new SwerveWheelModuleSubsystem(7, 6, 3, "FL", calibrateWidget);// The order is angle, speed,
                                                                                    // encoder, offset
-         autoCaliZero();
         // (offset gets changed by calibration.)
         SendableRegistry.addChild(this, backRight);
         SendableRegistry.addChild(this, backLeft);
@@ -66,7 +66,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         angleController = new PIDController(.3, 0, 0);
         angleController.enableContinuousInput(0, Math.PI * 2);
         angleController.setSetpoint(0);
-        SmartDashboard.putString("Ready Call", "Autobots, Roll Out!");
+        //SmartDashboard.putString("Ready Call", "Autobots, Roll Out!");
         FLAngle = Shuffleboard.getTab("Calibrate").add("FLAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 360));
         FRAngle = Shuffleboard.getTab("Calibrate").add("FRAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
@@ -75,6 +75,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
                 .withProperties(Map.of("min", 0, "max", 360));
         BRAngle = Shuffleboard.getTab("Calibrate").add("BRAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 360));
+        autoCaliZero();
     }
 
     public void drive(double x1, double y1, double x2) {
@@ -107,10 +108,17 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         frontLeftAngle = Math.atan2(b, d) / Math.PI;
         backLeftAngle = Math.atan2(a, d) / Math.PI;
 
-        backLeft.drive(backLeftSpeed, -backLeftAngle);
-        backRight.drive(backRightSpeed, -backRightAngle);
-        frontRight.drive(-frontRightSpeed, -frontRightAngle);
-        frontLeft.drive(-frontLeftSpeed, -frontLeftAngle);
+        if (invertWidget.getEntry().getBoolean(false)){
+            backLeft.drive(-backLeftSpeed, -backLeftAngle);
+            backRight.drive(-backRightSpeed, -backRightAngle);
+            frontRight.drive(-frontRightSpeed, -frontRightAngle);
+            frontLeft.drive(-frontLeftSpeed, -frontLeftAngle);
+        }else{
+            backLeft.drive(-backLeftSpeed, -backLeftAngle);
+            backRight.drive(backRightSpeed, -backRightAngle);
+            frontRight.drive(frontRightSpeed, -frontRightAngle);
+            frontLeft.drive(frontLeftSpeed, -frontLeftAngle);
+        }
 
         //Print speed values
         SmartDashboard.putNumber("Backright Speed", backRightSpeed);
@@ -142,10 +150,6 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         FRAngle.getEntry().setDouble(frontRight.autoCali());
         BLAngle.getEntry().setDouble(backLeft.autoCali());
         BRAngle.getEntry().setDouble(backRight.autoCali());
-    }
-
-    public void calibrateButton() {
-
     }
 
     public void autoCaliZero(){

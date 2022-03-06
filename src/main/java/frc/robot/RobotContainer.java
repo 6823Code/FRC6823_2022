@@ -80,8 +80,8 @@ public class RobotContainer {
         robotSpaceDriveCommand = new RobotSpaceDrive(swerveDriveSubsystem, joystickHandler3);
         targetSpaceDriveCommand = new TargetSpaceDrive(swerveDriveSubsystem, joystickHandler3, limeLightSubsystem, navX);
         backLoad = new Load(shooterSubsystem, conveyorSubsystem);
-        //swerveDriveSubsystem.setDefaultCommand(fieldSpaceDriveCommand);
         swerveDriveSubsystem.setDefaultCommand(fieldSpaceDriveCommand);
+        //swerveDriveSubsystem.setDefaultCommand(targetSpaceDriveCommand);
 
         shoot = new Shoot(shooterSubsystem, conveyorSubsystem, joystickHandler4);
         shooterSubsystem.setDefaultCommand(shoot); // Check shoot for shoot button mapping
@@ -112,9 +112,9 @@ public class RobotContainer {
         joystickHandler3.button(3).whenPressed(fieldSpaceDriveCommand::zero);
 
         // Holding 7 will enable robot space drive, instead of field space
-        joystickHandler3.button(1).whenHeld(robotSpaceDriveCommand);
+        joystickHandler3.button(1).whileHeld(robotSpaceDriveCommand);
 
-        joystickHandler3.button(4).whenHeld(targetSpaceDriveCommand);
+        joystickHandler3.button(4).whileHeld(targetSpaceDriveCommand);
 
         joystickHandler4.button(6).whileHeld(backLoad);
 
@@ -132,7 +132,6 @@ public class RobotContainer {
         joystickHandler4.button(7).whenPressed(() -> swerveDriveSubsystem.autoCali(), swerveDriveSubsystem);
         // joystickHandler4.button(8).whileHeld(() ->
         // shooterSubsystem.setShooterAngle(30), shooterSubsystem);
-        joystickHandler4.button(8).whenReleased(() -> shooterSubsystem.temp(), shooterSubsystem);
         // joystickHandler3.button(2).whileActiveContinuous(() ->
         // liftSubsystem.liftUp(), liftSubsystem)
         // .whenInactive(liftSubsystem::liftStop);

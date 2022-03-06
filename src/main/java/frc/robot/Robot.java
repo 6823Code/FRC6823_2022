@@ -7,7 +7,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Robot extends TimedRobot {
@@ -23,7 +22,7 @@ public class Robot extends TimedRobot {
         // rgb2.setPattern(0.87);
 
         // PREFS.putBoolean("DEBUG_MODE", false);
-        SmartDashboard.putBoolean("LemonPipeline", false);
+        //SmartDashboard.putBoolean("LemonPipeline", false);
 
     }
 

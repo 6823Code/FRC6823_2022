@@ -1,7 +1,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimeLightSubsystem;
@@ -14,18 +13,21 @@ public class PickUpBall extends CommandBase {
 
     private PIDController distController, aimController;
 
-    private long whenStarted;
-    private int stage = -1;
-    private boolean isItFinished = false;
+    private long whenStartedGorging;
+    private int stage;
+    private int pipeline;
+    private boolean isItFinished;
 
     public PickUpBall(SwerveDriveSubsystem swerveDriveSubsystem, IntakeSubsystem intakeSubsystem,
-            LimeLightSubsystem limeLightSubsystem) {
+            LimeLightSubsystem limeLightSubsystem, int pipeline) {
 
         this.swerveDriveSubsystem = swerveDriveSubsystem;
         this.intakeSubsystem = intakeSubsystem;
         this.limeLightSubsystem = limeLightSubsystem;
 
         stage = 0;
+        this.pipeline = pipeline;
+        isItFinished = false;
 
         addRequirements(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem);
     }
@@ -43,10 +45,10 @@ public class PickUpBall extends CommandBase {
         double distanceCommand = distController.calculate(limeLightSubsystem.getTy());
         double aimCommand = aimController.calculate(limeLightSubsystem.getTx());
 
-        limeLightSubsystem.setPipeline(1);
-        SmartDashboard.putNumber("Ball Eat Stage", stage);
-        SmartDashboard.putNumber("Ball Distance", distanceCommand);
-        SmartDashboard.putNumber("Aim Command Ball", aimCommand);
+        limeLightSubsystem.setPipeline(pipeline);
+        //SmartDashboard.putNumber("Ball Eat Stage", stage);
+        //SmartDashboard.putNumber("Ball Distance", distanceCommand);
+        //SmartDashboard.putNumber("Aim Command Ball", aimCommand);
 
         if (limeLightSubsystem.hasTarget()) {
             hasSeenBall = true;

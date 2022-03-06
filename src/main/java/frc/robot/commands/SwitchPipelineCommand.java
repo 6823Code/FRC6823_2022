@@ -2,7 +2,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.LimeLightSubsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SwitchPipelineCommand extends CommandBase {
     //Declare subsystem, isFinished, and intended pipeline
@@ -40,13 +39,13 @@ public class SwitchPipelineCommand extends CommandBase {
         //     limeLightSubsystem.setServoAngle(65);
         // else if (pipeline == 1)
         //     limeLightSubsystem.setServoAngle(15);
-        SmartDashboard.putNumber("The Servo Angle", limeLightSubsystem.getPipeline());
+        //SmartDashboard.putNumber("The Servo Angle", limeLightSubsystem.getPipeline());
 
     }
 
     @Override
     public boolean isFinished() {
-        SmartDashboard.putNumber("The Servo Angle", limeLightSubsystem.getPipeline());
+        //SmartDashboard.putNumber("The Servo Angle", limeLightSubsystem.getPipeline());
         return isFinished;
     }
 

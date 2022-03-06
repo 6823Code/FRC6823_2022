@@ -36,7 +36,7 @@ public class AutoCommandGroup extends SequentialCommandGroup {
             addCommands(new Wait(3));
             addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
             addCommands(new AutoSearchRight(swerveDriveSubsystem, limeLightSubsystem, 1));
-            addCommands(new PickUpBall(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem));
+            addCommands(new PickUpBall(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem, 1));
             addCommands(new AutoSearchLeft(swerveDriveSubsystem, limeLightSubsystem, 0));
             addCommands(new AutoAim2d(swerveDriveSubsystem, limeLightSubsystem, 0));
             addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, shooterSubsystem.getShooterRPMLeft()*20, shooterSubsystem.getShooterRPMRight()*20));
@@ -49,7 +49,7 @@ public class AutoCommandGroup extends SequentialCommandGroup {
             addCommands(new Wait(3));
             addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
             addCommands(new AutoSearchRight(swerveDriveSubsystem, limeLightSubsystem, 2));
-            addCommands(new PickUpBall(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem));
+            addCommands(new PickUpBall(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem, 2));
             addCommands(new AutoSearchLeft(swerveDriveSubsystem, limeLightSubsystem, 0));
             addCommands(new AutoAim2d(swerveDriveSubsystem, limeLightSubsystem, 0));
             addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, shooterSubsystem.getShooterRPMLeft()*20, shooterSubsystem.getShooterRPMRight()*20));
