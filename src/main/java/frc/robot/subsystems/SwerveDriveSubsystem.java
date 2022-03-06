@@ -35,6 +35,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     private SimpleWidget BLAngle;
     private SimpleWidget BRAngle;
     private SimpleWidget calibrateWidget;
+    private SimpleWidget invertWidget;
 
     public void setFieldAngle(double fieldangle) {
         this.fieldangle = fieldangle;
@@ -45,9 +46,9 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     public SwerveDriveSubsystem() {
         calibrateWidget = Shuffleboard.getTab("Preferences").add("Calibrate?", false)
                 .withWidget(BuiltInWidgets.kToggleButton);
-        // calibrateSettingWidget = Shuffleboard.getTab("calibrate").add("Calibrate?",
-        // false)
-        // .withWidget(BuiltInWidgets.kBooleanBox);
+        invertWidget = Shuffleboard.getTab("Preferences").add("Invert?", false)
+                .withWidget(BuiltInWidgets.kToggleButton);
+
         backRight = new SwerveWheelModuleSubsystem(1, 8, 0, "BR", calibrateWidget);// These are the motors and encoder
                                                                                    // ports for swerve drive
         backLeft = new SwerveWheelModuleSubsystem(3, 2, 1, "BL", calibrateWidget);
@@ -107,10 +108,17 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         frontLeftAngle = Math.atan2(b, d) / Math.PI;
         backLeftAngle = Math.atan2(a, d) / Math.PI;
 
-        backLeft.drive(backLeftSpeed, -backLeftAngle);
-        backRight.drive(-backRightSpeed, -backRightAngle);
-        frontRight.drive(-frontRightSpeed, -frontRightAngle);
-        frontLeft.drive(-frontLeftSpeed, -frontLeftAngle);
+        if (invertWidget.getEntry().getBoolean(false)){
+            backLeft.drive(-backLeftSpeed, -backLeftAngle);
+            backRight.drive(-backRightSpeed, -backRightAngle);
+            frontRight.drive(-frontRightSpeed, -frontRightAngle);
+            frontLeft.drive(-frontLeftSpeed, -frontLeftAngle);
+        }else{
+            backLeft.drive(backLeftSpeed, -backLeftAngle);
+            backRight.drive(backRightSpeed, -backRightAngle);
+            frontRight.drive(frontRightSpeed, -frontRightAngle);
+            frontLeft.drive(frontLeftSpeed, -frontLeftAngle);
+        }
 
         //Print speed values
         SmartDashboard.putNumber("Backright Speed", backRightSpeed);

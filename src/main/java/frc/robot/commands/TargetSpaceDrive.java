@@ -50,9 +50,9 @@ public class TargetSpaceDrive extends CommandBase {
         // }
 
         //Set xval, yval, spinval to the scaled values from the joystick, bounded on [-1, 1]
-        double xval = Math.max(Math.min(joystickHandler.getAxis0() * -speedRate, 1), -1);
-        double yval = Math.max(Math.min(joystickHandler.getAxis1() * speedRate, 1), -1);
-        double spinval = tX;
+        double xval = Math.max(Math.min(joystickHandler.getAxis0() * speedRate, 1), -1);
+        double yval = Math.max(Math.min(joystickHandler.getAxis1() * - speedRate, 1), -1);
+        double spinval = -tX;
 
         //xval *= -1; //Left right swap
         

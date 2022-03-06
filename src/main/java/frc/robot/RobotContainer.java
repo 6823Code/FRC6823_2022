@@ -112,9 +112,9 @@ public class RobotContainer {
         joystickHandler3.button(3).whenPressed(fieldSpaceDriveCommand::zero);
 
         // Holding 7 will enable robot space drive, instead of field space
-        joystickHandler3.button(1).whenHeld(robotSpaceDriveCommand);
+        joystickHandler3.button(1).whileHeld(robotSpaceDriveCommand);
 
-        joystickHandler3.button(4).whenHeld(targetSpaceDriveCommand);
+        joystickHandler3.button(4).whileHeld(targetSpaceDriveCommand);
 
         joystickHandler4.button(6).whileHeld(backLoad);
 
