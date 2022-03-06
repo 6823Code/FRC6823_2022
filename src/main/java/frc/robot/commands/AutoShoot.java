@@ -9,16 +9,18 @@ public class AutoShoot extends CommandBase {
     private ConveyorSubsystem conveyor;
     //private double aimRate;
     private double loadRate;
-    private int shootRate;
+    private int leftShootRate;
+    private int rightShootRate;
     private boolean isFinished;
 
-    public AutoShoot(ShooterSubsystem shooter, ConveyorSubsystem conveyor, double aimRate, double loadRate, int shootRate) {
+    public AutoShoot(ShooterSubsystem shooter, ConveyorSubsystem conveyor, double aimRate, double loadRate, int leftShootRate, int rightShootRate) {
         //Instantiate subsystem, Joystick Handler
         this.shooter = shooter;
         this.conveyor = conveyor;
         //this.aimRate = aimRate;
         this.loadRate = loadRate;
-        this.shootRate = shootRate;
+        this.leftShootRate = leftShootRate;
+        this.rightShootRate = rightShootRate;
         isFinished = false;
 
         addRequirements(this.shooter);
@@ -27,7 +29,7 @@ public class AutoShoot extends CommandBase {
     @Override
     public void execute() {
         shooter.prep(loadRate);
-        shooter.shoot(-50 * shootRate);
+        shooter.shoot(-50 * leftShootRate, -50 * rightShootRate);
         conveyor.convey();
         isFinished = true;
     }
