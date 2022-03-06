@@ -13,7 +13,7 @@ public class PickUpBall extends CommandBase {
 
     private PIDController distController, aimController;
 
-    private long whenStartedGorging;
+    private long whenStarted;
     private int stage;
     private int pipeline;
     private boolean isItFinished;

@@ -1,6 +1,9 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 // import frc.robot.NavXHandler;
 // import frc.robot.Robot;
@@ -13,6 +16,7 @@ import frc.robot.subsystems.SwerveDriveSubsystem;
 
 public class AutoCommandGroup extends SequentialCommandGroup {
 
+    private SimpleWidget autoSelect;
     //Declare subsystems and NavX used
     private SwerveDriveSubsystem swerveDriveSubsystem;
     private ShooterSubsystem shooterSubsystem;
@@ -28,34 +32,37 @@ public class AutoCommandGroup extends SequentialCommandGroup {
         conveyorSubsystem = robotContainer.getConveyorSubsystem();
         intakeSubsystem = robotContainer.getIntakeSubsystem();
         limeLightSubsystem = robotContainer.getLimeLightSubsystem();
+
+        autoSelect = Shuffleboard.getTab("Preferences").add("Auto", "red")
+        .withWidget(BuiltInWidgets.kTextView);
         
         //Add each command you want the robot to do in order
-        if (Preferences.getString("allianceColor", "red").toUpperCase().equals("RED")){
+        if (autoSelect.getEntry().getString("red").toUpperCase().equals("RED")){
             addCommands(new AutoAim2d(swerveDriveSubsystem, limeLightSubsystem, 0));
             addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, shooterSubsystem.getShooterRPMLeft()*20, shooterSubsystem.getShooterRPMRight()*20));
             addCommands(new Wait(3));
             addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
-            addCommands(new AutoSearchRight(swerveDriveSubsystem, limeLightSubsystem, 1));
-            addCommands(new PickUpBall(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem, 1));
-            addCommands(new AutoSearchLeft(swerveDriveSubsystem, limeLightSubsystem, 0));
+            // addCommands(new AutoSearchRight(swerveDriveSubsystem, limeLightSubsystem, 1));
+            // addCommands(new PickUpBall(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem, 1));
+            // addCommands(new AutoSearchLeft(swerveDriveSubsystem, limeLightSubsystem, 0));
+            // addCommands(new AutoAim2d(swerveDriveSubsystem, limeLightSubsystem, 0));
+            // addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, shooterSubsystem.getShooterRPMLeft()*20, shooterSubsystem.getShooterRPMRight()*20));
+            // addCommands(new Wait(3));
+            // addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
+            // addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 1));
+        }else if (autoSelect.getEntry().getString("blue").toUpperCase().equals("BLUE")){
             addCommands(new AutoAim2d(swerveDriveSubsystem, limeLightSubsystem, 0));
             addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, shooterSubsystem.getShooterRPMLeft()*20, shooterSubsystem.getShooterRPMRight()*20));
             addCommands(new Wait(3));
             addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
-            addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 1));
-        }else if (Preferences.getString("allianceColor", "blue").toUpperCase().equals("BLUE")){
-            addCommands(new AutoAim2d(swerveDriveSubsystem, limeLightSubsystem, 0));
-            addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, shooterSubsystem.getShooterRPMLeft()*20, shooterSubsystem.getShooterRPMRight()*20));
-            addCommands(new Wait(3));
-            addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
-            addCommands(new AutoSearchRight(swerveDriveSubsystem, limeLightSubsystem, 2));
-            addCommands(new PickUpBall(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem, 2));
-            addCommands(new AutoSearchLeft(swerveDriveSubsystem, limeLightSubsystem, 0));
-            addCommands(new AutoAim2d(swerveDriveSubsystem, limeLightSubsystem, 0));
-            addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, shooterSubsystem.getShooterRPMLeft()*20, shooterSubsystem.getShooterRPMRight()*20));
-            addCommands(new Wait(3));
-            addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
-            addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 1));
+            // addCommands(new AutoSearchRight(swerveDriveSubsystem, limeLightSubsystem, 2));
+            // addCommands(new PickUpBall(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem, 2));
+            // addCommands(new AutoSearchLeft(swerveDriveSubsystem, limeLightSubsystem, 0));
+            // addCommands(new AutoAim2d(swerveDriveSubsystem, limeLightSubsystem, 0));
+            // addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, shooterSubsystem.getShooterRPMLeft()*20, shooterSubsystem.getShooterRPMRight()*20));
+            // addCommands(new Wait(3));
+            // addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
+            // addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 1));
         }
     }
 
