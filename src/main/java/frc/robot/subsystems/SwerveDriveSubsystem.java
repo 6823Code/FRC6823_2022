@@ -66,7 +66,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         angleController = new PIDController(.3, 0, 0);
         angleController.enableContinuousInput(0, Math.PI * 2);
         angleController.setSetpoint(0);
-        SmartDashboard.putString("Ready Call", "Autobots, Roll Out!");
+        //SmartDashboard.putString("Ready Call", "Autobots, Roll Out!");
         FLAngle = Shuffleboard.getTab("Calibrate").add("FLAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 360));
         FRAngle = Shuffleboard.getTab("Calibrate").add("FRAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)

@@ -1,7 +1,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.LimeLightSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
@@ -41,7 +40,7 @@ public class AutoSearchLeft extends CommandBase {
             } else if (rotateCommand < -0.4) {
                 rotateCommand = -0.4;
             }
-            SmartDashboard.putNumber("ROTATE", rotateCommand);
+            //SmartDashboard.putNumber("ROTATE", rotateCommand);
             swerveDriveSubsystem.drive(0, 0, rotateCommand);
             if (Math.abs(limeLightSubsystem.getTxRad()) < margin) {
                 isFinished = true;

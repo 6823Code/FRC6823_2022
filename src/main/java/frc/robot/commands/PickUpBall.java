@@ -1,7 +1,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimeLightSubsystem;
@@ -47,9 +46,9 @@ public class PickUpBall extends CommandBase {
         double aimCommand = aimController.calculate(limeLightSubsystem.getTx());
 
         limeLightSubsystem.setPipeline(pipeline);
-        SmartDashboard.putNumber("Ball Eat Stage", stage);
-        SmartDashboard.putNumber("Ball Distance", distanceCommand);
-        SmartDashboard.putNumber("Aim Command Ball", aimCommand);
+        //SmartDashboard.putNumber("Ball Eat Stage", stage);
+        //SmartDashboard.putNumber("Ball Distance", distanceCommand);
+        //SmartDashboard.putNumber("Aim Command Ball", aimCommand);
 
         if (limeLightSubsystem.hasTarget()) {
             hasSeenBall = true;
