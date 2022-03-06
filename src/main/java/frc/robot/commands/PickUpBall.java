@@ -60,7 +60,7 @@ public class PickUpBall extends CommandBase {
 
             if (Math.abs(distController.getPositionError()) < 5 && hasSeenBall) {
                 stage = 1;
-                whenStartedGorging = System.currentTimeMillis();
+                whenStarted = System.currentTimeMillis();
                 intakeSubsystem.intake();
             }
             if (!hasSeenBall) {
@@ -68,10 +68,10 @@ public class PickUpBall extends CommandBase {
             }
         } else if (stage == 1) {
             // close to ball, move towards it despite not seeing it
-            swerveDriveSubsystem.drive(-.6, 0, 0);
+            swerveDriveSubsystem.drive(0, 0.6, 0);
 
             // stop after 2 seconds
-            if (System.currentTimeMillis() - whenStartedGorging > 4500) {
+            if (System.currentTimeMillis() - whenStarted > 4500) {
                 isItFinished = true;
                 intakeSubsystem.stopIntake();
                 swerveDriveSubsystem.stop();
