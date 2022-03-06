@@ -152,10 +152,6 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         BRAngle.getEntry().setDouble(backRight.autoCali());
     }
 
-    public void calibrateButton() {
-
-    }
-
     public void autoCaliZero(){
         if (frontLeft.autoCali() != -2){
             FLAngle.getEntry().setNumber(frontLeft.autoCaliZero());
