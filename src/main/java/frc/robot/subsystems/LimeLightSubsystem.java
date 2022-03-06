@@ -37,7 +37,6 @@ public class LimeLightSubsystem extends SubsystemBase {
     }
 
     public double getServoAngle() {
-        SmartDashboard.putNumber("LL servo angle", this.servo.getAngle());
         return this.servo.getAngle();
     }
 
