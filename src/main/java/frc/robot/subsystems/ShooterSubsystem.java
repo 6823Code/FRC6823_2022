@@ -92,12 +92,10 @@ public class ShooterSubsystem extends SubsystemBase {
         // test += 100;
     }
 
-    // public void shoot(double power) {
-    // leftMotor.set(ControlMode.PercentOutput, -power); //velocity in encoder units
-    // per 100 ms
-    // rightMotor.set(ControlMode.PercentOutput, power);
-    // //leftMotor.getSelectedSensorVelocity();
-    // }
+    public void shootPower(double power) {
+        leftMotor.set(ControlMode.PercentOutput, -power); //velocity in encoder units per 100 ms
+        rightMotor.set(ControlMode.PercentOutput, power);
+    }
 
     public void prep(double load) {
         loadMotor.set(load);
