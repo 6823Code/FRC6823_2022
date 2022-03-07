@@ -42,7 +42,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void backIntake() {
-        intakeMotor.set(inTakePower);
+        intakeMotor.set(-inTakePower);
     }
 
     public void backAngle() {
@@ -54,7 +54,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void intake() {
-        intakeMotor.set(-inTakePower);
+        intakeMotor.set(inTakePower);
     }
 
     public void angle() {

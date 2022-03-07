@@ -110,13 +110,13 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
         if (invertWidget.getEntry().getBoolean(false)){
             backLeft.drive(-backLeftSpeed, -backLeftAngle);
-            backRight.drive(-backRightSpeed, -backRightAngle);
-            frontRight.drive(-frontRightSpeed, -frontRightAngle);
-            frontLeft.drive(-frontLeftSpeed, -frontLeftAngle);
-        }else{
-            backLeft.drive(-backLeftSpeed, -backLeftAngle);
             backRight.drive(backRightSpeed, -backRightAngle);
             frontRight.drive(frontRightSpeed, -frontRightAngle);
+            frontLeft.drive(-frontLeftSpeed, -frontLeftAngle);
+        }else{
+            backLeft.drive(backLeftSpeed, -backLeftAngle);
+            backRight.drive(-backRightSpeed, -backRightAngle);
+            frontRight.drive(-frontRightSpeed, -frontRightAngle);
             frontLeft.drive(frontLeftSpeed, -frontLeftAngle);
         }
 
