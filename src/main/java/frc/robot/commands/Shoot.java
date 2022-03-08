@@ -30,10 +30,10 @@ public class Shoot extends CommandBase {
         int shootRateRight;
         if(joystickHandler.getAxis3() != 0){
             loadRate = shooter.getLoadPercent();
-            // shootRateLeft = shooter.getShooterRPMLeft()*20;
-            // shootRateRight = shooter.getShooterRPMRight()*20;
-            shootRateLeft = (int)160000;
-            shootRateRight = (int)160000;
+            shootRateLeft = shooter.getShooterRPMLeft()*20;
+            shootRateRight = shooter.getShooterRPMRight()*20;
+            // shootRateLeft = (int)160000;
+            // shootRateRight = (int)160000;
             //shootRate = 1.0;
             conveyor.convey();
         }else if (joystickHandler.getAxis2() != 0){

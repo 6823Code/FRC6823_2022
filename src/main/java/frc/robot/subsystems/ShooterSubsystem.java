@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterSubsystem extends SubsystemBase {
 
-    private final double P = .02;
+    private final double P = .01; // was 0.04
     private final double I = .00001;
     private final double D = 0;
     private TalonFX leftMotor;
@@ -45,6 +45,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private SimpleWidget loadWidget;
     private SimpleWidget RPMLeft;
     private SimpleWidget RPMRight;
+    private SimpleWidget angleDebug;
 
     public ShooterSubsystem() {
         this.leftMotor = new TalonFX(11);
@@ -63,9 +64,9 @@ public class ShooterSubsystem extends SubsystemBase {
         SendableRegistry.addLW(this, "Shooter");
         RPMLeft = Shuffleboard.getTab("Preferences").addPersistent("shooterRPMLeft", 3000)
                 .withWidget(BuiltInWidgets.kNumberSlider)
-                .withProperties(Map.of("min", 0, "max", 6000));
+                .withProperties(Map.of("min", 0, "max", 10000));
         RPMRight = Shuffleboard.getTab("Preferences").addPersistent("shooterRPMRight", 3000).withWidget(BuiltInWidgets.kNumberSlider)
-                .withProperties(Map.of("min", 0, "max", 6000));
+                .withProperties(Map.of("min", 0, "max", 10000));
         encoder.reset();
     }
 
@@ -136,11 +137,11 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void setShooterAngle(double angle) {
-        double currentEncoderValue = (encoder.get() - 0.386) * 360;
+        double currentEncoderValue = (encoder.get() - 0.05) * 360;
         double setpoint = -Math.abs(angle);
         pidController.setSetpoint(setpoint);
         double pidOut = pidController.calculate(currentEncoderValue, setpoint);
-        angleMotor.set(-pidOut);
+        angleMotor.set(pidOut);
         //SmartDashboard.putBoolean("settingSA", true);
         //SmartDashboard.putNumber("shooterPIDout", pidOut);
     }
