@@ -17,7 +17,7 @@ public class Shoot extends CommandBase {
         this.shooter = shooter;
         this.conveyor = conveyor;
         this.joystickHandler = joystickHandler;
-        shooterAngle = 45;
+        shooterAngle = 60;
 
         addRequirements(this.shooter);
     }
@@ -49,11 +49,11 @@ public class Shoot extends CommandBase {
         }
       
         if (joystickHandler.getAxis1() < -0.75){
-            shooterAngle = 70;
+            shooterAngle = 80;
         }else if (joystickHandler.getAxis1() > 0.75){
-            shooterAngle = 45;
+            shooterAngle = 10;
         }else if (joystickHandler.getAxis0() < -0.75){
-            shooterAngle = 50;
+            shooterAngle = 75;
         }else if (joystickHandler.getAxis0() > 0.75){
             shooterAngle = 60;
         }

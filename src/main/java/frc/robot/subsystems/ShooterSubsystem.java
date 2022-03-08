@@ -19,6 +19,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     private final double P = .01; // was 0.04
     private final double I = .00001;
+    private final double D = 0;
     private TalonFX leftMotor;
     private TalonFX rightMotor;
     private CANSparkMax angleMotor;
@@ -54,7 +55,7 @@ public class ShooterSubsystem extends SubsystemBase {
         // this.angleEncoder = new AnalogInput(0);
         // this.speedController = new PIDController(0.0001, 0, 0);
         this.encoder = new DutyCycleEncoder(1);
-        this.pidController = new PIDController(P, I, 0);
+        this.pidController = new PIDController(P, I, D);
         pidController.setTolerance(20);
         velocityLeft = 0;
         velocityRight = 0;
@@ -66,9 +67,7 @@ public class ShooterSubsystem extends SubsystemBase {
                 .withProperties(Map.of("min", 0, "max", 10000));
         RPMRight = Shuffleboard.getTab("Preferences").addPersistent("shooterRPMRight", 3000).withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 10000));
-        angleDebug = Shuffleboard.getTab("Preferences").addPersistent("intakeAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
-            .withProperties(Map.of("min", -1, "max", 1));
-
+        encoder.reset();
     }
 
     public void shoot(int rpm) {
