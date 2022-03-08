@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterSubsystem extends SubsystemBase {
 
-    private final double P = .04;
+    private final double P = .01; // was 0.04
     private final double I = .00001;
     private TalonFX leftMotor;
     private TalonFX rightMotor;
@@ -140,11 +140,11 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void setShooterAngle(double angle) {
-        double currentEncoderValue = (encoder.get() + 1.05) * 360;
-        double setpoint = -Math.abs(angleDebug.getEntry().getDouble(0) * 360);
+        double currentEncoderValue = (encoder.get() - 0.05) * 360;
+        double setpoint = -Math.abs(angle);
         pidController.setSetpoint(setpoint);
         double pidOut = pidController.calculate(currentEncoderValue, setpoint);
-        //angleMotor.set(pidOut);
+        angleMotor.set(pidOut);
         //SmartDashboard.putBoolean("settingSA", true);
         //SmartDashboard.putNumber("shooterPIDout", pidOut);
     }
