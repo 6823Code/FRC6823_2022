@@ -51,9 +51,20 @@ public class FieldSpaceDrive extends CommandBase {
         double yval = Math.max(Math.min(joystickHandler.getAxis1() * speedRate, 1), -1);
         double spinval = Math.max(Math.min(MathUtil.clipToZero(joystickHandler.getAxis5(), 0.1) * turnRate, 1), -1);
         if (spinval >= 0){
-            spinval = Math.pow(spinval, 2);
+            spinval = Math.pow(spinval, 3);
         }else{
-            spinval = -Math.pow(spinval, 2);
+            spinval = -Math.pow(spinval, 3);
+        }
+
+        if (xval >= 0){
+            xval = Math.pow(xval, 2);
+        }else{
+            xval = -Math.pow(xval, 2);
+        }
+        if (yval >= 0){
+            yval = Math.pow(yval, 2);
+        }else{
+            yval = -Math.pow(yval, 2);
         }
 
         //xval *= -1; //Left right swap

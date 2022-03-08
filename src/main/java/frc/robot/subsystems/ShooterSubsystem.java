@@ -44,6 +44,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private SimpleWidget loadWidget;
     private SimpleWidget RPMLeft;
     private SimpleWidget RPMRight;
+    private SimpleWidget angleDebug;
 
     public ShooterSubsystem() {
         this.leftMotor = new TalonFX(11);
@@ -62,9 +63,11 @@ public class ShooterSubsystem extends SubsystemBase {
         SendableRegistry.addLW(this, "Shooter");
         RPMLeft = Shuffleboard.getTab("Preferences").addPersistent("shooterRPMLeft", 3000)
                 .withWidget(BuiltInWidgets.kNumberSlider)
-                .withProperties(Map.of("min", 0, "max", 6000));
+                .withProperties(Map.of("min", 0, "max", 10000));
         RPMRight = Shuffleboard.getTab("Preferences").addPersistent("shooterRPMRight", 3000).withWidget(BuiltInWidgets.kNumberSlider)
-                .withProperties(Map.of("min", 0, "max", 6000));
+                .withProperties(Map.of("min", 0, "max", 10000));
+        angleDebug = Shuffleboard.getTab("Preferences").addPersistent("intakeAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
+            .withProperties(Map.of("min", -1, "max", 1));
 
     }
 
@@ -135,11 +138,11 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void setShooterAngle(double angle) {
-        double currentEncoderValue = (encoder.get() - 0.1) * 360;
-        double setpoint = -Math.abs(angle);
+        double currentEncoderValue = (encoder.get() + 1.05) * 360;
+        double setpoint = -Math.abs(angleDebug.getEntry().getDouble(0) * 360);
         pidController.setSetpoint(setpoint);
         double pidOut = pidController.calculate(currentEncoderValue, setpoint);
-        angleMotor.set(-pidOut);
+        //angleMotor.set(pidOut);
         //SmartDashboard.putBoolean("settingSA", true);
         //SmartDashboard.putNumber("shooterPIDout", pidOut);
     }
