@@ -18,7 +18,7 @@ public class ConveyorSubsystem extends SubsystemBase {
 
     public ConveyorSubsystem() {
         this.conveyorMotor = new CANSparkMax(15, CANSparkMaxLowLevel.MotorType.kBrushless);
-        conveyorWidget = Shuffleboard.getTab("Preferences").add("conveyorPower", 0.3).withWidget(BuiltInWidgets.kNumberSlider)
+        conveyorWidget = Shuffleboard.getTab("Preferences").addPersistent("conveyorPower", 0.3).withWidget(BuiltInWidgets.kNumberSlider)
         .withProperties(Map.of("min", 0, "max", 1));
         SendableRegistry.addChild(this, conveyorMotor);
         SendableRegistry.addLW(this, "Conveyor");
