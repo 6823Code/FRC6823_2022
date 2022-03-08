@@ -58,13 +58,13 @@ public class ShooterSubsystem extends SubsystemBase {
         pidController.setTolerance(20);
         velocityLeft = 0;
         velocityRight = 0;
-        loadWidget = Shuffleboard.getTab("Preferences").add("LoadRate", 0.6).withWidget(BuiltInWidgets.kNumberSlider)
+        loadWidget = Shuffleboard.getTab("Preferences").addPersistent("LoadRate", 0.6).withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", -1, "max", 1));
         SendableRegistry.addLW(this, "Shooter");
-        RPMLeft = Shuffleboard.getTab("Preferences").add("shooterRPMLeft", 3000)
+        RPMLeft = Shuffleboard.getTab("Preferences").addPersistent("shooterRPMLeft", 3000)
                 .withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 6000));
-        RPMRight = Shuffleboard.getTab("Preferences").add("shooterRPMRight", 3000).withWidget(BuiltInWidgets.kNumberSlider)
+        RPMRight = Shuffleboard.getTab("Preferences").addPersistent("shooterRPMRight", 3000).withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 6000));
         encoder.reset();
     }
@@ -93,12 +93,10 @@ public class ShooterSubsystem extends SubsystemBase {
         // test += 100;
     }
 
-    // public void shoot(double power) {
-    // leftMotor.set(ControlMode.PercentOutput, -power); //velocity in encoder units
-    // per 100 ms
-    // rightMotor.set(ControlMode.PercentOutput, power);
-    // //leftMotor.getSelectedSensorVelocity();
-    // }
+    public void shootPower(double power) {
+        leftMotor.set(ControlMode.PercentOutput, -power); //velocity in encoder units per 100 ms
+        rightMotor.set(ControlMode.PercentOutput, power);
+    }
 
     public void prep(double load) {
         loadMotor.set(load);

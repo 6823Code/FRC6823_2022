@@ -44,9 +44,9 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     }
 
     public SwerveDriveSubsystem() {
-        calibrateWidget = Shuffleboard.getTab("Preferences").add("Calibrate?", false)
+        calibrateWidget = Shuffleboard.getTab("Preferences").addPersistent("Calibrate?", false)
                 .withWidget(BuiltInWidgets.kToggleButton);
-        invertWidget = Shuffleboard.getTab("Preferences").add("Invert?", false)
+        invertWidget = Shuffleboard.getTab("Preferences").addPersistent("Invert?", false)
                 .withWidget(BuiltInWidgets.kToggleButton);
 
         backRight = new SwerveWheelModuleSubsystem(1, 8, 0, "BR", calibrateWidget);// These are the motors and encoder
@@ -67,13 +67,13 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         angleController.enableContinuousInput(0, Math.PI * 2);
         angleController.setSetpoint(0);
         //SmartDashboard.putString("Ready Call", "Autobots, Roll Out!");
-        FLAngle = Shuffleboard.getTab("Calibrate").add("FLAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
+        FLAngle = Shuffleboard.getTab("Calibrate").addPersistent("FLAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 360));
-        FRAngle = Shuffleboard.getTab("Calibrate").add("FRAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
+        FRAngle = Shuffleboard.getTab("Calibrate").addPersistent("FRAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 360));
-        BLAngle = Shuffleboard.getTab("Calibrate").add("BLAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
+        BLAngle = Shuffleboard.getTab("Calibrate").addPersistent("BLAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 360));
-        BRAngle = Shuffleboard.getTab("Calibrate").add("BRAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
+        BRAngle = Shuffleboard.getTab("Calibrate").addPersistent("BRAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 360));
         autoCaliZero();
     }
