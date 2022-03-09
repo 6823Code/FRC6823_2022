@@ -45,7 +45,6 @@ public class ShooterSubsystem extends SubsystemBase {
     private SimpleWidget loadWidget;
     private SimpleWidget RPMLeft;
     private SimpleWidget RPMRight;
-    private SimpleWidget angleDebug;
 
     public ShooterSubsystem() {
         this.leftMotor = new TalonFX(11);
