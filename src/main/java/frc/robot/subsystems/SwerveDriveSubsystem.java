@@ -50,7 +50,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
                 .withWidget(BuiltInWidgets.kToggleButton);
 
         backRight = new SwerveWheelModuleSubsystem(1, 8, 0, "BR", calibrateWidget);// These are the motors and encoder
-                                                                                   // ports for swerve drive
+                                                                // ports for swerve drive
         backLeft = new SwerveWheelModuleSubsystem(3, 2, 1, "BL", calibrateWidget);
         frontRight = new SwerveWheelModuleSubsystem(5, 4, 2, "FR", calibrateWidget);
         frontLeft = new SwerveWheelModuleSubsystem(7, 6, 3, "FL", calibrateWidget);// The order is angle, speed,

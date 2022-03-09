@@ -137,7 +137,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void setShooterAngle(double angle) {
-        double currentEncoderValue = (encoder.get() - 0.05) * 360;
+        double currentEncoderValue = (encoder.get() - 0.39) * 360;
         double setpoint = -Math.abs(angle);
         pidController.setSetpoint(setpoint);
         double pidOut = pidController.calculate(currentEncoderValue, setpoint);
