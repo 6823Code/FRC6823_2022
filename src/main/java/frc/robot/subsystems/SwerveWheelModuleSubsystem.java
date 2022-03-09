@@ -22,7 +22,6 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
     private CANCoder angleEncoder;
     private boolean calibrateMode;
     private double encoderOffset;
-    private int angleEncoderChannel;
     private String motorName;
     private SimpleWidget calibrateState;
 
@@ -32,9 +31,7 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         this.angleMotor = new TalonFX(angleMotorChannel);
         this.speedMotor = new TalonFX(speedMotorChannel);
         this.angleEncoder = new CANCoder(angleEncoderChannel); // CANCoder Encoder
-        this.angleEncoderChannel = angleEncoderChannel;
-
-        this.speedMotor.setNeutralMode(NeutralMode.Brake);
+        this.speedMotor.setNeutralMode(NeutralMode.Coast);
         this.motorName = motorName;
         // pidController = new PIDController(P, I, 0); // This is the PID constant,
         // we're not using any
@@ -69,9 +66,8 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
 
         // Optimal offset can be calculated here.
         angle *= 180;
-        angle += 180;
         angle += encoderOffset;
-        angle %= 360; // ensure setpoint is on scale 0-360
+        angle = MathUtil.mod(angle, 360); // ensure setpoint is on scale 0-360
 
         // if the setpoint is more than 90 degrees away form the current position, then
         // just reverse the speed
@@ -83,7 +79,7 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         }
 
         speedMotor.set(ControlMode.PercentOutput, speed); // sets motor speed //22150 units/100 ms at 12.4V
-        SmartDashboard.putNumber("Speed " + angleEncoderChannel, speed);
+        //SmartDashboard.putNumber("Speed " + angleEncoderChannel, speed);
 
         // Sets angle motor to angle
         // pidController.setSetpoint(setpoint);
@@ -91,18 +87,18 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         // pidOut *= 3000 * 4096 * 600; //pidOut is on [-1, 1], pidOut * 3000 (Max rpm)
         // * 4096 units/revolution * (600*100)ms/min
 
-        SmartDashboard.putNumber("Angle w/ offset", angle);
+        //SmartDashboard.putNumber("Angle w/ offset", angle);
         angle /= 360; // Angle position in rotations
-        SmartDashboard.putNumber("Position in revolutions", angle);
+        //SmartDashboard.putNumber("Position in revolutions", angle);
         angle *= 26227; // Angle Position in encoder units
-        SmartDashboard.putNumber("Position[" + angleEncoderChannel + "]", angle);
+        //SmartDashboard.putNumber("Position[" + angleEncoderChannel + "]", angle);
 
         if (calibrateMode)
             angleMotor.set(ControlMode.PercentOutput, 0); // Sends new pidOut (in units/100 ms) to velocity control
         else
             angleMotor.set(ControlMode.Position, angle);
 
-        SmartDashboard.putNumber("Encoder " + motorName, angleMotor.getSelectedSensorPosition());
+        SmartDashboard.putNumber("Encoder " + motorName, unitsToDegrees(angleMotor.getSelectedSensorPosition()));
     }
 
     // this method outputs position of the encoder to the smartDashBoard, useful for
@@ -139,7 +135,13 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         }
     }
 
-    private double unitsToDegrees(double units) {
-        return units / 26227 * 360;
+    public double autoCaliZero(){
+        setZero(0);
+        return 0;
+    }
+
+    private double unitsToDegrees(double units){
+        units = units / 26227 * 360 ;
+        return MathUtil.mod(units, 360);
     }
 }
