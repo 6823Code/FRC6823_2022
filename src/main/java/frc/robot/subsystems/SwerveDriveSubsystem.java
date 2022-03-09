@@ -160,4 +160,18 @@ public class SwerveDriveSubsystem extends SubsystemBase {
             BRAngle.getEntry().setNumber(backRight.autoCaliZero());
         }
     }
+
+    public void coast(){
+        backRight.coast();
+        backLeft.coast();
+        frontRight.coast();
+        frontLeft.coast();
+    }
+
+    public void brake(){
+        backRight.brake();
+        backLeft.brake();
+        frontRight.brake();
+        frontLeft.brake();
+    }
 }

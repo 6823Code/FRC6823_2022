@@ -144,4 +144,12 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         units = units / 26227 * 360 ;
         return MathUtil.mod(units, 360);
     }
+
+    public void coast(){
+        speedMotor.setNeutralMode(NeutralMode.Coast);
+    }
+
+    public void brake(){
+        speedMotor.setNeutralMode(NeutralMode.Brake);
+    }
 }

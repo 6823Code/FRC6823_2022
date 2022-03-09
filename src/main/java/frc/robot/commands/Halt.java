@@ -24,8 +24,9 @@ public class Halt extends CommandBase {
     @Override
     public void execute() {
         swerveDrive.stop();
+        swerveDrive.brake();
         shooter.loadStop();
-        shooter.shootStop();;
+        shooter.shootStop();
         conveyor.stopConvey();
         isFinished = true;
     }
@@ -43,5 +44,6 @@ public class Halt extends CommandBase {
     @Override
     public void end(boolean inturrupted) {
         isFinished = false;
+        swerveDrive.coast();
     }
 }
