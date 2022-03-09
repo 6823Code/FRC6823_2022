@@ -42,7 +42,8 @@ public class AutoCommandGroup extends SequentialCommandGroup {
             // addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, shooterSubsystem.getShooterRPMLeft()*20, shooterSubsystem.getShooterRPMRight()*20));
             // addCommands(new Wait(3));
             // addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
-            addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 0.5));
+            addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 1));
+            addCommands(new BrakeMode(swerveDriveSubsystem, 1));
         }else if (Preferences.getString("allianceColor", "blue").toUpperCase().equals("BLUE")){
             // addCommands(new AutoAim2d(swerveDriveSubsystem, limeLightSubsystem, 0));
             addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, shooterSubsystem.getShooterRPMLeft()*20, shooterSubsystem.getShooterRPMRight()*20));
@@ -55,7 +56,8 @@ public class AutoCommandGroup extends SequentialCommandGroup {
             // addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, shooterSubsystem.getShooterRPMLeft()*20, shooterSubsystem.getShooterRPMRight()*20));
             // addCommands(new Wait(3));
             // addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
-            addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 0.5));
+            addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 1)); //If brakemode fails, set seconds to 0.5 and comment out brakemode
+            addCommands(new BrakeMode(swerveDriveSubsystem, 1));
         }
     }
 
