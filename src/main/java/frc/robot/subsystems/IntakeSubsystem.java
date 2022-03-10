@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.util.Map;
 
@@ -30,7 +31,7 @@ public class IntakeSubsystem extends SubsystemBase {
     public IntakeSubsystem() {
         this.angleMotor = new CANSparkMax(10, CANSparkMaxLowLevel.MotorType.kBrushless);
         this.intakeMotor = new CANSparkMax(9, CANSparkMaxLowLevel.MotorType.kBrushless);
-        // this.angleEncoder = angleMotor.getEncoder();
+        this.angleEncoder = new DutyCycleEncoder(2);
         intakeWidget = Shuffleboard.getTab("Preferences").addPersistent("intakePercent", 0.433)
                 .withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 1));
@@ -79,5 +80,6 @@ public class IntakeSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         inTakePower = intakeWidget.getEntry().getDouble(-2);
+        SmartDashboard.putNumber("Intake Angle", angleEncoder.getAbsolutePosition());
     }
 }
