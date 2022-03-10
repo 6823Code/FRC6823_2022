@@ -9,6 +9,7 @@ public class Shoot extends CommandBase {
     private ShooterSubsystem shooter;
     private ConveyorSubsystem conveyor;
     private JoystickHandler joystickHandler;
+    private double shooterAngle;
 
     public Shoot(ShooterSubsystem shooter, ConveyorSubsystem conveyor,
     JoystickHandler joystickHandler) {
@@ -16,6 +17,7 @@ public class Shoot extends CommandBase {
         this.shooter = shooter;
         this.conveyor = conveyor;
         this.joystickHandler = joystickHandler;
+        shooterAngle = 75;
 
         addRequirements(this.shooter);
     }
@@ -30,6 +32,8 @@ public class Shoot extends CommandBase {
             loadRate = shooter.getLoadPercent();
             shootRateLeft = shooter.getShooterRPMLeft()*20;
             shootRateRight = shooter.getShooterRPMRight()*20;
+            // shootRateLeft = (int)160000;
+            // shootRateRight = (int)160000;
             //shootRate = 1.0;
             conveyor.convey();
         }else if (joystickHandler.getAxis2() != 0){
@@ -44,20 +48,17 @@ public class Shoot extends CommandBase {
             conveyor.stopConvey();
         }
       
-        if (joystickHandler.getAxis1() < 0){
-            shooter.setShooterAngle(70);
-        }else if (joystickHandler.getAxis1() > 0){
-            shooter.setShooterAngle(0);
-        }else if (joystickHandler.getAxis0() < 0){
-            shooter.setShooterAngle(50);
-        }else if (joystickHandler.getAxis0() > 0){
-            shooter.setShooterAngle(30);
+        if (joystickHandler.getAxis1() < -0.75){
+            shooterAngle = 75;
+        }else if (joystickHandler.getAxis1() > 0.75){
+            shooterAngle = 50;
+        // }else if (joystickHandler.getAxis0() < -0.75){
+        //     shooterAngle = 65;
+        }else if (joystickHandler.getAxis0() > 0.75){
+            shooterAngle = 60;
         }
+        shooter.setShooterAngle(shooterAngle);
         shooter.prep(loadRate);
         shooter.shoot(shootRateLeft, shootRateRight);
-    }
-
-    public void zero() { //Zeroes direction
-
     }
 }

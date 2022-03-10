@@ -31,7 +31,7 @@ public class IntakeSubsystem extends SubsystemBase {
         this.angleMotor = new CANSparkMax(10, CANSparkMaxLowLevel.MotorType.kBrushless);
         this.intakeMotor = new CANSparkMax(9, CANSparkMaxLowLevel.MotorType.kBrushless);
         // this.angleEncoder = angleMotor.getEncoder();
-        intakeWidget = Shuffleboard.getTab("Preferences").add("intakePercent", 0.433)
+        intakeWidget = Shuffleboard.getTab("Preferences").addPersistent("intakePercent", 0.433)
                 .withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 1));
         margin = 0.1;
@@ -47,7 +47,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void backIntake() {
-        intakeMotor.set(inTakePower);
+        intakeMotor.set(-inTakePower);
     }
 
     public void backAngle() {
@@ -58,7 +58,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void intake() {
-        intakeMotor.set(-inTakePower);
+        intakeMotor.set(inTakePower);
     }
 
     public void angle() {

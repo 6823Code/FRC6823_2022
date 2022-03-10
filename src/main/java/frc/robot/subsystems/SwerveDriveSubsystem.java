@@ -35,6 +35,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     private SimpleWidget BLAngle;
     private SimpleWidget BRAngle;
     private SimpleWidget calibrateWidget;
+    private SimpleWidget invertWidget;
 
     public void setFieldAngle(double fieldangle) {
         this.fieldangle = fieldangle;
@@ -43,13 +44,13 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     }
 
     public SwerveDriveSubsystem() {
-        calibrateWidget = Shuffleboard.getTab("Preferences").add("Calibrate?", false)
+        calibrateWidget = Shuffleboard.getTab("Preferences").addPersistent("Calibrate?", false)
                 .withWidget(BuiltInWidgets.kToggleButton);
-        // calibrateSettingWidget = Shuffleboard.getTab("calibrate").add("Calibrate?",
-        // false)
-        // .withWidget(BuiltInWidgets.kBooleanBox);
+        invertWidget = Shuffleboard.getTab("Preferences").addPersistent("Invert?", false)
+                .withWidget(BuiltInWidgets.kToggleButton);
+
         backRight = new SwerveWheelModuleSubsystem(1, 8, 0, "BR", calibrateWidget);// These are the motors and encoder
-                                                                                   // ports for swerve drive
+                                                                // ports for swerve drive
         backLeft = new SwerveWheelModuleSubsystem(3, 2, 1, "BL", calibrateWidget);
         frontRight = new SwerveWheelModuleSubsystem(5, 4, 2, "FR", calibrateWidget);
         frontLeft = new SwerveWheelModuleSubsystem(7, 6, 3, "FL", calibrateWidget);// The order is angle, speed,
@@ -65,15 +66,16 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         angleController = new PIDController(.3, 0, 0);
         angleController.enableContinuousInput(0, Math.PI * 2);
         angleController.setSetpoint(0);
-        SmartDashboard.putString("Ready Call", "Autobots, Roll Out!");
-        FLAngle = Shuffleboard.getTab("Calibrate").add("FLAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
+        //SmartDashboard.putString("Ready Call", "Autobots, Roll Out!");
+        FLAngle = Shuffleboard.getTab("Calibrate").addPersistent("FLAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 360));
-        FRAngle = Shuffleboard.getTab("Calibrate").add("FRAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
+        FRAngle = Shuffleboard.getTab("Calibrate").addPersistent("FRAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 360));
-        BLAngle = Shuffleboard.getTab("Calibrate").add("BLAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
+        BLAngle = Shuffleboard.getTab("Calibrate").addPersistent("BLAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 360));
-        BRAngle = Shuffleboard.getTab("Calibrate").add("BRAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
+        BRAngle = Shuffleboard.getTab("Calibrate").addPersistent("BRAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 360));
+        autoCaliZero();
     }
 
     public void drive(double x1, double y1, double x2) {
@@ -106,12 +108,19 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         frontLeftAngle = Math.atan2(b, d) / Math.PI;
         backLeftAngle = Math.atan2(a, d) / Math.PI;
 
-        backLeft.drive(-backLeftSpeed, -backLeftAngle);
-        backRight.drive(backRightSpeed, -backRightAngle);
-        frontRight.drive(frontRightSpeed, -frontRightAngle);
-        frontLeft.drive(-frontLeftSpeed, -frontLeftAngle);
+        if (invertWidget.getEntry().getBoolean(false)){
+            backLeft.drive(-backLeftSpeed, -backLeftAngle);
+            backRight.drive(backRightSpeed, -backRightAngle);
+            frontRight.drive(frontRightSpeed, -frontRightAngle);
+            frontLeft.drive(-frontLeftSpeed, -frontLeftAngle);
+        }else{
+            backLeft.drive(backLeftSpeed, -backLeftAngle);
+            backRight.drive(-backRightSpeed, -backRightAngle);
+            frontRight.drive(-frontRightSpeed, -frontRightAngle);
+            frontLeft.drive(frontLeftSpeed, -frontLeftAngle);
+        }
 
-        // Print speed values
+        //Print speed values
         SmartDashboard.putNumber("Backright Speed", backRightSpeed);
         SmartDashboard.putNumber("Backleft Speed", backLeftSpeed);
         SmartDashboard.putNumber("Frontright Speed", frontRightSpeed);
@@ -119,7 +128,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     }
 
-    @Override
+    // @Override
     public void periodic() {
         // Do NOT make negative!!!!
         // adding is counter clockwise, subtratcting is clockwise?
@@ -143,7 +152,26 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         BRAngle.getEntry().setDouble(backRight.autoCali());
     }
 
-    public void calibrateButton() {
+    public void autoCaliZero(){
+        if (frontLeft.autoCali() != -2){
+            FLAngle.getEntry().setNumber(frontLeft.autoCaliZero());
+            FRAngle.getEntry().setNumber(frontRight.autoCaliZero());
+            BLAngle.getEntry().setNumber(backLeft.autoCaliZero());
+            BRAngle.getEntry().setNumber(backRight.autoCaliZero());
+        }
+    }
 
+    public void coast(){
+        backRight.coast();
+        backLeft.coast();
+        frontRight.coast();
+        frontLeft.coast();
+    }
+
+    public void brake(){
+        backRight.brake();
+        backLeft.brake();
+        frontRight.brake();
+        frontLeft.brake();
     }
 }

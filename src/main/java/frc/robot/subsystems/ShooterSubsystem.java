@@ -17,8 +17,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterSubsystem extends SubsystemBase {
 
-    private final double P = .04;
+    private final double P = .01; // was 0.04
     private final double I = .00001;
+    private final double D = 0;
     private TalonFX leftMotor;
     private TalonFX rightMotor;
     private CANSparkMax angleMotor;
@@ -53,19 +54,19 @@ public class ShooterSubsystem extends SubsystemBase {
         // this.angleEncoder = new AnalogInput(0);
         // this.speedController = new PIDController(0.0001, 0, 0);
         this.encoder = new DutyCycleEncoder(1);
-        this.pidController = new PIDController(P, I, 0);
+        this.pidController = new PIDController(P, I, D);
         pidController.setTolerance(20);
         velocityLeft = 0;
         velocityRight = 0;
-        loadWidget = Shuffleboard.getTab("Preferences").add("LoadRate", 0.6).withWidget(BuiltInWidgets.kNumberSlider)
+        loadWidget = Shuffleboard.getTab("Preferences").addPersistent("LoadRate", 0.6).withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", -1, "max", 1));
         SendableRegistry.addLW(this, "Shooter");
-        RPMLeft = Shuffleboard.getTab("Preferences").add("shooterRPMLeft", 3000)
+        RPMLeft = Shuffleboard.getTab("Preferences").addPersistent("shooterRPMLeft", 3000)
                 .withWidget(BuiltInWidgets.kNumberSlider)
-                .withProperties(Map.of("min", 0, "max", 6000));
-        RPMRight = Shuffleboard.getTab("Preferences").add("shooterRPMRight", 3000).withWidget(BuiltInWidgets.kNumberSlider)
-                .withProperties(Map.of("min", 0, "max", 6000));
-
+                .withProperties(Map.of("min", 0, "max", 10000));
+        RPMRight = Shuffleboard.getTab("Preferences").addPersistent("shooterRPMRight", 3000).withWidget(BuiltInWidgets.kNumberSlider)
+                .withProperties(Map.of("min", 0, "max", 10000));
+        encoder.reset();
     }
 
     public void shoot(int rpm) {
@@ -75,8 +76,8 @@ public class ShooterSubsystem extends SubsystemBase {
         velocityRight *= -1;
         leftMotor.set(ControlMode.Velocity, -velocityLeft); // velocity in encoder units per 100 ms
         rightMotor.set(ControlMode.Velocity, velocityRight);
-        SmartDashboard.putNumber("velocityLeft target", velocityLeft);
-        SmartDashboard.putNumber("velocityRight target", velocityRight);
+        //SmartDashboard.putNumber("velocityLeft target", velocityLeft);
+        //SmartDashboard.putNumber("velocityRight target", velocityRight);
     }
 
     public void shoot(int rpmLeft, int rpmRight) {
@@ -86,18 +87,16 @@ public class ShooterSubsystem extends SubsystemBase {
         // velocityRight *= -1;
         leftMotor.set(ControlMode.Velocity, -velocityLeft); // velocity in encoder units per 100 ms
         rightMotor.set(ControlMode.Velocity, velocityRight);
-        SmartDashboard.putNumber("velocityLeft target", velocityLeft);
-        SmartDashboard.putNumber("velocityRight target", velocityRight);
+        //SmartDashboard.putNumber("velocityLeft target", velocityLeft);
+        //SmartDashboard.putNumber("velocityRight target", velocityRight);
         // leftMotor.getSelectedSensorVelocity();
         // test += 100;
     }
 
-    // public void shoot(double power) {
-    // leftMotor.set(ControlMode.PercentOutput, -power); //velocity in encoder units
-    // per 100 ms
-    // rightMotor.set(ControlMode.PercentOutput, power);
-    // //leftMotor.getSelectedSensorVelocity();
-    // }
+    public void shootPower(double power) {
+        leftMotor.set(ControlMode.PercentOutput, -power); //velocity in encoder units per 100 ms
+        rightMotor.set(ControlMode.PercentOutput, power);
+    }
 
     public void prep(double load) {
         loadMotor.set(load);
@@ -137,17 +136,13 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void setShooterAngle(double angle) {
-        double currentEncoderValue = (encoder.get() - 0.584) * 360;
+        double currentEncoderValue = (encoder.get() - 0.39) * 360;
         double setpoint = -Math.abs(angle);
         pidController.setSetpoint(setpoint);
         double pidOut = pidController.calculate(currentEncoderValue, setpoint);
-        angleMotor.set(-pidOut);
-        SmartDashboard.putBoolean("settingSA", true);
-        SmartDashboard.putNumber("shooterPIDout", pidOut);
-    }
-
-    public void temp() {
-        SmartDashboard.putBoolean("settingSA", false);
+        angleMotor.set(pidOut);
+        //SmartDashboard.putBoolean("settingSA", true);
+        //SmartDashboard.putNumber("shooterPIDout", pidOut);
     }
 
     @Override
