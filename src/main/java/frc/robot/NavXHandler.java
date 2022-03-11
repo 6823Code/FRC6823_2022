@@ -1,6 +1,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.util.MathUtil;
 import edu.wpi.first.wpilibj.DriverStation;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -43,10 +45,14 @@ public class NavXHandler {
         // SmartDashboard.putNumber("getVelocityX()", ahrs.getVelocityX());
         // SmartDashboard.putNumber("getVelocityY()", ahrs.getVelocityY());
         // SmartDashboard.putNumber("getVelocityZ()", ahrs.getVelocityZ());
+
+        SmartDashboard.putNumber("Pitch", ahrs.getPitch());
+        SmartDashboard.putNumber("Roll", ahrs.getRoll());
+        SmartDashboard.putNumber("Yaw", ahrs.getYaw());
     }
 
     public double getAngleRad() {
-        return (((ahrs.getAngle() * 2 * Math.PI / 360d) % (Math.PI * 2)) + (Math.PI * 2)) % (Math.PI * 2);
+        return MathUtil.mod(ahrs.getAngle() * 2 * Math.PI / 360, Math.PI * 2);
     }
 
     public double getAngle() {

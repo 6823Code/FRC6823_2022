@@ -17,8 +17,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterSubsystem extends SubsystemBase {
 
-    private final double P = .01; // was 0.04
-    private final double I = .00001;
+    private final double P = .02; // was 0.04
+    private final double I = .0004;
     private final double D = 0;
     private TalonFX leftMotor;
     private TalonFX rightMotor;
@@ -53,7 +53,7 @@ public class ShooterSubsystem extends SubsystemBase {
         this.loadMotor = new CANSparkMax(13, CANSparkMaxLowLevel.MotorType.kBrushless);
         // this.angleEncoder = new AnalogInput(0);
         // this.speedController = new PIDController(0.0001, 0, 0);
-        this.encoder = new DutyCycleEncoder(1);
+        this.encoder = new DutyCycleEncoder(0);
         this.pidController = new PIDController(P, I, D);
         pidController.setTolerance(20);
         velocityLeft = 0;
@@ -66,7 +66,6 @@ public class ShooterSubsystem extends SubsystemBase {
                 .withProperties(Map.of("min", 0, "max", 10000));
         RPMRight = Shuffleboard.getTab("Preferences").addPersistent("shooterRPMRight", 3000).withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 10000));
-        encoder.reset();
     }
 
     public void shoot(int rpm) {
@@ -136,11 +135,11 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void setShooterAngle(double angle) {
-        double currentEncoderValue = (encoder.get() - 0.39) * 360;
+        double currentEncoderValue = (encoder.get() - 0.383) * 360;
         double setpoint = -Math.abs(angle);
         pidController.setSetpoint(setpoint);
         double pidOut = pidController.calculate(currentEncoderValue, setpoint);
-        angleMotor.set(pidOut);
+        angleMotor.set(-pidOut);
         //SmartDashboard.putBoolean("settingSA", true);
         //SmartDashboard.putNumber("shooterPIDout", pidOut);
     }

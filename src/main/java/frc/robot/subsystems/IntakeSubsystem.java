@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.util.Map;
 
@@ -23,20 +24,23 @@ public class IntakeSubsystem extends SubsystemBase {
     private double anglePower;
     private double margin;
     private double downPos;
-    private double upPos;
+    private double pidPower;
     private SimpleWidget intakeWidget;
+    private SimpleWidget angleWidget;
     private PIDController pid;
 
     public IntakeSubsystem() {
         this.angleMotor = new CANSparkMax(10, CANSparkMaxLowLevel.MotorType.kBrushless);
         this.intakeMotor = new CANSparkMax(9, CANSparkMaxLowLevel.MotorType.kBrushless);
-        // this.angleEncoder = angleMotor.getEncoder();
+        this.angleEncoder = new DutyCycleEncoder(2);
         intakeWidget = Shuffleboard.getTab("Preferences").addPersistent("intakePercent", 0.433)
                 .withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 1));
+        angleWidget = Shuffleboard.getTab("Preferences").addPersistent("anglePercent", 0.433)
+                .withWidget(BuiltInWidgets.kNumberSlider)
+                .withProperties(Map.of("min", 0, "max", 1));
         margin = 0.1;
-        downPos = 0;
-        upPos = 1;
+        downPos = 0.32;
 
         pid = new PIDController(P, I, 0);
 
@@ -50,10 +54,10 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeMotor.set(-inTakePower);
     }
 
-    public void backAngle() {
+    public void angle() {
         while(Math.abs(angleEncoder.getAbsolutePosition() - downPos) > margin){
-            anglePower = pid.calculate(angleEncoder.getAbsolutePosition(), downPos);
-            angleMotor.set(anglePower);
+            pidPower = pid.calculate(angleEncoder.getAbsolutePosition(), downPos);
+            angleMotor.set(-pidPower);
         }
     }
 
@@ -61,11 +65,8 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeMotor.set(inTakePower);
     }
 
-    public void angle() {
-        while(Math.abs(angleEncoder.getAbsolutePosition() - upPos) > margin){
-            anglePower = pid.calculate(angleEncoder.getAbsolutePosition(), upPos);
-            angleMotor.set(anglePower);
-        }
+    public void backAngle() {
+        angleMotor.set(anglePower);
     }
 
     public void stopIntake() {
@@ -79,5 +80,7 @@ public class IntakeSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         inTakePower = intakeWidget.getEntry().getDouble(-2);
+        anglePower = angleWidget.getEntry().getDouble(-2);
+        SmartDashboard.putNumber("Intake Angle", angleEncoder.getAbsolutePosition());
     }
 }
