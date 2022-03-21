@@ -75,7 +75,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
                 .withProperties(Map.of("min", 0, "max", 360));
         BRAngle = Shuffleboard.getTab("Calibrate").addPersistent("BRAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 360));
-        autoCaliZero();
+        //autoCaliZero();
     }
 
     public void drive(double x1, double y1, double x2) {

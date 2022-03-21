@@ -61,8 +61,7 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
     // angle is a value between -1 to 1
     public void drive(double speed, double angle) {
 
-        double currentEncoderValue = angleMotor.getSelectedSensorPosition(); // Combines reading from
-        // encoder
+        double currentEncoderValue = angleEncoder.getAbsolutePosition();
 
         // Optimal offset can be calculated here.
         angle *= 180;
@@ -98,7 +97,7 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         else
             angleMotor.set(ControlMode.Position, angle);
 
-        SmartDashboard.putNumber("Encoder " + motorName, unitsToDegrees(angleMotor.getSelectedSensorPosition()));
+        SmartDashboard.putNumber("Encoder " + motorName, angleEncoder.getAbsolutePosition());
     }
 
     // this method outputs position of the encoder to the smartDashBoard, useful for
