@@ -39,11 +39,13 @@ public class ShooterSubsystem extends SubsystemBase {
     private double shooterAnglePercentBack;
     private double shooterAnglePercentForward;
     private double loadPercent;
+    private double ratio;
+    private double percent;
     private DutyCycleEncoder encoder;
     private PIDController pidController;
     private SimpleWidget loadWidget;
-    private SimpleWidget RPMLeft;
-    private SimpleWidget RPMRight;
+    private SimpleWidget RPMRatio;
+    private SimpleWidget RPMPercent;
 
     public ShooterSubsystem() {
         this.leftMotor = new TalonFX(11);
@@ -57,15 +59,16 @@ public class ShooterSubsystem extends SubsystemBase {
         pidController.setTolerance(20);
         velocityLeft = 0;
         velocityRight = 0;
-        loadWidget = Shuffleboard.getTab("Preferences").add("LoadRate", 0.6).withWidget(BuiltInWidgets.kNumberSlider)
+        loadWidget = Shuffleboard.getTab("Preferences").add("LoadRate", 0.6)
+                .withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", -1, "max", 1));
         SendableRegistry.addLW(this, "Shooter");
-        RPMLeft = Shuffleboard.getTab("Preferences").add("shooterRPMLeft", 3000)
-                .withWidget(BuiltInWidgets.kNumberSlider)
-                .withProperties(Map.of("min", 0, "max", 6000));
-        RPMRight = Shuffleboard.getTab("Preferences").add("shooterRPMRight", 3000).withWidget(BuiltInWidgets.kNumberSlider)
-                .withProperties(Map.of("min", 0, "max", 6000));
-
+        RPMRatio = Shuffleboard.getTab("Preferences").add("shooterRPMOffset", 0)
+                .withWidget(BuiltInWidgets.kTextView)
+                .withProperties(Map.of("min", -1, "max", 1));
+        RPMPercent = Shuffleboard.getTab("Preferences").add("shooterRPMPercent", 1)
+                .withWidget(BuiltInWidgets.kTextView)
+                .withProperties(Map.of("min", 0, "max", 1));
     }
 
     public void shoot(int rpm) {
@@ -146,8 +149,18 @@ public class ShooterSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        shooterRPMLeft = RPMLeft.getEntry().getNumber(-2).intValue();
-        shooterRPMRight = RPMRight.getEntry().getNumber(-2).intValue();
+        percent = RPMPercent.getEntry().getNumber(2).doubleValue();
+        ratio = RPMRatio.getEntry().getNumber(2).doubleValue();
+
+        if(ratio >= 0){
+            shooterRPMLeft = (int)(6000 * percent);
+            shooterRPMRight = (int)((1 - ratio) * 6000 * percent);
+        }else{
+            ratio *= -1;
+            shooterRPMLeft = (int)((1 - ratio) * 6000 * percent);
+            shooterRPMRight = (int)(6000 * percent);
+        }
+        
         loadPercent = loadWidget.getEntry().getDouble(-1);
 
         // SmartDashboard.putNumber("Left shoot rpm",
