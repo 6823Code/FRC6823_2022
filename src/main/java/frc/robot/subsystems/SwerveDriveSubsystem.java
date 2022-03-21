@@ -50,7 +50,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
                 .withWidget(BuiltInWidgets.kToggleButton);
 
         backRight = new SwerveWheelModuleSubsystem(1, 8, 0, "BR", calibrateWidget);// These are the motors and encoder
-                                                                                   // ports for swerve drive
+                                                                // ports for swerve drive
         backLeft = new SwerveWheelModuleSubsystem(3, 2, 1, "BL", calibrateWidget);
         frontRight = new SwerveWheelModuleSubsystem(5, 4, 2, "FR", calibrateWidget);
         frontLeft = new SwerveWheelModuleSubsystem(7, 6, 3, "FL", calibrateWidget);// The order is angle, speed,
@@ -109,15 +109,15 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         backLeftAngle = Math.atan2(a, d) / Math.PI;
 
         if (invertWidget.getEntry().getBoolean(false)){
-            backLeft.drive(backLeftSpeed, -backLeftAngle);
-            backRight.drive(-backRightSpeed, -backRightAngle);
-            frontRight.drive(-frontRightSpeed, -frontRightAngle);
-            frontLeft.drive(frontLeftSpeed, -frontLeftAngle);
-        }else{
             backLeft.drive(-backLeftSpeed, -backLeftAngle);
             backRight.drive(backRightSpeed, -backRightAngle);
             frontRight.drive(frontRightSpeed, -frontRightAngle);
             frontLeft.drive(-frontLeftSpeed, -frontLeftAngle);
+        }else{
+            backLeft.drive(backLeftSpeed, -backLeftAngle);
+            backRight.drive(-backRightSpeed, -backRightAngle);
+            frontRight.drive(-frontRightSpeed, -frontRightAngle);
+            frontLeft.drive(frontLeftSpeed, -frontLeftAngle);
         }
 
         //Print speed values
@@ -159,5 +159,19 @@ public class SwerveDriveSubsystem extends SubsystemBase {
             BLAngle.getEntry().setNumber(backLeft.autoCaliZero());
             BRAngle.getEntry().setNumber(backRight.autoCaliZero());
         }
+    }
+
+    public void coast(){
+        backRight.coast();
+        backLeft.coast();
+        frontRight.coast();
+        frontLeft.coast();
+    }
+
+    public void brake(){
+        backRight.brake();
+        backLeft.brake();
+        frontRight.brake();
+        frontLeft.brake();
     }
 }

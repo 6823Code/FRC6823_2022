@@ -1,38 +1,36 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ConveyorSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 
-public class Halt extends CommandBase {
+public class BrakeMode extends CommandBase {
     private SwerveDriveSubsystem swerveDrive;
-    private ShooterSubsystem shooter;
-    private ConveyorSubsystem conveyor;
     private boolean isFinished;
+    private double seconds;
+    private Timer timer;
 
-    public Halt(SwerveDriveSubsystem swerveDrive, ShooterSubsystem shooter, ConveyorSubsystem conveyor) {
+    public BrakeMode(SwerveDriveSubsystem swerveDrive, double seconds) {
         //Instantiate subsystem, Joystick Handler
         this.swerveDrive = swerveDrive;
-        this.shooter = shooter;
-        this.conveyor = conveyor;
         isFinished = false;
-
-        addRequirements(this.shooter);
+        timer = new Timer();
+        this.seconds = seconds;
     }
 
     @Override
     public void execute() {
-        swerveDrive.stop();
-        shooter.loadStop();
-        shooter.shootStop();
-        conveyor.stopConvey();
-        isFinished = true;
+        swerveDrive.brake();
+        if (timer.hasElapsed(seconds)) {
+            isFinished = true;
+        }
     }
 
     @Override
     public void initialize() {
-
+        timer.reset();
+        timer.start();
     }
 
     @Override
@@ -43,5 +41,6 @@ public class Halt extends CommandBase {
     @Override
     public void end(boolean inturrupted) {
         isFinished = false;
+        swerveDrive.coast();
     }
 }

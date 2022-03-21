@@ -23,7 +23,7 @@ public class GoBackwards extends CommandBase {
 
     @Override
     public void execute() {
-        swerveDriveSubsystem.drive(0, -percent, 0);
+        swerveDriveSubsystem.drive(0, percent, 0);
 
         if (timer.hasElapsed(seconds)) {
             isFinished = true;
