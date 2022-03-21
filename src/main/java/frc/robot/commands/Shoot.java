@@ -17,7 +17,7 @@ public class Shoot extends CommandBase {
         this.shooter = shooter;
         this.conveyor = conveyor;
         this.joystickHandler = joystickHandler;
-        shooterAngle = 70;
+        shooterAngle = 60;
 
         addRequirements(this.shooter);
     }
