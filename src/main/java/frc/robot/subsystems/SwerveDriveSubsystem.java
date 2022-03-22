@@ -49,13 +49,12 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         invertWidget = Shuffleboard.getTab("Preferences").addPersistent("Invert?", false)
                 .withWidget(BuiltInWidgets.kToggleButton);
 
-        backRight = new SwerveWheelModuleSubsystem(1, 8, 0, "BR", calibrateWidget);// These are the motors and encoder
-                                                                // ports for swerve drive
-        backLeft = new SwerveWheelModuleSubsystem(3, 2, 1, "BL", calibrateWidget);
-        frontRight = new SwerveWheelModuleSubsystem(5, 4, 2, "FR", calibrateWidget);
-        frontLeft = new SwerveWheelModuleSubsystem(7, 6, 3, "FL", calibrateWidget);// The order is angle, speed,
-                                                                                   // encoder, offset
-        // (offset gets changed by calibration.)
+        backRight = new SwerveWheelModuleSubsystem(1, 8, 26, "BR", calibrateWidget);// These are the motors and encoder
+                                                                // CAN IDs for swerve drive
+        backLeft = new SwerveWheelModuleSubsystem(3, 2, 27, "BL", calibrateWidget);
+        frontRight = new SwerveWheelModuleSubsystem(5, 4, 28, "FR", calibrateWidget);
+        frontLeft = new SwerveWheelModuleSubsystem(7, 6, 25, "FL", calibrateWidget);// The order is angle, speed,
+                                                                                   // encoder, calibrateWidget
         SendableRegistry.addChild(this, backRight);
         SendableRegistry.addChild(this, backLeft);
         SendableRegistry.addChild(this, frontRight);
