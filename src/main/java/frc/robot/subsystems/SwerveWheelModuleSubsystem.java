@@ -72,10 +72,11 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         // just reverse the speed
         // Set a variable to hold wheel position in degrees or one to hold
         // units/rotation
-        if (MathUtil.getCyclicalDistance(unitsToDegrees(currentEncoderValue), angle, 360) > 90) {
-            speed *= -1;
-            angle = (angle + 180) % 360;
-        }
+        
+        // if (MathUtil.getCyclicalDistance(unitsToDegrees(currentEncoderValue), angle, 360) > 90) {
+        //     speed *= -1;
+        //     angle = (angle + 180) % 360;
+        // }
 
         speedMotor.set(ControlMode.PercentOutput, speed); // sets motor speed //22150 units/100 ms at 12.4V
         //SmartDashboard.putNumber("Speed " + angleEncoderChannel, speed);
