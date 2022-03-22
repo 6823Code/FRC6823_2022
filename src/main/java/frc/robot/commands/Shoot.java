@@ -17,7 +17,7 @@ public class Shoot extends CommandBase {
         this.shooter = shooter;
         this.conveyor = conveyor;
         this.joystickHandler = joystickHandler;
-        shooterAngle = 45;
+        shooterAngle = 70;
 
         addRequirements(this.shooter);
     }
@@ -30,10 +30,10 @@ public class Shoot extends CommandBase {
         int shootRateRight;
         if(joystickHandler.getAxis3() != 0){
             loadRate = shooter.getLoadPercent();
-            // shootRateLeft = shooter.getShooterRPMLeft()*20;
-            // shootRateRight = shooter.getShooterRPMRight()*20;
-            shootRateLeft = (int)160000;
-            shootRateRight = (int)160000;
+            shootRateLeft = shooter.getShooterRPMLeft()*20;
+            shootRateRight = shooter.getShooterRPMRight()*20;
+            // shootRateLeft = (int)160000;
+            // shootRateRight = (int)160000;
             //shootRate = 1.0;
             conveyor.convey();
         }else if (joystickHandler.getAxis2() != 0){
@@ -51,9 +51,9 @@ public class Shoot extends CommandBase {
         if (joystickHandler.getAxis1() < -0.75){
             shooterAngle = 70;
         }else if (joystickHandler.getAxis1() > 0.75){
-            shooterAngle = 45;
-        }else if (joystickHandler.getAxis0() < -0.75){
             shooterAngle = 50;
+        // }else if (joystickHandler.getAxis0() < -0.75){
+        //     shooterAngle = 65;
         }else if (joystickHandler.getAxis0() > 0.75){
             shooterAngle = 60;
         }
