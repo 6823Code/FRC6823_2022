@@ -3,7 +3,6 @@ package frc.robot;
 //import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Preferences;
 //import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.util.MathUtil;
@@ -14,7 +13,8 @@ public class JoystickHandler {
     private double deadZone;
 
     public JoystickHandler(int joyNum) {
-        this.joystick = new Joystick(joyNum); //Joystick is on port 3;
+        this.joystick = new Joystick(joyNum); //Joystick is on port 3
+        this.deadZone = 0.05; //set dead zone
 	}
 
 	public double getRawAxis0() {
@@ -90,11 +90,5 @@ public class JoystickHandler {
 
     public boolean isJoystickInUse() { //Is main joystick active at all
         return getAxis0() != 0 || getAxis1() != 0 || getAxis5() != 0;
-    }
-
-    public void updateDeadZone(){
-        if (!Preferences.containsKey("Dead Zone"))
-            Preferences.setDouble("Dead Zone", 0.05);
-        deadZone = Preferences.getDouble("Dead Zone", 0.05);
     }
 }

@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DriverStation;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -34,15 +35,15 @@ public class NavXHandler {
     }
 
     public void printEverything() {
-        // SmartDashboard.putNumber("getAngle()", ahrs.getAngle());
+        SmartDashboard.putNumber("getAngle()", ahrs.getAngle());
 
-        // SmartDashboard.putNumber("getDisplacementX()", ahrs.getDisplacementX());
-        // SmartDashboard.putNumber("getDisplacementY()", ahrs.getDisplacementY());
-        // SmartDashboard.putNumber("getDisplacementZ()", ahrs.getDisplacementZ());
+        SmartDashboard.putNumber("getDisplacementX()", ahrs.getDisplacementX());
+        SmartDashboard.putNumber("getDisplacementY()", ahrs.getDisplacementY());
+        SmartDashboard.putNumber("getDisplacementZ()", ahrs.getDisplacementZ());
 
-        // SmartDashboard.putNumber("getVelocityX()", ahrs.getVelocityX());
-        // SmartDashboard.putNumber("getVelocityY()", ahrs.getVelocityY());
-        // SmartDashboard.putNumber("getVelocityZ()", ahrs.getVelocityZ());
+        SmartDashboard.putNumber("getVelocityX()", ahrs.getVelocityX());
+        SmartDashboard.putNumber("getVelocityY()", ahrs.getVelocityY());
+        SmartDashboard.putNumber("getVelocityZ()", ahrs.getVelocityZ());
     }
 
     public double getAngleRad() {

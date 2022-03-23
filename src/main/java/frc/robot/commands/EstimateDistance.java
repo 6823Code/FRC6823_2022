@@ -1,5 +1,7 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class EstimateDistance {
     private static double cameraHeight = 33.5;
 
@@ -8,8 +10,8 @@ public class EstimateDistance {
         //Returns the distance from limelight target based on height 
         //of camera, height of target, angle from vertical center, and 
         //angle from horizontal center
-        //SmartDashboard.putNumber("cameraAngleFromForward", cameraAngleFromForward);
-        //SmartDashboard.putNumber("cameraAngleToTarget", cameraAngleToTarget);
+        SmartDashboard.putNumber("cameraAngleFromForward", cameraAngleFromForward);
+        SmartDashboard.putNumber("cameraAngleToTarget", cameraAngleToTarget);
         return ((targetHeight - cameraHeight) / Math.tan(cameraAngleFromForward + cameraAngleToTarget));
     }
 }

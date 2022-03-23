@@ -1,21 +1,15 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.JoystickHandler;
 import frc.robot.NavXHandler;
 import frc.robot.subsystems.SwerveDriveSubsystem;
-import frc.robot.util.MathUtil;
 
 public class FieldSpaceDrive extends CommandBase {
     //Declare subsystem, Joystick Handler, NavX
     private SwerveDriveSubsystem swerveDrive;
     private JoystickHandler joystickHandler;
     private NavXHandler navXHandler;
-    private SimpleWidget speedRateWidget;
-    private SimpleWidget turnRateWidget;
 
     private double fieldAngle = 0; //Angle of away from driver from zero
 
@@ -25,38 +19,27 @@ public class FieldSpaceDrive extends CommandBase {
         this.swerveDrive = subsystem;
         this.joystickHandler = joystickHandler;
         this.navXHandler = navXHandler;
-        this.speedRateWidget = Shuffleboard.getTab("Preferences").add("Speed Rate", 0.5)
-        .withWidget(BuiltInWidgets.kNumberSlider);
-        this.turnRateWidget = Shuffleboard.getTab("Preferences").add("Turn Rate", 0.5)
-        .withWidget(BuiltInWidgets.kNumberSlider);
+
         addRequirements(swerveDrive);
     }
 
     @Override
     public void execute() {
         navXHandler.printEverything();
-        joystickHandler.updateDeadZone();
 
         //Set speed and turn rates for full throttle and not full throttle
-        double speedRate = speedRateWidget.getEntry().getDouble(0.5);
-        double turnRate = turnRateWidget.getEntry().getDouble(0.5);
+        double speedRate = 0.5;
+        double turnRate = 0.1;
 
-        // if (joystickHandler.isFullThrottle()) {
-        //     speedRate = 1;
-        //     turnRate = .6;
-        // }
-
-        //Set xval, yval, spinval to the scaled values from the joystick, bounded on [-1, 1]
-        double xval = Math.max(Math.min(joystickHandler.getAxis0() * -speedRate, 1), -1);
-        double yval = Math.max(Math.min(joystickHandler.getAxis1() * speedRate, 1), -1);
-        double spinval = Math.max(Math.min(MathUtil.clipToZero(joystickHandler.getAxis5(), 0.1) * turnRate, 1), -1);
-        if (spinval >= 0){
-            spinval = Math.pow(spinval, 2);
-        }else{
-            spinval = -Math.pow(spinval, 2);
+        if (joystickHandler.isFullThrottle()) {
+            speedRate = 1;
+            turnRate = .6;
         }
 
-        //xval *= -1; //Left right swap
+        //Set xval, yval, spinval to the scaled values from the joystick, bounded on [-1, 1]
+        double xval = Math.max(Math.min(joystickHandler.getAxis1() * speedRate, 1), -1);
+        double yval = Math.max(Math.min(joystickHandler.getAxis0() * speedRate, 1), -1);
+        double spinval = Math.max(Math.min(joystickHandler.getAxis5() * turnRate, 1), -1);
         
 
         double robotAngle = navXHandler.getAngleRad() - fieldAngle;
@@ -77,7 +60,7 @@ public class FieldSpaceDrive extends CommandBase {
     }
 
     public void zero() { //Zeroes direction
-        this.fieldAngle = navXHandler.getAngleRad(); // + Math.PI
+        this.fieldAngle = navXHandler.getAngleRad();
         swerveDrive.setFieldAngle(fieldAngle);
     }
 }
