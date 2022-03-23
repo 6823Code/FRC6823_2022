@@ -49,11 +49,11 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         invertWidget = Shuffleboard.getTab("Preferences").add("Invert?", false)
                 .withWidget(BuiltInWidgets.kToggleButton);
 
-        backRight = new SwerveWheelModuleSubsystem(1, 8, 0, "BR", calibrateWidget);// These are the motors and encoder
+        backRight = new SwerveWheelModuleSubsystem(1, 8, 26, "BR", calibrateWidget);// These are the motors and encoder
                                                                                    // ports for swerve drive
-        backLeft = new SwerveWheelModuleSubsystem(3, 2, 1, "BL", calibrateWidget);
-        frontRight = new SwerveWheelModuleSubsystem(5, 4, 2, "FR", calibrateWidget);
-        frontLeft = new SwerveWheelModuleSubsystem(7, 6, 3, "FL", calibrateWidget);// The order is angle, speed,
+        backLeft = new SwerveWheelModuleSubsystem(3, 2, 27, "BL", calibrateWidget);
+        frontRight = new SwerveWheelModuleSubsystem(5, 4, 28, "FR", calibrateWidget);
+        frontLeft = new SwerveWheelModuleSubsystem(7, 6, 25, "FL", calibrateWidget);// The order is angle, speed,
                                                                                    // encoder, offset
         // (offset gets changed by calibration.)
         SendableRegistry.addChild(this, backRight);
@@ -75,7 +75,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
                 .withProperties(Map.of("min", 0, "max", 360));
         BRAngle = Shuffleboard.getTab("Calibrate").add("BRAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 360));
-        autoCaliZero();
+        //autoCaliZero();
     }
 
     public void drive(double x1, double y1, double x2) {
