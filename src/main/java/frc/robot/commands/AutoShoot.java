@@ -9,8 +9,8 @@ public class AutoShoot extends CommandBase {
     private ConveyorSubsystem conveyor;
     //private double aimRate;
     private double loadRate;
-    private int leftShootRate;
-    private int rightShootRate;
+    // private int leftShootRate;
+    // private int rightShootRate;
     private boolean isFinished;
 
     public AutoShoot(ShooterSubsystem shooter, ConveyorSubsystem conveyor, double aimRate, double loadRate, int leftShootRate, int rightShootRate) {
@@ -19,8 +19,8 @@ public class AutoShoot extends CommandBase {
         this.conveyor = conveyor;
         //this.aimRate = aimRate;
         this.loadRate = loadRate;
-        this.leftShootRate = leftShootRate;
-        this.rightShootRate = rightShootRate;
+        // this.leftShootRate = leftShootRate;
+        // this.rightShootRate = rightShootRate;
         isFinished = false;
 
         addRequirements(this.shooter);
