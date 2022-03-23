@@ -8,17 +8,18 @@ import com.ctre.phoenix.sensors.CANCoder;
 
 import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.util.MathUtil;
 
 public class SwerveWheelModuleSubsystem extends SubsystemBase {
-    // private final double P = .008;
-    // private final double I = .00001;
+    private final double P = .008;
+    private final double I = .00001;
 
     private TalonFX angleMotor;
     private TalonFX speedMotor;
-    // private PIDController pidController;
+    private PIDController pidController;
     private CANCoder angleEncoder;
     private boolean calibrateMode;
     private double encoderOffset;
@@ -33,7 +34,7 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         this.angleEncoder = new CANCoder(angleEncoderChannel); // CANCoder Encoder
         this.speedMotor.setNeutralMode(NeutralMode.Coast);
         this.motorName = motorName;
-        // pidController = new PIDController(P, I, 0); // This is the PID constant,
+        this.pidController = new PIDController(P, I, 0); // This is the PID constant,
         // we're not using any
         // Integral/Derivative control but increasing the P value will make
         // the motors more aggressive to changing to angles.
@@ -42,7 +43,7 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
 
         // pidController.setTolerance(20); //sets tolerance, shouldn't be needed.
 
-        // pidController.enableContinuousInput(0, 360); // This makes the PID controller
+        pidController.enableContinuousInput(0, 360); // This makes the PID controller
         // understand the fact that for
         // our setup, 360 degrees is the same as 0 since the wheel loops.
 
@@ -82,21 +83,21 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         //SmartDashboard.putNumber("Speed " + angleEncoderChannel, speed);
 
         // Sets angle motor to angle
-        // pidController.setSetpoint(setpoint);
-        // double pidOut = pidController.calculate(currentEncoderValue, setpoint);
-        // pidOut *= 3000 * 4096 * 600; //pidOut is on [-1, 1], pidOut * 3000 (Max rpm)
+        pidController.setSetpoint(angle);
+        double pidOut = pidController.calculate(currentEncoderValue, angle);
+        pidOut *= 3000 * 4096 * 600; //pidOut is on [-1, 1], pidOut * 3000 (Max rpm)
         // * 4096 units/revolution * (600*100)ms/min
 
         //SmartDashboard.putNumber("Angle w/ offset", angle);
-        angle /= 360; // Angle position in rotations
+        //angle /= 360; // Angle position in rotations
         //SmartDashboard.putNumber("Position in revolutions", angle);
-        angle *= 26227; // Angle Position in encoder units
+        //angle *= 26227; // Angle Position in encoder units
         //SmartDashboard.putNumber("Position[" + angleEncoderChannel + "]", angle);
 
         if (calibrateMode)
             angleMotor.set(ControlMode.PercentOutput, 0); // Sends new pidOut (in units/100 ms) to velocity control
         else
-            angleMotor.set(ControlMode.Position, angle);
+            angleMotor.set(ControlMode.PercentOutput, pidOut);
 
         SmartDashboard.putNumber("Encoder " + motorName, angleEncoder.getAbsolutePosition());
     }
