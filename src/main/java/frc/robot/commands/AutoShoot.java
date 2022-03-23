@@ -29,8 +29,10 @@ public class AutoShoot extends CommandBase {
     @Override
     public void execute() {
         shooter.prep(loadRate);
-        shooter.shoot(50 * leftShootRate, 50 * rightShootRate);
+        shooter.shoot(50 * 5000, 50 * 5000);
+        //shooter.shoot(50 * leftShootRate, 50 * rightShootRate);
         conveyor.convey();
+        shooter.setShooterAngle(70);
         isFinished = true;
     }
 

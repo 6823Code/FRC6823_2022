@@ -45,6 +45,22 @@ public class LiftSubsystem extends SubsystemBase {
         rightLiftMotor.set(rightLiftPower);
     }
 
+    public void leftUp(){
+        leftLiftMotor.set(leftLiftPower);
+    }
+
+    public void leftDown(){
+        leftLiftMotor.set(-leftLiftPower);
+    }
+
+    public void rightUp(){
+        rightLiftMotor.set(rightLiftPower);
+    }
+
+    public void rightDown(){
+        rightLiftMotor.set(-rightLiftPower);
+    }
+
     public void liftStop() {
         leftLiftMotor.set(0);
         rightLiftMotor.set(0);
