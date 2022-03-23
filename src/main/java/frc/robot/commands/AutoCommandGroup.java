@@ -39,7 +39,7 @@ public class AutoCommandGroup extends SequentialCommandGroup {
             // addCommands(new PickUpBall(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem, 1));
             // addCommands(new AutoSearchLeft(swerveDriveSubsystem, limeLightSubsystem, 0));
             // addCommands(new AutoAim2d(swerveDriveSubsystem, limeLightSubsystem, 0));
-            addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, shooterSubsystem.getShooterRPMLeft()*20, shooterSubsystem.getShooterRPMRight()*20));
+            addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, 4140*20, 4140*20));
             addCommands(new Wait(3));
             addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
             addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 1));
