@@ -21,7 +21,7 @@ public class HammerDrop extends CommandBase {
 
     @Override
     public void execute() {
-        intakeSubsystem.backAngle();
+        intakeSubsystem.backAngle(0.5);
 
         if (timer.hasElapsed(seconds)) {
             isFinished = true;
@@ -42,5 +42,6 @@ public class HammerDrop extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         isFinished = false;
+        intakeSubsystem.stopAngle();
     }
 }

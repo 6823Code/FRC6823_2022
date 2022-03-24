@@ -36,7 +36,7 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeWidget = Shuffleboard.getTab("Preferences").addPersistent("intakePercent", 0.433)
                 .withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 1));
-        angleWidget = Shuffleboard.getTab("Preferences").addPersistent("anglePercent", 0.433)
+        angleWidget = Shuffleboard.getTab("Preferences").addPersistent("hammerPercent", 0.433)
                 .withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 1));
         // margin = 0.1;
@@ -68,6 +68,10 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public void backAngle() {
         angleMotor.set(anglePower);
+    }
+
+    public void backAngle(double power){
+        angleMotor.set(power);
     }
 
     public void stopIntake() {
