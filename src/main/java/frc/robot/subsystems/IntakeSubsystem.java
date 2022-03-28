@@ -51,7 +51,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void backIntake() {
-        intakeMotor.set(-inTakePower);
+        intakeMotor.set(-inTakePower * 0.5);
     }
 
     public void angle() {

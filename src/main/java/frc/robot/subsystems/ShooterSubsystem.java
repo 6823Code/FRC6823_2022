@@ -67,7 +67,7 @@ public class ShooterSubsystem extends SubsystemBase {
         RPMRatio = Shuffleboard.getTab("Preferences").add("shooterRPMOffset", 0)
                 .withWidget(BuiltInWidgets.kTextView)
                 .withProperties(Map.of("min", -1, "max", 1));
-        RPMPercent = Shuffleboard.getTab("Preferences").add("shooterRPMPercent", 1)
+        RPMPercent = Shuffleboard.getTab("Preferences").add("shooterRPMPercent", 0.69)
                 .withWidget(BuiltInWidgets.kTextView)
                 .withProperties(Map.of("min", 0, "max", 1));
     }
