@@ -27,11 +27,8 @@ public class AutoSearchRight extends CommandBase {
     public void execute() {
         double rotateCommand;
         if (!limeLightSubsystem.hasTarget()) {
-            rotateCommand = -0.2;
-            swerveDriveSubsystem.drive(0, 0, rotateCommand * -1);
-        }
-
-        if (limeLightSubsystem.hasTarget()) {
+            rotateCommand = 0.2;
+        }else{
             double currentAngle = limeLightSubsystem.getTxRad();
             rotateCommand = angleController.calculate(currentAngle) * -1;
 
@@ -40,12 +37,11 @@ public class AutoSearchRight extends CommandBase {
             } else if (rotateCommand < -0.4) {
                 rotateCommand = -0.4;
             }
-            //SmartDashboard.putNumber("ROTATE", rotateCommand);
-            swerveDriveSubsystem.drive(0, 0, rotateCommand);
             if (Math.abs(limeLightSubsystem.getTxRad()) < margin) {
                 isFinished = true;
             }
         }
+        swerveDriveSubsystem.drive(0, 0, rotateCommand);
     }
 
     @Override

@@ -87,5 +87,6 @@ public class IntakeSubsystem extends SubsystemBase {
         inTakePower = intakeWidget.getEntry().getDouble(-2);
         anglePower = angleWidget.getEntry().getDouble(-2);
         SmartDashboard.putNumber("Intake Angle", angleEncoder.getAbsolutePosition());
+        SmartDashboard.putNumber("Intake Speed", intakeMotor.getEncoder().getVelocity());
     }
 }
