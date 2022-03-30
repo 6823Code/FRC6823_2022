@@ -1,6 +1,8 @@
 package frc.robot;
 
 import frc.robot.commands.AutoCommandGroup;
+import frc.robot.commands.AutoSearchLeft;
+import frc.robot.commands.AutoSearchRight;
 import frc.robot.commands.FieldSpaceDrive;
 import frc.robot.commands.RobotSpaceDrive;
 import frc.robot.commands.RotateToAngle;
@@ -68,7 +70,7 @@ public class RobotContainer {
         shooterSubsystem = new ShooterSubsystem();
         joystickHandler3 = new JoystickHandler(3);
         joystickHandler4 = new JoystickHandler(4);
-        limeLightSubsystem = new LimeLightSubsystem(0);
+        limeLightSubsystem = new LimeLightSubsystem(8);
         intakeSubsystem = new IntakeSubsystem();
         conveyorSubsystem = new ConveyorSubsystem();
         liftSubsystem = new LiftSubsystem();
@@ -152,5 +154,12 @@ public class RobotContainer {
         joystickHandler3.button(12).whileHeld(() ->
         liftSubsystem.rightDown(), liftSubsystem)
         .whenInactive(liftSubsystem::liftStop);
+
+        joystickHandler3.button(13).whenPressed(new 
+        AutoSearchLeft(swerveDriveSubsystem, 
+        limeLightSubsystem, 2));
+        joystickHandler3.button(14).whenPressed(new 
+        AutoSearchRight(swerveDriveSubsystem, 
+        limeLightSubsystem, 1));
     }
 }
