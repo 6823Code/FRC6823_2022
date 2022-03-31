@@ -30,7 +30,7 @@ public class LimeLightSubsystem extends SubsystemBase {
         if (pipeline == 0)
             setServoAngle(90);
         else
-            setServoAngle(0); //ground
+            setServoAngle(30); //ground
     }
 
     public double getServoAngle() {
@@ -89,7 +89,7 @@ public class LimeLightSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        setServoAngle(0);
+        // setServoAngle(0);
         SmartDashboard.putNumber("Servo", servo.getPosition());
         SmartDashboard.putNumber("Servo_Angle", getServoAngle());
         SmartDashboard.putNumber("tx", getTx());

@@ -20,7 +20,6 @@ public class AutoSearchLeft extends CommandBase {
         this.limeLightSubsystem = limeLightSubsystem;
         addRequirements(swerveDriveSubsystem, limeLightSubsystem);
         this.pipeline = pipeline;
-        limeLightSubsystem.setPipeline(pipeline);
     }
 
     @Override
