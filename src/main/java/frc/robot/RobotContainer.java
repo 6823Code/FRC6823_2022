@@ -157,7 +157,7 @@ public class RobotContainer {
 
         joystickHandler3.button(13).whenPressed(new 
         AutoSearchLeft(swerveDriveSubsystem, 
-        limeLightSubsystem, 2), false);
+        limeLightSubsystem, 0), false);
         joystickHandler3.button(14).whenPressed(new 
         AutoSearchRight(swerveDriveSubsystem, 
         limeLightSubsystem, 1), false);

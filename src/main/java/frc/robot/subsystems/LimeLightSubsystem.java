@@ -94,6 +94,7 @@ public class LimeLightSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Servo_Angle", getServoAngle());
         SmartDashboard.putNumber("tx", getTx());
         SmartDashboard.putNumber("ty", getTy());
+        SmartDashboard.putNumber("pipeline", table.getEntry("pipeline").getDouble(0));
         SmartDashboard.putNumber("Dist from tower", LimelightTools.distFromTower(getTyRad() / Math.PI));
     }
 }

@@ -26,7 +26,7 @@ public class AutoSearchRight extends CommandBase {
     public void execute() {
         double rotateCommand;
         if (!limeLightSubsystem.hasTarget()) {
-            rotateCommand = 0.2;
+            rotateCommand = -0.2;
         }else{
             double currentAngle = limeLightSubsystem.getTxRad();
             rotateCommand = angleController.calculate(currentAngle) * -1;

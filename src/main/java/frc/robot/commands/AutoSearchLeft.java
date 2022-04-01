@@ -40,7 +40,7 @@ public class AutoSearchLeft extends CommandBase {
                 isFinished = true;
             }
         }
-        swerveDriveSubsystem.drive(0, 0, -rotateCommand);
+        swerveDriveSubsystem.drive(0, 0, rotateCommand);
     }
 
     @Override
