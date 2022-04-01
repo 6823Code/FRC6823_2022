@@ -9,7 +9,7 @@ public class AutoSearchLeft extends CommandBase {
     private SwerveDriveSubsystem swerveDriveSubsystem;
     private LimeLightSubsystem limeLightSubsystem;
     private boolean isFinished = false;
-    private double margin = 0.05; // margin of degrees
+    private double margin = 5; // margin of degrees
     private PIDController angleController;
     private int pipeline;
 
@@ -36,7 +36,7 @@ public class AutoSearchLeft extends CommandBase {
             } else if (rotateCommand < -0.4) {
                 rotateCommand = -0.4;
             }
-            if (Math.abs(limeLightSubsystem.getTxRad()) < margin) {
+            if (Math.abs(limeLightSubsystem.getTx()) < margin) {
                 isFinished = true;
             }
         }
