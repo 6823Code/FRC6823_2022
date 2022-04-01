@@ -59,7 +59,7 @@ public class AutoCommandGroup extends SequentialCommandGroup {
             addCommands(new AutoSearchRight(swerveDriveSubsystem, limeLightSubsystem, 1));
             // addCommands(new PickUpBall(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem, 1));
             // addCommands(new AutoSearchLeft(swerveDriveSubsystem, limeLightSubsystem, 0));
-            // addCommands(new GoForwardsToDistance(swerveDriveSubsystem, 2));
+            // addCommands(new LineUpToShoot(swerveDriveSubsystem, limeLightSubsystem, 2));
             // addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, 1500, 1500));
             // addCommands(new Wait(3));
             // addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
@@ -73,7 +73,7 @@ public class AutoCommandGroup extends SequentialCommandGroup {
             addCommands(new AutoSearchRight(swerveDriveSubsystem, limeLightSubsystem, 2));
             // addCommands(new PickUpBall(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem, 2));
             // addCommands(new AutoSearchLeft(swerveDriveSubsystem, limeLightSubsystem, 0));
-            // addCommands(new GoForwardsToDistance(swerveDriveSubsystem, 2));
+            // addCommands(new LineUpToShoot(swerveDriveSubsystem, limeLightSubsystem, 2));
             // addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, 1500, 1500));
             // addCommands(new Wait(3));
             // addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
