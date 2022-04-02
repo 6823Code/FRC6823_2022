@@ -9,7 +9,7 @@ public class AutoSearchRight extends CommandBase {
     private SwerveDriveSubsystem swerveDriveSubsystem;
     private LimeLightSubsystem limeLightSubsystem;
     private boolean isFinished = false;
-    private double margin = 5; // margin of degrees
+    private double margin = 1; // margin of degrees
     private PIDController angleController;
     private int pipeline;
 
@@ -29,7 +29,7 @@ public class AutoSearchRight extends CommandBase {
             rotateCommand = -0.2;
         }else{
             double currentAngle = limeLightSubsystem.getTxRad();
-            rotateCommand = angleController.calculate(currentAngle) * -1;
+            rotateCommand = angleController.calculate(currentAngle);
 
             if (rotateCommand > 0.4) {
                 rotateCommand = 0.4;
@@ -51,7 +51,7 @@ public class AutoSearchRight extends CommandBase {
     @Override
     public void initialize() {
         limeLightSubsystem.setPipeline(pipeline);
-        angleController = new PIDController(.3, 0, 0);
+        angleController = new PIDController(1, 0, 0);
         angleController.setSetpoint(0);
     }
 

@@ -67,7 +67,7 @@ public class PickUpBall extends CommandBase {
             }
         } else if (stage == 1) {
             // close to ball, move towards it despite not seeing it
-            swerveDriveSubsystem.drive(0, -0.5, 0);
+            swerveDriveSubsystem.drive(0, -0.1, 0);
 
             // stop after 2 seconds
             if (System.currentTimeMillis() - whenStartedIntaking >= 1000) {
