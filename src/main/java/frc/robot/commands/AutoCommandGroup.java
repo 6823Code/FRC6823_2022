@@ -38,7 +38,7 @@ public class AutoCommandGroup extends SequentialCommandGroup {
         autoSelect.addOption("Taxi", "Taxi");
         autoSelect.addOption("None", "None");
 
-        Shuffleboard.getTab("Preferences").addPersistent("Auto", autoSelect);
+        Shuffleboard.getTab("Preferences").add(autoSelect);
         
         //Add each command you want the robot to do in order
         if (autoSelect.getSelected().toUpperCase().equals("1BALL")){
