@@ -7,6 +7,6 @@ public class LimelightTools {
         double heightDiff = HEIGHT - LL_HEIGHT;
         angle += Math.PI * 50 / 180;
         // return Math.sin((0.25 * Math.PI) - angle) * heightDiff / Math.sin(angle); //Law of sines
-        return heightDiff / Math.tan(angle);
+        return heightDiff / Math.tan(angle); //SOH CAH TOA
     }
 }

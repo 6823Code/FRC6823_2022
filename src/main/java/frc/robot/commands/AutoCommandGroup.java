@@ -1,6 +1,6 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 // import frc.robot.NavXHandler;
@@ -32,11 +32,13 @@ public class AutoCommandGroup extends SequentialCommandGroup {
         limeLightSubsystem = robotContainer.getLimeLightSubsystem();
 
         autoSelect = new SendableChooser<String>();
-        autoSelect.setDefaultOption("Red", "Red"); //change this
+        autoSelect.addOption("Red", "Red");
         autoSelect.addOption("Blue", "Blue");
-        autoSelect.addOption("1Ball", "1Ball");
+        autoSelect.setDefaultOption("1Ball", "1Ball");
         autoSelect.addOption("Taxi", "Taxi");
         autoSelect.addOption("None", "None");
+
+        Shuffleboard.getTab("Preferences").addPersistent("Auto", autoSelect);
         
         //Add each command you want the robot to do in order
         if (autoSelect.getSelected().toUpperCase().equals("1BALL")){
@@ -59,7 +61,7 @@ public class AutoCommandGroup extends SequentialCommandGroup {
             addCommands(new Wait(3));
             addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
             addCommands(new AutoSearchRight(swerveDriveSubsystem, limeLightSubsystem, 1));
-            addCommands(new PickUpBall(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem, 1));
+            addCommands(new PickUpSeconds(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem, 1, 0.3, 0.5));
             addCommands(new AutoSearchLeft(swerveDriveSubsystem, limeLightSubsystem, 0));
             addCommands(new LineUpToShoot(swerveDriveSubsystem, limeLightSubsystem, 2));
             // addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, 1500, 1500));
