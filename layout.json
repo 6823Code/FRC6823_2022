@@ -329,6 +329,28 @@
               "_source0": "network_table:///SmartDashboard/Servo",
               "_title": "Servo"
             }
+          },
+          "3,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///limelight/pipeline",
+              "_title": "limelight/pipeline"
+            }
+          },
+          "9,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/pipeline",
+              "_title": "pipeline"
+            }
           }
         }
       }

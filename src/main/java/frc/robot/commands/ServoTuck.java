@@ -14,7 +14,7 @@ public class ServoTuck extends CommandBase {
 
     @Override
     public void execute() {
-        limeLightSubsystem.setServoAngle(0);
+        limeLightSubsystem.setServoAngle(35);
         isFinished = true;
     }
 

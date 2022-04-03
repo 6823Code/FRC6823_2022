@@ -27,6 +27,8 @@ public class PickUpSeconds extends CommandBase {
         this.intakeSubsystem = intakeSubsystem;
         this.limeLightSubsystem = limeLightSubsystem;
 
+        this.timer = new Timer();
+
         this.seconds = seconds;
         this.pipeline = pipeline;
         power = 0.3;
@@ -42,6 +44,8 @@ public class PickUpSeconds extends CommandBase {
         this.intakeSubsystem = intakeSubsystem;
         this.limeLightSubsystem = limeLightSubsystem;
 
+        this.timer = new Timer();
+
         this.seconds = seconds;
         this.pipeline = pipeline;
         this.power = power;
@@ -50,13 +54,34 @@ public class PickUpSeconds extends CommandBase {
         addRequirements(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem);
     }
 
+    public PickUpSeconds(SwerveDriveSubsystem swerveDriveSubsystem, IntakeSubsystem intakeSubsystem, 
+        double power, double seconds) {
+
+        this.swerveDriveSubsystem = swerveDriveSubsystem;
+        this.intakeSubsystem = intakeSubsystem;
+
+        this.timer = new Timer();
+
+        this.seconds = seconds;
+        this.power = power;
+        isItFinished = false;
+
+        addRequirements(swerveDriveSubsystem, intakeSubsystem);
+    }
+
     @Override
     public void execute() {
-        double aimCommand = aimController.calculate(limeLightSubsystem.getTx());
+        if (limeLightSubsystem != null){
+            double aimCommand = aimController.calculate(limeLightSubsystem.getTx());
 
-        limeLightSubsystem.setPipeline(pipeline);
+            limeLightSubsystem.setPipeline(pipeline);
 
-        swerveDriveSubsystem.drive(0, power, aimCommand * -1);
+            swerveDriveSubsystem.drive(0, -power, aimCommand * -1);
+        }else{
+            swerveDriveSubsystem.drive(0, -power, 0);
+        }
+
+        intakeSubsystem.intake();
 
         if (timer.hasElapsed(seconds)){
             isItFinished = true;
@@ -67,6 +92,7 @@ public class PickUpSeconds extends CommandBase {
     public void initialize() {
         aimController = new PIDController(.016, 0, 0);
         aimController.setSetpoint(0);
+        timer.reset();
         timer.start();
     }
 
@@ -79,7 +105,6 @@ public class PickUpSeconds extends CommandBase {
     public void end(boolean interrupted) {
         swerveDriveSubsystem.stop();
         intakeSubsystem.stopIntake();
-        timer.reset();
         isItFinished = false;
     }
 }

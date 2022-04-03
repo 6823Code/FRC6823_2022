@@ -49,6 +49,8 @@ public class NavXHandler {
         SmartDashboard.putNumber("Pitch", ahrs.getPitch());
         SmartDashboard.putNumber("Roll", ahrs.getRoll());
         SmartDashboard.putNumber("Yaw", ahrs.getYaw());
+
+        SmartDashboard.putNumber("NavX Angle", MathUtil.mod(getAngleRad(), 2 * Math.PI));
     }
 
     public double getAngleRad() {
