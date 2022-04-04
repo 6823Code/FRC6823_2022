@@ -95,11 +95,16 @@ public class RobotContainer {
         shooterSubsystem.setDefaultCommand(shoot); // Check shoot for shoot button mapping
 
         autoSelect = new SendableChooser<String>();
-        autoSelect.addOption("Red", "Red");
-        autoSelect.addOption("Blue", "Blue");
-        autoSelect.setDefaultOption("1Ball", "1Ball");
+        autoSelect.setDefaultOption("1 Ball", "1Ball");
         autoSelect.addOption("Taxi", "Taxi");
-        autoSelect.addOption("Directly Behind", "Behind");
+        autoSelect.addOption("Ball 1", "Ball 1");
+        autoSelect.addOption("Ball 2", "Ball 2");
+        autoSelect.addOption("Ball 4", "Ball 4");
+        autoSelect.addOption("Ball 7", "Ball 7");
+        autoSelect.addOption("Ball 8", "Ball 8");
+        autoSelect.addOption("Ball 10", "Ball 10");
+        autoSelect.addOption("4 Ball Red", "4 Red");
+        autoSelect.addOption("4 Ball Blue", "4 Blue");
         autoSelect.addOption("None", "None");
 
         Shuffleboard.getTab("Preferences").add("Auto Select", autoSelect);

@@ -28,7 +28,7 @@ public class LimeLightSubsystem extends SubsystemBase {
     public void setPipeline(int pipeline) {
         table.getEntry("pipeline").setNumber(pipeline);
         if (pipeline == 0)
-            setServoAngle(90);
+            setServoAngle(70);
         else
             setServoAngle(30); //ground
     }
