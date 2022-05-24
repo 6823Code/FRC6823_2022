@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.JoystickHandler;
 import frc.robot.NavXHandler;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -13,7 +12,7 @@ import frc.robot.subsystems.LimeLightSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 
-public class FieldSpaceAuto extends CommandBase { //Logger should log joystick 3 to axes 0-6 and buttons 1-16, and joystick 4 to axes 7-12 and buttons 17-26
+public class AutoPlayback extends CommandBase { //Logger should log joystick 3 to axes 0-6 and buttons 1-16, and joystick 4 to axes 7-12 and buttons 17-26
     //Declare subsystem, Joystick Handler, NavX
     private SwerveDriveSubsystem swerveDrive;
     private NavXHandler navXHandler;
@@ -21,6 +20,7 @@ public class FieldSpaceAuto extends CommandBase { //Logger should log joystick 3
     private double turnRate;
 
     private double fieldAngle = 0; //Angle of away from driver from zero
+    private double shooterAngle = 60;
 
     public SwerveDriveSubsystem swerveDriveSubsystem;
     public NavXHandler navX;
@@ -32,7 +32,7 @@ public class FieldSpaceAuto extends CommandBase { //Logger should log joystick 3
     private AutoCommandGroup auton;
     public LimeLightSubsystem limeLightSubsystem;
 
-    public FieldSpaceAuto(SwerveDriveSubsystem subsystem, ShooterSubsystem shooterSubsystem, IntakeSubsystem intakeSubsystem, ConveyorSubsystem conveyorSubsystem, 
+    public AutoPlayback(SwerveDriveSubsystem subsystem, ShooterSubsystem shooterSubsystem, IntakeSubsystem intakeSubsystem, ConveyorSubsystem conveyorSubsystem, 
     Input[] inputs, NavXHandler navXHandler) {
         //Instantiate subsystem, Joystick Handler, NavX
         this.swerveDrive = subsystem;
@@ -102,6 +102,42 @@ public class FieldSpaceAuto extends CommandBase { //Logger should log joystick 3
         currentInput.button(12).whileHeld(() ->
         liftSubsystem.rightDown(), liftSubsystem)
         .whenInactive(liftSubsystem::liftStop);
+
+        double loadRate;
+        int shootRateLeft;
+        int shootRateRight;
+        if(currentInput.getAxis10() != 0){
+            loadRate = shooterSubsystem.getLoadPercent();
+            shootRateLeft = shooterSubsystem.getShooterRPMLeft()*20;
+            shootRateRight = shooterSubsystem.getShooterRPMRight()*20;
+            // shootRateLeft = (int)160000;
+            // shootRateRight = (int)160000;
+            //shootRate = 1.0;
+            conveyorSubsystem.convey();
+        }else if (currentInput.getAxis11() != 0){
+            loadRate = 0;
+            shootRateLeft = 0;
+            shootRateRight = 0;
+            conveyorSubsystem.convey();
+        }else{
+            loadRate = 0;
+            shootRateLeft = 0;
+            shootRateRight = 0;
+            conveyorSubsystem.stopConvey();
+        }
+      
+        if (currentInput.getAxis8() < -0.75){
+            shooterAngle = 70;
+        }else if (currentInput.getAxis8() > 0.75){
+            shooterAngle = 50;
+        // }else if (joystickHandler.getAxis0() < -0.75){
+        //     shooterAngle = 65;
+        }else if (currentInput.getAxis7() > 0.75){
+            shooterAngle = 60;
+        }
+        shooterSubsystem.setShooterAngle(shooterAngle);
+        shooterSubsystem.prep(loadRate);
+        shooterSubsystem.shoot(shootRateLeft, shootRateRight);
         }
     }
 
