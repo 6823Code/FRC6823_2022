@@ -35,7 +35,7 @@ public class AutoCommandGroup extends SequentialCommandGroup {
             addCommands(new HammerDrop(intakeSubsystem, 0.1));
             addCommands(new GoBackwards(swerveDriveSubsystem, 0.1, 0.5));
             addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, intakeSubsystem, 0, 0.6, 1500, 1500));
-            addCommands(new Wait(3));
+            addCommands(new Wait(5));
             addCommands(new FullHalt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem, intakeSubsystem));
             addCommands(new ServoTuck(limeLightSubsystem));
             addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 0.5));
@@ -82,7 +82,7 @@ public class AutoCommandGroup extends SequentialCommandGroup {
             addCommands(new GoBackwards(swerveDriveSubsystem, -0.2, 0.5));
             addCommands(new Wait(.1));
             addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, intakeSubsystem, 0, 0.6, 1812, 1812)); //About 5000 rpm, 2.76 rpm/unit
-            addCommands(new Wait(3));
+            addCommands(new Wait(5));
             addCommands(new FullHalt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem, intakeSubsystem));
             addCommands(new ServoTuck(limeLightSubsystem));
             addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 0.5));
@@ -90,11 +90,11 @@ public class AutoCommandGroup extends SequentialCommandGroup {
             addCommands(new ServoTuck(limeLightSubsystem));
             addCommands(new HammerDrop(intakeSubsystem, 0.15));
             addCommands(new PickUpSeconds(swerveDriveSubsystem, intakeSubsystem, 0.2, 2.2));
-            addCommands(new RotateToAngle(swerveDriveSubsystem, navX, Math.PI));
+            addCommands(new RotateToAngle(swerveDriveSubsystem, navX, 177 * Constants.degToRad));
             addCommands(new GoBackwards(swerveDriveSubsystem, -0.2, 0.5));
             addCommands(new Wait(.1));
             addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, intakeSubsystem, 0, 0.6, 1812, 1812)); //About 5000 rpm, 2.76 rpm/unit
-            addCommands(new Wait(3));
+            addCommands(new Wait(5));
             addCommands(new FullHalt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem, intakeSubsystem));
             addCommands(new ServoTuck(limeLightSubsystem));
             addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 0.5));
@@ -106,7 +106,7 @@ public class AutoCommandGroup extends SequentialCommandGroup {
             addCommands(new GoBackwards(swerveDriveSubsystem, -0.2, 0.5));
             addCommands(new Wait(.1));
             addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, intakeSubsystem, 0, 0.6, 1812, 1812)); //About 5000 rpm, 2.76 rpm/unit
-            addCommands(new Wait(3));
+            addCommands(new Wait(5));
             addCommands(new FullHalt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem, intakeSubsystem));
             addCommands(new ServoTuck(limeLightSubsystem));
             addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 0.5));
@@ -147,6 +147,18 @@ public class AutoCommandGroup extends SequentialCommandGroup {
             addCommands(new AutoSearchRight(swerveDriveSubsystem, limeLightSubsystem, 0));
             addCommands(new PickUpUntilSize(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem, 0));
             addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, intakeSubsystem, 0, 0.6, 1812, 1812));
+            addCommands(new ServoTuck(limeLightSubsystem));
+            addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 0.5));
+        }else if (selection.toUpperCase().equals("NAV")){
+            addCommands(new ServoTuck(limeLightSubsystem));
+            addCommands(new HammerDrop(intakeSubsystem, 0.15));
+            addCommands(new PickUpSeconds(swerveDriveSubsystem, intakeSubsystem, 0.2, 2.2));
+            addCommands(new RotateToAngle(swerveDriveSubsystem, navX, Math.PI));
+            addCommands(new GoBackwards(swerveDriveSubsystem, -0.2, 0.5));
+            addCommands(new Wait(.1));
+            addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, intakeSubsystem, 0, 0.6, 1812, 1812)); //About 5000 rpm, 2.76 rpm/unit
+            addCommands(new Wait(5));
+            addCommands(new FullHalt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem, intakeSubsystem));
             addCommands(new ServoTuck(limeLightSubsystem));
             addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 0.5));
         }

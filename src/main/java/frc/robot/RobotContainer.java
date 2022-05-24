@@ -11,7 +11,6 @@ import frc.robot.commands.RotateToAngle;
 import frc.robot.commands.RotateToZero;
 import frc.robot.commands.ServoTuck;
 import frc.robot.commands.Shoot;
-import frc.robot.commands.SwitchPipelineCommand;
 import frc.robot.commands.TargetSpaceDrive;
 import frc.robot.commands.Load;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -105,6 +104,7 @@ public class RobotContainer {
         autoSelect.addOption("Ball 10", "Ball 10");
         autoSelect.addOption("4 Ball Red", "4 Red");
         autoSelect.addOption("4 Ball Blue", "4 Blue");
+        autoSelect.addOption("NavX", "Nav");
         autoSelect.addOption("None", "None");
 
         Shuffleboard.getTab("Preferences").add("Auto Select", autoSelect);
@@ -191,7 +191,7 @@ public class RobotContainer {
 
         joystickHandler3.button(7).whenPressed(new 
         ServoTuck(limeLightSubsystem));
-        joystickHandler3.button(7).whenPressed(new 
-        SwitchPipelineCommand(limeLightSubsystem, 1));
+        joystickHandler3.button(7).whenPressed(() -> 
+        limeLightSubsystem.setPipeline(1), limeLightSubsystem);
     }
 }
