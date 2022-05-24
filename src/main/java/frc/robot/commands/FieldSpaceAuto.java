@@ -6,9 +6,14 @@ import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.JoystickHandler;
 import frc.robot.NavXHandler;
+import frc.robot.subsystems.ConveyorSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LiftSubsystem;
+import frc.robot.subsystems.LimeLightSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 
-public class FieldSpaceAuto extends CommandBase {
+public class FieldSpaceAuto extends CommandBase { //Logger should log joystick 3 to axes 0-6 and buttons 1-16, and joystick 4 to axes 7-12 and buttons 17-26
     //Declare subsystem, Joystick Handler, NavX
     private SwerveDriveSubsystem swerveDrive;
     private NavXHandler navXHandler;
@@ -17,10 +22,23 @@ public class FieldSpaceAuto extends CommandBase {
 
     private double fieldAngle = 0; //Angle of away from driver from zero
 
-    public FieldSpaceAuto(SwerveDriveSubsystem subsystem, 
+    public SwerveDriveSubsystem swerveDriveSubsystem;
+    public NavXHandler navX;
+    public ShooterSubsystem shooterSubsystem;
+    public IntakeSubsystem intakeSubsystem;
+    public ConveyorSubsystem conveyorSubsystem;
+    public Load backLoad;
+    public LiftSubsystem liftSubsystem;
+    private AutoCommandGroup auton;
+    public LimeLightSubsystem limeLightSubsystem;
+
+    public FieldSpaceAuto(SwerveDriveSubsystem subsystem, ShooterSubsystem shooterSubsystem, IntakeSubsystem intakeSubsystem, ConveyorSubsystem conveyorSubsystem, 
     Input[] inputs, NavXHandler navXHandler) {
         //Instantiate subsystem, Joystick Handler, NavX
         this.swerveDrive = subsystem;
+        this.shooterSubsystem = shooterSubsystem;
+        this.intakeSubsystem = intakeSubsystem;
+        this.conveyorSubsystem = conveyorSubsystem;
         this.navXHandler = navXHandler;
         speedRate = 0.5; //change to recording 
         turnRate = 0.5; //change to recording
@@ -33,7 +51,7 @@ public class FieldSpaceAuto extends CommandBase {
             Input currentInput = inputs[i];
             navXHandler.printEverything();
 
-        //Set xval, yval, spinval to the scaled values from the joystick, bounded on [-1, 1]
+            //Set xval, yval, spinval to the scaled values from the joystick, bounded on [-1, 1]
         double xval = Math.max(Math.min(currentInput.getAxis0() * -speedRate, 1), -1);
         double yval = Math.max(Math.min(currentInput.getAxis1() * speedRate, 1), -1);
         double spinval = Math.max(Math.min(currentInput.getAxis5() * turnRate, 1), -1);
@@ -44,6 +62,46 @@ public class FieldSpaceAuto extends CommandBase {
         double tyval = getTransY(xval, yval, robotAngle);
 
         swerveDrive.drive(txval, tyval, spinval);
+
+        currentInput.button(8).whileHeld(() -> swerveDriveSubsystem.drive(0,
+                0.1, 0), swerveDriveSubsystem);
+
+        currentInput.button(22).whileHeld(backLoad);
+
+        currentInput.button(22).whenReleased(backLoad::stop);
+
+        currentInput.button(17).whileActiveContinuous(() -> intakeSubsystem.backAngle(), intakeSubsystem)
+                .whenInactive(intakeSubsystem::stopAngle);
+        currentInput.button(18).whileActiveContinuous(() -> intakeSubsystem.intake(), intakeSubsystem)
+                .whenInactive(intakeSubsystem::stopIntake);
+        currentInput.button(19).whileActiveContinuous(() -> intakeSubsystem.backIntake(), intakeSubsystem)
+                .whenInactive(intakeSubsystem::stopIntake);
+        currentInput.button(20).whileActiveContinuous(() -> intakeSubsystem.angle(), intakeSubsystem)
+                .whenInactive(intakeSubsystem::stopAngle);
+
+        currentInput.button(23).whenPressed(() -> swerveDriveSubsystem.autoCali(), swerveDriveSubsystem);
+        // joystickHandler4.button(8).whileHeld(() ->
+        // shooterSubsystem.setShooterAngle(30), shooterSubsystem);
+        currentInput.button(1).whileHeld(() ->
+        liftSubsystem.liftUp(), liftSubsystem)
+        .whenInactive(liftSubsystem::liftStop);
+
+        currentInput.button(6).whileHeld(() ->
+        liftSubsystem.liftDown(), liftSubsystem)
+        .whenInactive(liftSubsystem::liftStop);
+
+        currentInput.button(9).whileHeld(() ->
+        liftSubsystem.leftUp(), liftSubsystem)
+        .whenInactive(liftSubsystem::liftStop);
+        currentInput.button(10).whileHeld(() ->
+        liftSubsystem.leftDown(), liftSubsystem)
+        .whenInactive(liftSubsystem::liftStop);
+        currentInput.button(11).whileHeld(() ->
+        liftSubsystem.rightUp(), liftSubsystem)
+        .whenInactive(liftSubsystem::liftStop);
+        currentInput.button(12).whileHeld(() ->
+        liftSubsystem.rightDown(), liftSubsystem)
+        .whenInactive(liftSubsystem::liftStop);
         }
     }
 
