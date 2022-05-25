@@ -2,38 +2,47 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
-//import com.revrobotics.RelativeEncoder;
+
+// import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.util.sendable.SendableRegistry;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
-//import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-//import edu.wpi.first.wpilibj.Preferences;
 import java.util.Map;
 
 public class IntakeSubsystem extends SubsystemBase {
 
+    // private final double P = .04;
+    // private final double I = .00001;
     private CANSparkMax angleMotor;
     private CANSparkMax intakeMotor;
-    // private RelativeEncoder angleEncoder;
+    private DutyCycleEncoder angleEncoder;
     private double inTakePower;
     private double anglePower;
-    // private int offset;
+    // private double margin;
+    // private double downPos;
+    // private double pidPower;
     private SimpleWidget intakeWidget;
     private SimpleWidget angleWidget;
+    //private PIDController pid;
 
     public IntakeSubsystem() {
         this.angleMotor = new CANSparkMax(10, CANSparkMaxLowLevel.MotorType.kBrushless);
         this.intakeMotor = new CANSparkMax(9, CANSparkMaxLowLevel.MotorType.kBrushless);
-        // this.angleEncoder = angleMotor.getEncoder();
-        intakeWidget = Shuffleboard.getTab("Preferences").add("intakePercent", 0.433)
+        this.angleEncoder = new DutyCycleEncoder(2);
+        intakeWidget = Shuffleboard.getTab("Preferences").addPersistent("intakePercent", 0.433)
                 .withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 1));
-        angleWidget = Shuffleboard.getTab("Preferences").add("hammerPercent", 0.4)
+        angleWidget = Shuffleboard.getTab("Preferences").addPersistent("hammerPercent", 0.433)
                 .withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 1));
-        // offset = 0;
+        // margin = 0.1;
+        // downPos = 0.32;
+
+        // pid = new PIDController(P, I, 0);
 
         SendableRegistry.addChild(this, angleMotor);
         SendableRegistry.addChild(this, intakeMotor);
@@ -42,27 +51,27 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void backIntake() {
+        intakeMotor.set(-inTakePower * 0.5);
+    }
+
+    public void angle() {
+        // while(Math.abs(angleEncoder.getAbsolutePosition() - downPos) > margin){
+        //     pidPower = pid.calculate(angleEncoder.getAbsolutePosition(), downPos);
+        //     angleMotor.set(-pidPower);
+        // }
+        angleMotor.set(-1.5 * anglePower);
+    }
+
+    public void intake() {
         intakeMotor.set(inTakePower);
     }
 
     public void backAngle() {
-        // if (angleEncoder.getPosition() > offset && !backLimit.get()){
         angleMotor.set(anglePower);
-        // }else{
-        // stopAngle();
-        // }
     }
 
-    public void intake() {
-        intakeMotor.set(-inTakePower);
-    }
-
-    public void angle() {
-        // if (angleEncoder.getPosition() < offset + 100 && !frontLimit.get()){
-        angleMotor.set(-anglePower * 1.5);
-        // }else{
-        // stopAngle();
-        // }
+    public void backAngle(double power){
+        angleMotor.set(power);
     }
 
     public void stopIntake() {
@@ -77,5 +86,7 @@ public class IntakeSubsystem extends SubsystemBase {
     public void periodic() {
         inTakePower = intakeWidget.getEntry().getDouble(-2);
         anglePower = angleWidget.getEntry().getDouble(-2);
+        SmartDashboard.putNumber("Intake Angle", angleEncoder.getAbsolutePosition());
+        SmartDashboard.putNumber("Intake Speed", intakeMotor.getEncoder().getVelocity());
     }
 }

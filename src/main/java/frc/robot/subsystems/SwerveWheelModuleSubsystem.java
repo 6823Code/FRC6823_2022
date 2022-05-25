@@ -31,7 +31,7 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         this.angleMotor = new TalonFX(angleMotorChannel);
         this.speedMotor = new TalonFX(speedMotorChannel);
         this.angleEncoder = new CANCoder(angleEncoderChannel); // CANCoder Encoder
-        this.speedMotor.setNeutralMode(NeutralMode.Brake);
+        this.speedMotor.setNeutralMode(NeutralMode.Coast);
         this.motorName = motorName;
         // pidController = new PIDController(P, I, 0); // This is the PID constant,
         // we're not using any
@@ -143,5 +143,13 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
     private double unitsToDegrees(double units){
         units = units / 26227 * 360 ;
         return MathUtil.mod(units, 360);
+    }
+
+    public void coast(){
+        speedMotor.setNeutralMode(NeutralMode.Coast);
+    }
+
+    public void brake(){
+        speedMotor.setNeutralMode(NeutralMode.Brake);
     }
 }

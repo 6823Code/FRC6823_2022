@@ -1,29 +1,27 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.SwerveDriveSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 
 import edu.wpi.first.wpilibj.Timer;
 
-public class GoBackwards extends CommandBase {
-    private SwerveDriveSubsystem swerveDriveSubsystem;
+public class HammerDrop extends CommandBase {
+    private IntakeSubsystem intakeSubsystem;
     private boolean isFinished;
-    private double percent;
     private double seconds;
     private Timer timer;
 
-    public GoBackwards(SwerveDriveSubsystem swerveDriveSubsystem, double percentPower, double seconds) {
-        this.swerveDriveSubsystem = swerveDriveSubsystem;
-        addRequirements(swerveDriveSubsystem);
+    public HammerDrop(IntakeSubsystem intakeSubsystem, double seconds) {
+        this.intakeSubsystem = intakeSubsystem;
+        addRequirements(intakeSubsystem);
         timer = new Timer();
         isFinished = false;
-        this.percent = percentPower;
         this.seconds = seconds;
     }
 
     @Override
     public void execute() {
-        swerveDriveSubsystem.drive(0, percent, 0);
+        intakeSubsystem.backAngle(0.5);
 
         if (timer.hasElapsed(seconds)) {
             isFinished = true;
@@ -44,6 +42,6 @@ public class GoBackwards extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         isFinished = false;
-        swerveDriveSubsystem.stop();
+        intakeSubsystem.stopAngle();
     }
 }

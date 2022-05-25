@@ -17,8 +17,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterSubsystem extends SubsystemBase {
 
-    private final double P = .04;
-    private final double I = .00001;
+    private final double P = .02; // was 0.04
+    private final double I = .0004;
+    private final double D = 0;
     private TalonFX leftMotor;
     private TalonFX rightMotor;
     private CANSparkMax angleMotor;
@@ -39,11 +40,13 @@ public class ShooterSubsystem extends SubsystemBase {
     private double shooterAnglePercentBack;
     private double shooterAnglePercentForward;
     private double loadPercent;
+    private double ratio;
+    private double percent;
     private DutyCycleEncoder encoder;
     private PIDController pidController;
     private SimpleWidget loadWidget;
-    private SimpleWidget RPMLeft;
-    private SimpleWidget RPMRight;
+    private SimpleWidget RPMRatio;
+    private SimpleWidget RPMPercent;
 
     public ShooterSubsystem() {
         this.leftMotor = new TalonFX(11);
@@ -52,20 +55,21 @@ public class ShooterSubsystem extends SubsystemBase {
         this.loadMotor = new CANSparkMax(13, CANSparkMaxLowLevel.MotorType.kBrushless);
         // this.angleEncoder = new AnalogInput(0);
         // this.speedController = new PIDController(0.0001, 0, 0);
-        this.encoder = new DutyCycleEncoder(1);
-        this.pidController = new PIDController(P, I, 0);
+        this.encoder = new DutyCycleEncoder(0);
+        this.pidController = new PIDController(P, I, D);
         pidController.setTolerance(20);
         velocityLeft = 0;
         velocityRight = 0;
-        loadWidget = Shuffleboard.getTab("Preferences").add("LoadRate", 0.6).withWidget(BuiltInWidgets.kNumberSlider)
+        loadWidget = Shuffleboard.getTab("Preferences").add("LoadRate", 0.6)
+                .withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", -1, "max", 1));
         SendableRegistry.addLW(this, "Shooter");
-        RPMLeft = Shuffleboard.getTab("Preferences").add("shooterRPMLeft", 3000)
-                .withWidget(BuiltInWidgets.kNumberSlider)
-                .withProperties(Map.of("min", 0, "max", 6000));
-        RPMRight = Shuffleboard.getTab("Preferences").add("shooterRPMRight", 3000).withWidget(BuiltInWidgets.kNumberSlider)
-                .withProperties(Map.of("min", 0, "max", 6000));
-
+        RPMRatio = Shuffleboard.getTab("Preferences").add("shooterRPMOffset", 0)
+                .withWidget(BuiltInWidgets.kTextView)
+                .withProperties(Map.of("min", -1, "max", 1));
+        RPMPercent = Shuffleboard.getTab("Preferences").add("shooterRPMPercent", 0.69)
+                .withWidget(BuiltInWidgets.kTextView)
+                .withProperties(Map.of("min", 0, "max", 1));
     }
 
     public void shoot(int rpm) {
@@ -92,12 +96,10 @@ public class ShooterSubsystem extends SubsystemBase {
         // test += 100;
     }
 
-    // public void shoot(double power) {
-    // leftMotor.set(ControlMode.PercentOutput, -power); //velocity in encoder units
-    // per 100 ms
-    // rightMotor.set(ControlMode.PercentOutput, power);
-    // //leftMotor.getSelectedSensorVelocity();
-    // }
+    public void shootPower(double power) {
+        leftMotor.set(ControlMode.PercentOutput, -power); //velocity in encoder units per 100 ms
+        rightMotor.set(ControlMode.PercentOutput, power);
+    }
 
     public void prep(double load) {
         loadMotor.set(load);
@@ -137,7 +139,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void setShooterAngle(double angle) {
-        double currentEncoderValue = (encoder.get() - 0.1) * 360;
+        double currentEncoderValue = (encoder.get() - 0.383) * 360;
         double setpoint = -Math.abs(angle);
         pidController.setSetpoint(setpoint);
         double pidOut = pidController.calculate(currentEncoderValue, setpoint);
@@ -148,8 +150,18 @@ public class ShooterSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        shooterRPMLeft = RPMLeft.getEntry().getNumber(-2).intValue();
-        shooterRPMRight = RPMRight.getEntry().getNumber(-2).intValue();
+        percent = RPMPercent.getEntry().getNumber(2).doubleValue();
+        ratio = RPMRatio.getEntry().getNumber(2).doubleValue();
+
+        if(ratio >= 0){
+            shooterRPMLeft = (int)(6000 * percent);
+            shooterRPMRight = (int)((1 - ratio) * 6000 * percent);
+        }else{
+            ratio *= -1;
+            shooterRPMLeft = (int)((1 - ratio) * 6000 * percent);
+            shooterRPMRight = (int)(6000 * percent);
+        }
+        
         loadPercent = loadWidget.getEntry().getDouble(-1);
 
         // SmartDashboard.putNumber("Left shoot rpm",

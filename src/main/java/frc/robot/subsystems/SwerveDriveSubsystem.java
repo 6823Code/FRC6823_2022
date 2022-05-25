@@ -44,13 +44,13 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     }
 
     public SwerveDriveSubsystem() {
-        calibrateWidget = Shuffleboard.getTab("Preferences").add("Calibrate?", false)
+        calibrateWidget = Shuffleboard.getTab("Preferences").addPersistent("Calibrate?", false)
                 .withWidget(BuiltInWidgets.kToggleButton);
-        invertWidget = Shuffleboard.getTab("Preferences").add("Invert?", false)
+        invertWidget = Shuffleboard.getTab("Preferences").addPersistent("Invert?", false)
                 .withWidget(BuiltInWidgets.kToggleButton);
 
         backRight = new SwerveWheelModuleSubsystem(1, 8, 0, "BR", calibrateWidget);// These are the motors and encoder
-                                                                                   // ports for swerve drive
+                                                                // ports for swerve drive
         backLeft = new SwerveWheelModuleSubsystem(3, 2, 1, "BL", calibrateWidget);
         frontRight = new SwerveWheelModuleSubsystem(5, 4, 2, "FR", calibrateWidget);
         frontLeft = new SwerveWheelModuleSubsystem(7, 6, 3, "FL", calibrateWidget);// The order is angle, speed,
@@ -67,13 +67,13 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         angleController.enableContinuousInput(0, Math.PI * 2);
         angleController.setSetpoint(0);
         //SmartDashboard.putString("Ready Call", "Autobots, Roll Out!");
-        FLAngle = Shuffleboard.getTab("Calibrate").add("FLAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
+        FLAngle = Shuffleboard.getTab("Calibrate").addPersistent("FLAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 360));
-        FRAngle = Shuffleboard.getTab("Calibrate").add("FRAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
+        FRAngle = Shuffleboard.getTab("Calibrate").addPersistent("FRAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 360));
-        BLAngle = Shuffleboard.getTab("Calibrate").add("BLAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
+        BLAngle = Shuffleboard.getTab("Calibrate").addPersistent("BLAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 360));
-        BRAngle = Shuffleboard.getTab("Calibrate").add("BRAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
+        BRAngle = Shuffleboard.getTab("Calibrate").addPersistent("BRAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 360));
         autoCaliZero();
     }
@@ -110,13 +110,13 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
         if (invertWidget.getEntry().getBoolean(false)){
             backLeft.drive(-backLeftSpeed, -backLeftAngle);
-            backRight.drive(-backRightSpeed, -backRightAngle);
-            frontRight.drive(-frontRightSpeed, -frontRightAngle);
-            frontLeft.drive(-frontLeftSpeed, -frontLeftAngle);
-        }else{
-            backLeft.drive(-backLeftSpeed, -backLeftAngle);
             backRight.drive(backRightSpeed, -backRightAngle);
             frontRight.drive(frontRightSpeed, -frontRightAngle);
+            frontLeft.drive(-frontLeftSpeed, -frontLeftAngle);
+        }else{
+            backLeft.drive(backLeftSpeed, -backLeftAngle);
+            backRight.drive(-backRightSpeed, -backRightAngle);
+            frontRight.drive(-frontRightSpeed, -frontRightAngle);
             frontLeft.drive(frontLeftSpeed, -frontLeftAngle);
         }
 
@@ -159,5 +159,19 @@ public class SwerveDriveSubsystem extends SubsystemBase {
             BLAngle.getEntry().setNumber(backLeft.autoCaliZero());
             BRAngle.getEntry().setNumber(backRight.autoCaliZero());
         }
+    }
+
+    public void coast(){
+        backRight.coast();
+        backLeft.coast();
+        frontRight.coast();
+        frontLeft.coast();
+    }
+
+    public void brake(){
+        backRight.brake();
+        backLeft.brake();
+        frontRight.brake();
+        frontLeft.brake();
     }
 }
