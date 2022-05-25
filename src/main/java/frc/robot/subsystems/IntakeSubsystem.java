@@ -32,7 +32,7 @@ public class IntakeSubsystem extends SubsystemBase {
     public IntakeSubsystem() {
         this.angleMotor = new CANSparkMax(10, CANSparkMaxLowLevel.MotorType.kBrushless);
         this.intakeMotor = new CANSparkMax(9, CANSparkMaxLowLevel.MotorType.kBrushless);
-        this.angleEncoder = new DutyCycleEncoder(2);
+        //this.angleEncoder = new DutyCycleEncoder(2);
         intakeWidget = Shuffleboard.getTab("Preferences").addPersistent("intakePercent", 0.433)
                 .withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 1));
