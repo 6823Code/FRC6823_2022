@@ -11,7 +11,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 
-public class AutoCommandGroup extends SequentialCommandGroup {
+public class AutoCommandGroup extends SequentialCommandGroup { //Auto Command Sequence
 
     //Declare subsystems and NavX used
     private SwerveDriveSubsystem swerveDriveSubsystem;
@@ -29,7 +29,7 @@ public class AutoCommandGroup extends SequentialCommandGroup {
         intakeSubsystem = robotContainer.getIntakeSubsystem();
         // limeLightSubsystem = robotContainer.getLimeLightSubsystem();
         
-        //Add each command you want the robot to do in order
+        //Add each command you want the robot to do in order, adjust if branches to accomodate for the auto selector
         if (Preferences.getString("allianceColor", "red").toUpperCase().equals("RED")){
             addCommands(new HammerDrop(intakeSubsystem, 0.1));
             addCommands(new GoBackwards(swerveDriveSubsystem, 0.1, 0.5));

@@ -4,7 +4,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.LimeLightSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 
-public class AutoAim2d extends CommandBase {
+public class AutoAim2d extends CommandBase { //Not currently used?
+    //Defining variables for subsystems, command state, margin, theta x, and limelight pipeline
     private SwerveDriveSubsystem swerveDriveSubsystem;
     private LimeLightSubsystem limeLightSubsystem;
     private boolean isFinished = false;
