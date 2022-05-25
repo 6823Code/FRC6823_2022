@@ -1,6 +1,5 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 // import frc.robot.NavXHandler;
 // import frc.robot.Robot;
@@ -26,14 +25,14 @@ public class AutoCommandGroup extends SequentialCommandGroup {
         swerveDriveSubsystem = robotContainer.getSwervedriveSubsystem();
         shooterSubsystem = robotContainer.getShooterSubsystem();
         conveyorSubsystem = robotContainer.getConveyorSubsystem();
-        intakeSubsystem = robotContainer.getIntakeSubsystem();
+        setIntakeSubsystem(robotContainer.getIntakeSubsystem());
         // limeLightSubsystem = robotContainer.getLimeLightSubsystem();
         
         //Add each command you want the robot to do in order
             addCommands(new GoBackwards(swerveDriveSubsystem, 0.1, 0.5));
             addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
             addCommands(new Wait(3));
-            
+
             addCommands(new GoBackwards(swerveDriveSubsystem, 0.1, 0.5));
             addCommands(new Wait(3));
             addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
@@ -50,4 +49,12 @@ public class AutoCommandGroup extends SequentialCommandGroup {
             addCommands(new Wait(3));
             addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
         }
+
+    public IntakeSubsystem getIntakeSubsystem() {
+        return intakeSubsystem;
+    }
+
+    public void setIntakeSubsystem(IntakeSubsystem intakeSubsystem) {
+        this.intakeSubsystem = intakeSubsystem;
+    }
 }
