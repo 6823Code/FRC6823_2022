@@ -9,7 +9,7 @@ public class AutoSearchLeft extends CommandBase {
     private SwerveDriveSubsystem swerveDriveSubsystem;
     private LimeLightSubsystem limeLightSubsystem;
     private boolean isFinished = false;
-    private double margin = 0.05; // margin of degrees
+    private double margin = 1; // margin of degrees
     private PIDController angleController;
     private int pipeline;
 
@@ -20,18 +20,14 @@ public class AutoSearchLeft extends CommandBase {
         this.limeLightSubsystem = limeLightSubsystem;
         addRequirements(swerveDriveSubsystem, limeLightSubsystem);
         this.pipeline = pipeline;
-
     }
 
     @Override
     public void execute() {
         double rotateCommand;
         if (!limeLightSubsystem.hasTarget()) {
-            rotateCommand = -0.2;
-            swerveDriveSubsystem.drive(0, 0, rotateCommand);
-        }
-
-        if (limeLightSubsystem.hasTarget()) {
+            rotateCommand = 0.2;
+        }else{
             double currentAngle = limeLightSubsystem.getTxRad();
             rotateCommand = angleController.calculate(currentAngle);
 
@@ -40,12 +36,11 @@ public class AutoSearchLeft extends CommandBase {
             } else if (rotateCommand < -0.4) {
                 rotateCommand = -0.4;
             }
-            //SmartDashboard.putNumber("ROTATE", rotateCommand);
-            swerveDriveSubsystem.drive(0, 0, rotateCommand);
-            if (Math.abs(limeLightSubsystem.getTxRad()) < margin) {
+            if (Math.abs(limeLightSubsystem.getTx()) < margin) {
                 isFinished = true;
             }
         }
+        swerveDriveSubsystem.drive(0, 0, rotateCommand);
     }
 
     @Override
@@ -56,7 +51,7 @@ public class AutoSearchLeft extends CommandBase {
     @Override
     public void initialize() {
         limeLightSubsystem.setPipeline(pipeline);
-        angleController = new PIDController(.3, 0, 0);
+        angleController = new PIDController(1, 0, 0);
         angleController.setSetpoint(0);
     }
 

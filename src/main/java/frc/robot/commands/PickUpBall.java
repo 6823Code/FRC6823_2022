@@ -13,7 +13,7 @@ public class PickUpBall extends CommandBase {
 
     private PIDController distController, aimController;
 
-    private long whenStartedGorging;
+    private long whenStartedIntaking;
     private int stage;
     private int pipeline;
     private boolean isItFinished;
@@ -52,15 +52,14 @@ public class PickUpBall extends CommandBase {
 
         if (limeLightSubsystem.hasTarget()) {
             hasSeenBall = true;
-
         }
         if (stage == 0) {
             // far from ball, need to move towards it using limelight
-            swerveDriveSubsystem.drive(distanceCommand, 0, aimCommand * -1);
+            swerveDriveSubsystem.drive(0, distanceCommand, aimCommand * -1);
 
             if (Math.abs(distController.getPositionError()) < 5 && hasSeenBall) {
                 stage = 1;
-                whenStartedGorging = System.currentTimeMillis();
+                whenStartedIntaking = System.currentTimeMillis();
                 intakeSubsystem.intake();
             }
             if (!hasSeenBall) {
@@ -68,10 +67,10 @@ public class PickUpBall extends CommandBase {
             }
         } else if (stage == 1) {
             // close to ball, move towards it despite not seeing it
-            swerveDriveSubsystem.drive(-.6, 0, 0);
+            swerveDriveSubsystem.drive(0, -0.1, 0);
 
             // stop after 2 seconds
-            if (System.currentTimeMillis() - whenStartedGorging > 4500) {
+            if (System.currentTimeMillis() - whenStartedIntaking >= 1000) {
                 isItFinished = true;
                 intakeSubsystem.stopIntake();
                 swerveDriveSubsystem.stop();

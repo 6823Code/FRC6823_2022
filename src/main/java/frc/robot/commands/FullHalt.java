@@ -27,6 +27,17 @@ public class FullHalt extends CommandBase {
         addRequirements(this.shooter);
     }
 
+    public FullHalt(SwerveDriveSubsystem swerveDrive, ShooterSubsystem shooter, ConveyorSubsystem conveyor, IntakeSubsystem intake) {
+        //Instantiate subsystem, Joystick Handler
+        this.swerveDrive = swerveDrive;
+        this.shooter = shooter;
+        this.conveyor = conveyor;
+        this.intake = intake;
+        isFinished = false;
+
+        addRequirements(this.shooter);
+    }
+
     @Override
     public void execute() {
         swerveDrive.stop();
@@ -35,7 +46,8 @@ public class FullHalt extends CommandBase {
         conveyor.stopConvey();
         intake.stopAngle();
         intake.stopIntake();
-        lift.liftStop();
+        if(lift != null)
+            lift.liftStop();
         isFinished = true;
     }
 
