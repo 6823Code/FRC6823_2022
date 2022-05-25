@@ -36,7 +36,6 @@ public class AutoTask  extends TimerTask{
     public void run()
     {
         Date e = new Date();
-        System.out.println(e.getTime() - s.getTime());
         holdTime = e.getTime() - s.getTime();
         if (holdTime > 29000)
         {
