@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.NavXHandler;
 import frc.robot.subsystems.SwerveDriveSubsystem;
@@ -11,7 +12,7 @@ public class RotateToAngle extends CommandBase {
     private SwerveDriveSubsystem swerveDriveSubsystem;
     private NavXHandler navXHandler;
     private boolean isFinished = false;
-    private final double MARGIN = 0.1; // margin in radians
+    private final double MARGIN = 0.03; // margin in radians
     private PIDController angleController;
 
     private double angle;
@@ -45,7 +46,9 @@ public class RotateToAngle extends CommandBase {
 
         //Print rotate power and rotate at that power
         //SmartDashboard.putNumber("ROTATE", rotateCommand);
-        swerveDriveSubsystem.drive(0, 0, rotateCommand);
+        swerveDriveSubsystem.drive(0, 0, -rotateCommand);
+
+        SmartDashboard.putNumber("NavX Angle", currentAngle);
 
         //If within margin of error, set isFinished to true
         if (Math.abs((currentAngle - (initialDegrees + angle)) % (2 * Math.PI)) < MARGIN) {
@@ -61,7 +64,7 @@ public class RotateToAngle extends CommandBase {
 
     @Override
     public void initialize() {
-        angleController = new PIDController(.3, 0, 0);
+        angleController = new PIDController(.35, .001, 0);
         angleController.enableContinuousInput(0, Math.PI * 2);
         angleController.setSetpoint(MathUtil.mod(initialDegrees + angle, 2 * Math.PI));
     }
