@@ -1,8 +1,5 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.NavXHandler;
 import frc.robot.RobotContainer;
@@ -15,7 +12,6 @@ import frc.robot.util.Constants;
 
 public class AutoCommandGroup extends SequentialCommandGroup {
 
-    private SimpleWidget autoSelect;
     //Declare subsystems and NavX used
     private SwerveDriveSubsystem swerveDriveSubsystem;
     private ShooterSubsystem shooterSubsystem;
