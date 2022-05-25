@@ -40,7 +40,6 @@ public class AutoCommandGroup extends SequentialCommandGroup {
 
             addCommands(new GoBackwards(swerveDriveSubsystem, 0.1, 0.5));
             addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, 1500, 1500));
-            addCommands(new Wait(3));
             addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
             addCommands(new Wait(3));
 
