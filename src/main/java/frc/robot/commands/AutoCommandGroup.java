@@ -30,37 +30,24 @@ public class AutoCommandGroup extends SequentialCommandGroup {
         // limeLightSubsystem = robotContainer.getLimeLightSubsystem();
         
         //Add each command you want the robot to do in order
-        if (Preferences.getString("allianceColor", "red").toUpperCase().equals("RED")){
-            addCommands(new HammerDrop(intakeSubsystem, 0.1));
             addCommands(new GoBackwards(swerveDriveSubsystem, 0.1, 0.5));
-            // addCommands(new AutoAim2d(swerveDriveSubsystem, limeLightSubsystem, 0));
-            // addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, shooterSubsystem.getShooterRPMLeft()*20, shooterSubsystem.getShooterRPMRight()*20));
-            // addCommands(new Wait(3));
-            // addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem))
-            // addCommands(new AutoSearchRight(swerveDriveSubsystem, limeLightSubsystem, 1));
-            // addCommands(new PickUpBall(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem, 1));
-            // addCommands(new AutoSearchLeft(swerveDriveSubsystem, limeLightSubsystem, 0));
-            // addCommands(new AutoAim2d(swerveDriveSubsystem, limeLightSubsystem, 0));
-            addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, 1500, 1500));
+            addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
+            addCommands(new Wait(3));
+            
+            addCommands(new GoBackwards(swerveDriveSubsystem, 0.1, 0.5));
             addCommands(new Wait(3));
             addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
-            addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 0.5));
-        }else if (Preferences.getString("allianceColor", "blue").toUpperCase().equals("BLUE")){
-            addCommands(new HammerDrop(intakeSubsystem, 0.1));
-            addCommands(new GoBackwards(swerveDriveSubsystem, 0.1, 0.5));
-            // addCommands(new AutoAim2d(swerveDriveSubsystem, limeLightSubsystem, 0));
-            // addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, shooterSubsystem.getShooterRPMLeft()*20, shooterSubsystem.getShooterRPMRight()*20));
-            // addCommands(new Wait(3));
-            // addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem))
-            // addCommands(new AutoSearchRight(swerveDriveSubsystem, limeLightSubsystem, 2));
-            // addCommands(new PickUpBall(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem, 2));
-            // addCommands(new AutoSearchLeft(swerveDriveSubsystem, limeLightSubsystem, 0));
-            // addCommands(new AutoAim2d(swerveDriveSubsystem, limeLightSubsystem, 0));
-            addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, 1500, 1500));
             addCommands(new Wait(3));
-            addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
-            addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 0.5));
-        }
-    }
 
+            addCommands(new GoBackwards(swerveDriveSubsystem, 0.1, 0.5));
+            addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, 1500, 1500));
+            addCommands(new Wait(3));
+            addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
+            addCommands(new Wait(3));
+
+            addCommands(new GoBackwards(swerveDriveSubsystem, 0.1, 0.5));
+            addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, 1500, 1500));
+            addCommands(new Wait(3));
+            addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
+        }
 }
