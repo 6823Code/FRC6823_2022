@@ -49,7 +49,6 @@ public class AutoTask  extends TimerTask{
         {
             System.out.println("Method Called");
             System.out.println(holdTime);
-            System.out.println(stick.getAxis0());
             file(stick.getAxis0(), stick.getAxis1(), stick.getAxis2(), stick.getAxis3(), stick.getAxis4(), stick.getAxis5(), stick.getAxis6(), getHold());
         }
     }

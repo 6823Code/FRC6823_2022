@@ -20,7 +20,7 @@ public class AutoGet {
     // (16 ms ~ 60 inputs per second)
     public boolean start(long delay)
     {
-        timer.scheduleAtFixedRate(task, delay, 16);
+        timer.scheduleAtFixedRate(task, delay, 100);
         return true;
     }
 }
