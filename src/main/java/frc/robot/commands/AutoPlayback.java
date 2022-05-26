@@ -1,5 +1,5 @@
 package frc.robot.commands;
-
+/*
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
@@ -154,3 +154,4 @@ public class AutoPlayback extends CommandBase { //Logger should log joystick 3 t
         swerveDrive.setFieldAngle(fieldAngle);
     }
 }
+*/
