@@ -57,7 +57,7 @@ public class AutoTask  extends TimerTask{
     {
         try {
             FileWriter out = new FileWriter(file);
-            out.write(a0 + "," + a1 + "," + a2 + "," + a3 + "," + a4 + "," + a5 + "," + a6 + "," + time + ",");
+            out.write(a0 + "," + a1 + "," + a2 + "," + a3 + "," + a4 + "," + a5 + "," + a6 + "," + time + "\n");
             out.close();
         } catch (Exception e) {
             
