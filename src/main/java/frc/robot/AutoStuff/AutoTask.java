@@ -3,7 +3,6 @@ package frc.robot.AutoStuff;
 //For file writing and getting time
 import java.util.*;
 import java.io.*;
-
 // For getting controller input
 import frc.robot.JoystickHandler;
 
@@ -15,6 +14,7 @@ public class AutoTask  extends TimerTask{
     private long holdTime;
     private JoystickHandler stick;
     private File file;
+    private String fileName;
 
 
     /**
@@ -22,11 +22,13 @@ public class AutoTask  extends TimerTask{
      */
     public AutoTask(int num) 
     {
+        fileName = "";
+        fileName = fileName.replace("\\", "/");
         s = new Date();
         holdTime = 0;
         stick = new JoystickHandler(num);
         System.out.println("Before File");
-        file = new File("C:\Users\admin\Desktop\AutoGetTests\autoCommands.txt.txt");
+        file = new File(fileName);
         System.out.println("After File");
     }
 
