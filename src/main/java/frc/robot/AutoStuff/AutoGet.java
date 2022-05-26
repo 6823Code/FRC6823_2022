@@ -1,14 +1,12 @@
 package frc.robot.AutoStuff;
 
 import java.util.Timer;
-
 public class AutoGet {
 
     private Timer timer;
     private AutoTask task;
-
     // Initializes Timer and AutoTask with joystick number (usually 3)
-    public AutoGet(int joyNum) throws Exception
+    public AutoGet(int joyNum) 
     {
         timer = new Timer(true);
         task = new AutoTask(joyNum);
