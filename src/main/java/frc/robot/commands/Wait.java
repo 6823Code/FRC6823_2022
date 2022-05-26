@@ -20,6 +20,7 @@ public class Wait extends CommandBase {
 
     @Override
     public void execute() {
+
     }
 
     @Override
