@@ -27,7 +27,7 @@ public class GoBackwards extends CommandBase {
 
         if (timer.hasElapsed(seconds)) {
             isFinished = true;
-        }
+        } 
     }
 
     @Override
