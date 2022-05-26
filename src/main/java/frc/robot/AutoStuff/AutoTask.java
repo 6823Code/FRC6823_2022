@@ -2,7 +2,10 @@ package frc.robot.AutoStuff;
 
 //For file writing and getting time
 import java.util.*;
+import java.nio.file.Path;
 import java.io.*;
+import java.net.URI;
+
 // For getting controller input
 import frc.robot.JoystickHandler;
 
@@ -14,24 +17,26 @@ public class AutoTask  extends TimerTask{
     private long holdTime;
     private JoystickHandler stick;
     private File file;
-    private String fileName;
+    private Path fileName;
 
 
     /**
      * Constructor for objects of class TimerStuff
      */
-    public AutoTask(int num) 
+    public AutoTask(int num) throws Exception
     {
-        fileName = "";
-        fileName = fileName.replace("\\", "/");
+        // for URI take file path for AutoCommand.txt
+        fileName = Path.of(new URI("C:"));
         s = new Date();
         holdTime = 0;
         stick = new JoystickHandler(num);
         System.out.println("Before File");
-        file = new File(fileName);
+        file = fileName.toFile();
         System.out.println("After File");
     }
 
+    // Gets inputs from axes and runs File, 
+    // also checks to see if program has been running for too long
     public void run()
     {
         Date e = new Date();
@@ -48,12 +53,13 @@ public class AutoTask  extends TimerTask{
         }
     }
 
+    // In case holdtime is needed from another class
     public long getHold()
     {
         return holdTime;
     }
 
-
+    // Files away inputs for later use
     public void file(double a0, double a1, double a2, double a3, double a4, double a5, double a6, long time)
     {
         System.out.println("Try to write");
