@@ -29,11 +29,11 @@ public class AutoCommandGroup extends SequentialCommandGroup {
         // limeLightSubsystem = robotContainer.getLimeLightSubsystem();
 
         // Add each command you want the robot to do in order
-        addCommands(new GoBackwards(swerveDriveSubsystem, 0.1, 0.5));
+        addCommands(new GoBackwards(swerveDriveSubsystem, 0.1, 5));
         addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
         addCommands(new Wait(3));
 
-        addCommands(new GoBackwards(swerveDriveSubsystem, 0.1, 0.5));
+        addCommands(new GoBackwards(swerveDriveSubsystem, 0.1, 5));
         addCommands(new Wait(3));
         addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
         addCommands(new Wait(3));
