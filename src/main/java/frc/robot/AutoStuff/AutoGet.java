@@ -8,7 +8,7 @@ public class AutoGet {
     private AutoTask task;
 
     // Initializes Timer and AutoTask with joystick number (usually 3)
-    public AutoGet(int joyNum)
+    public AutoGet(int joyNum) throws Exception
     {
         timer = new Timer(true);
         task = new AutoTask(joyNum);
