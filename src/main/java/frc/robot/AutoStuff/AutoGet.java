@@ -6,10 +6,10 @@ public class AutoGet {
     private Timer timer;
     private AutoTask task;
     // Initializes Timer and AutoTask with joystick number (usually 3)
-    public AutoGet(int joyNum) 
+    public AutoGet(int joyNum, int joyNum2) 
     {
         timer = new Timer(true);
-        task = new AutoTask(joyNum);
+        task = new AutoTask(joyNum, joyNum2);
     }
 
     // Runs the run() function from AutoTask at regular intervals to get inputs

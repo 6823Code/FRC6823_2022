@@ -45,7 +45,7 @@ public class Robot extends TimedRobot {
         robotContainer.getAutoCommandGroup().cancel();
         try{
             AutoGet a;
-            a = new AutoGet(3);
+            a = new AutoGet(3,4);
             a.start(1000);
         }
         catch (Exception e)
