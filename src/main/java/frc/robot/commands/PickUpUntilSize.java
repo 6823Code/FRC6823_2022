@@ -18,7 +18,7 @@ public class PickUpUntilSize extends CommandBase {
     private int pipeline;
     private boolean isItFinished;
     private final double MARGIN = 5;
-    private final double DIST = 50; //In cm?
+    private final double DIST = 100; //In cm
 
     public PickUpUntilSize(SwerveDriveSubsystem swerveDriveSubsystem, IntakeSubsystem intakeSubsystem,
             LimeLightSubsystem limeLightSubsystem, int pipeline) {
