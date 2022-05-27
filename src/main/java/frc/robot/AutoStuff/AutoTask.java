@@ -28,7 +28,7 @@ public class AutoTask  extends TimerTask{
         holdTime = 0;
         stick = new JoystickHandler(num);
         System.out.println("Before File");
-        file = new File("new_directory/Inputs.txt");
+        file = new File("/home/lvuser/Inputs.txt");
         file.mkdirs();
         try {
             file.createNewFile();

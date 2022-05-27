@@ -44,9 +44,9 @@ public class Robot extends TimedRobot {
     public void teleopInit() {
         robotContainer.getAutoCommandGroup().cancel();
         try{
-        AutoGet a;
-        a = new AutoGet(3);
-        a.start(1000);
+            AutoGet a;
+            a = new AutoGet(3);
+            a.start(1000);
         }
         catch (Exception e)
         {
