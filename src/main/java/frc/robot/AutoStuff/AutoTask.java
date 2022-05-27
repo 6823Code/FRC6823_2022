@@ -73,16 +73,6 @@ public class AutoTask  extends TimerTask{
         } catch (Exception e) {
             
         }
-        Scanner myScan;
-        try {
-            myScan = new Scanner(file);
-            System.out.println(myScan.nextLine());
-            myScan.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        
-        
         
     }
 }
