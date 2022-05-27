@@ -120,7 +120,10 @@ public class RobotContainer {
     }
 
     public AutoCommandGroup getAutoCommandGroup() {
-        auton = new AutoCommandGroup(this, autoSelect.getSelected());
+        if (autoSelect.getSelected() != null)
+            auton = new AutoCommandGroup(this, autoSelect.getSelected());
+        else
+            auton = new AutoCommandGroup(this, "None");
         return auton;
     }
 
