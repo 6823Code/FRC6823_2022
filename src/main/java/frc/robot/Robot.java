@@ -9,7 +9,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.AutoStuff.AutoGet;
-import frc.robot.AutoStuff.FileCheck;
 
 public class Robot extends TimedRobot {
     private RobotContainer robotContainer;
@@ -35,9 +34,8 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        robotContainer.getAutoCommandGroup().schedule();
-        FileCheck f = new FileCheck();
-        f.doNothing();
+        //robotContainer.getAutoCommandGroup().schedule();
+        
         // robotContainer.getMoreCommands().schedule();
 
     }
