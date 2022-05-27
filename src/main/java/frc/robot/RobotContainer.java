@@ -94,7 +94,7 @@ public class RobotContainer {
         shooterSubsystem.setDefaultCommand(shoot); // Check shoot for shoot button mapping
 
         autoSelect = new SendableChooser<String>();
-        autoSelect.setDefaultOption("1 Ball", "1Ball");
+        autoSelect.setDefaultOption("1 Ball", "1Ball"); //Look into if default not working
         autoSelect.addOption("Taxi", "Taxi");
         autoSelect.addOption("Ball 1", "Ball 1");
         autoSelect.addOption("Ball 2", "Ball 2");
