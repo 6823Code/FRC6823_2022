@@ -29,7 +29,7 @@ public class AutoTask  extends TimerTask{
         stick = new JoystickHandler(num);
         System.out.println("Before File");
         file = new File("/home/lvuser/Inputs.txt");
-        file.mkdirs();
+        // file.mkdirs();
         try {
             file.createNewFile();
         } catch (Exception e) {
@@ -78,7 +78,7 @@ public class AutoTask  extends TimerTask{
         try {
             //System.out.println("In try statement");
             FileWriter out = new FileWriter(file);
-            out.write(a0 + "," + a1 + "," + a2 + "," + a3 + "," + a4 + "," + a5 + "," + a6 + "," + time + "\n");
+            out.append(a0 + "," + a1 + "," + a2 + "," + a3 + "," + a4 + "," + a5 + "," + a6 + "," + time + "\n");
             out.close();
         } catch (Exception e) {
             
