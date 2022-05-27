@@ -106,6 +106,7 @@ public class RobotContainer {
         autoSelect.addOption("4 Ball Red", "4 Red");
         autoSelect.addOption("4 Ball Blue", "4 Blue");
         autoSelect.addOption("None", "None");
+        autoSelect.addOption("Debug", "Debug");
 
         Shuffleboard.getTab("Preferences").add("Auto Select", autoSelect);
         //Shuffleboard.getTab("Preferences").add("Auto Turn PID", RotateToAngle.angleController);

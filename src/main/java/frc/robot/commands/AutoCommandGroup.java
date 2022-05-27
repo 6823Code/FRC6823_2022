@@ -149,6 +149,11 @@ public class AutoCommandGroup extends SequentialCommandGroup {
             addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, intakeSubsystem, 0, 0.6, 1812, 1812));
             addCommands(new ServoTuck(limeLightSubsystem));
             addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 0.5));
+        }else if(selection.toUpperCase().equals("DEBUG")){
+            addCommands(new ServoTuck(limeLightSubsystem));
+            addCommands(new AutoSearchRight(swerveDriveSubsystem, limeLightSubsystem, 1));
+            addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, intakeSubsystem, 0, 0.6, 1812, 1812));
+            addCommands(new FullHalt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem, intakeSubsystem));
         }
     }
 
