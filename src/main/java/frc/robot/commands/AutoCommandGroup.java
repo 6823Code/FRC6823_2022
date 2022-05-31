@@ -153,9 +153,9 @@ public class AutoCommandGroup extends SequentialCommandGroup {
             addCommands(new ServoTuck(limeLightSubsystem));
             addCommands(new Wait(1));
             addCommands(new PickUpUntilSize(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem, 2));
-            addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, intakeSubsystem, 0, 0.6, 1812, 1812));
-            addCommands(new Wait(3));
-            addCommands(new FullHalt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem, intakeSubsystem));
+            // addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, intakeSubsystem, 0, 0.6, 1812, 1812));
+            // addCommands(new Wait(3));
+            // addCommands(new FullHalt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem, intakeSubsystem));
         }
     }
 

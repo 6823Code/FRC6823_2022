@@ -3,7 +3,7 @@ package frc.robot.util;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class EstimateDistance {
-    private static double cameraHeight = 33.5;
+    private static double cameraHeight = 59.3725; //33.5
 
     public static double getDistance(double targetHeight, 
     double cameraAngleFromForward, double cameraAngleToTarget) {

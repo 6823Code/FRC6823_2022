@@ -40,9 +40,13 @@ public class PickUpUntilSize extends CommandBase {
 
         limeLightSubsystem.setPipeline(pipeline);
 
-        swerveDriveSubsystem.drive(0, -distCommand, aimCommand * -1);
-
-        intakeSubsystem.intake();
+        if(limeLightSubsystem.hasTarget()){
+            swerveDriveSubsystem.drive(0, -distCommand, aimCommand * -1);
+            intakeSubsystem.intake();
+        }else{
+            swerveDriveSubsystem.stop();
+            intakeSubsystem.stopIntake();
+        }
 
         // if (Math.abs(limeLightSubsystem.getTy()) < MARGIN){
         //     isItFinished = true;
@@ -68,6 +72,7 @@ public class PickUpUntilSize extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         swerveDriveSubsystem.stop();
+        intakeSubsystem.stopIntake();
         isItFinished = false;
     }
 }
