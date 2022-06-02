@@ -8,6 +8,7 @@ import frc.robot.commands.RotateToZero;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.TargetSpaceDrive;
 import frc.robot.commands.Load;
+import frc.robot.commands.ParallelAutoCommandGroup;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.subsystems.ConveyorSubsystem;
@@ -29,7 +30,7 @@ public class RobotContainer {
     private FieldSpaceDrive fieldSpaceDriveCommand;
     private RobotSpaceDrive robotSpaceDriveCommand;
     private TargetSpaceDrive targetSpaceDriveCommand;
-    private AutoCommandGroup auton;
+    private ParallelAutoCommandGroup auton;
 
     private JoystickHandler joystickHandler3;
     private JoystickHandler joystickHandler4;
@@ -95,8 +96,13 @@ public class RobotContainer {
         configureButtonBindings();
     }
 
-    public AutoCommandGroup getAutoCommandGroup() {
-        auton = new AutoCommandGroup(this);
+    // public AutoCommandGroup getAutoCommandGroup() {
+    //     auton = new AutoCommandGroup(this);
+    //     return auton;
+    // }
+
+    public ParallelAutoCommandGroup getAutoCommandGroup(){
+        auton = new ParallelAutoCommandGroup(this);
         return auton;
     }
 
