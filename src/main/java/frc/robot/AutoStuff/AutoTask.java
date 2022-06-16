@@ -7,6 +7,7 @@ import java.io.*;
 
 // For getting controller input
 import frc.robot.JoystickHandler;
+import frc.robot.util.Constants;
 
 //Neo: Follow the White Rabbit...
 
@@ -30,7 +31,7 @@ public class AutoTask  extends TimerTask{
         stick = new JoystickHandler(num);
         stick2 = new JoystickHandler(num2);
         System.out.println("Before File");
-        file = new File("/home/lvuser/Inputs.txt");
+        file = new File(Constants.fileName);
         // file.mkdirs();
         try {
             file.createNewFile();

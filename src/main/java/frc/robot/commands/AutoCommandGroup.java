@@ -21,6 +21,8 @@ public class AutoCommandGroup extends SequentialCommandGroup {
     // private LimeLightSubsystem limeLightSubsystem;
     // private NavXHandler navXHandler;
 
+    //private Input[] inputs;
+
     public AutoCommandGroup(RobotContainer robotContainer) {
         //Instantiate subsystems and NavX; set limelight to desired pipeline
         swerveDriveSubsystem = robotContainer.getSwervedriveSubsystem();
@@ -28,6 +30,14 @@ public class AutoCommandGroup extends SequentialCommandGroup {
         conveyorSubsystem = robotContainer.getConveyorSubsystem();
         intakeSubsystem = robotContainer.getIntakeSubsystem();
         // limeLightSubsystem = robotContainer.getLimeLightSubsystem();
+
+        //inputs = new Input[300] //Number of timestamps in recording
+
+        /*
+        for(int i = 0; i < inputs.length; i++){
+
+        }
+        */
         
         //Add each command you want the robot to do in order
         if (Preferences.getString("allianceColor", "red").toUpperCase().equals("RED")){
