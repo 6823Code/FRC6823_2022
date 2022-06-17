@@ -83,9 +83,9 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         //SmartDashboard.putNumber("Speed " + angleEncoderChannel, speed);
 
         // Sets angle motor to angle
-        pidController.setSetpoint(angle);
+       // pidController.setSetpoint(angle);
         double pidOut = pidController.calculate(currentEncoderValue, angle);
-        pidOut *= 3000 * 4096 * 600; //pidOut is on [-1, 1], pidOut * 3000 (Max rpm)
+        // pidOut *= 3000 * 4096 * 600; //pidOut is on [-1, 1], pidOut * 3000 (Max rpm)
         // * 4096 units/revolution * (600*100)ms/min
 
         //SmartDashboard.putNumber("Angle w/ offset", angle);
@@ -126,9 +126,8 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
     }
 
     public double autoCali() {
-        double offset;
         if (calibrateMode) {
-            offset = (angleEncoder.getAbsolutePosition() + 180) % 360;
+            double offset = (angleEncoder.getAbsolutePosition() + 180) % 360;
             setZero(offset);
             return offset;
         } else {
@@ -141,10 +140,10 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         return 0;
     }
 
-    private double unitsToDegrees(double units){
-        units = units / 26227 * 360 ;
-        return MathUtil.mod(units, 360);
-    }
+    // private double unitsToDegrees(double units){
+    //     units = units / 26227 * 360 ;
+    //     return MathUtil.mod(units, 360);
+    // }
 
     public void coast(){
         speedMotor.setNeutralMode(NeutralMode.Coast);
