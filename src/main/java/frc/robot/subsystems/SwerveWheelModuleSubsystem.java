@@ -27,7 +27,7 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
     private SimpleWidget calibrateState;
 
     public SwerveWheelModuleSubsystem(int angleMotorChannel, int speedMotorChannel, int angleEncoderChannel,
-            String motorName, SimpleWidget calibrate) {
+            String motorName, SimpleWidget calibrate, double offset) {
         // We're using TalonFX motors on CAN.
         this.angleMotor = new TalonFX(angleMotorChannel);
         this.speedMotor = new TalonFX(speedMotorChannel);
@@ -52,12 +52,13 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         SendableRegistry.addChild(this, angleEncoder);
         SendableRegistry.addLW(this, "Swerve Wheel Module");
         calibrateState = calibrate;
-
-    }
-
-    public void setZero(double offset) {
         encoderOffset = offset;
+
     }
+
+    // public void setZero(double offset) {
+    //     encoderOffset = offset;
+    // }
 
     // angle is a value between -1 to 1
     public void drive(double speed, double angle) {
@@ -99,13 +100,13 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         else
             angleMotor.set(ControlMode.PercentOutput, pidOut);
 
-        SmartDashboard.putNumber("Encoder " + motorName, angleEncoder.getAbsolutePosition());
+        SmartDashboard.putNumber("Encoder " + motorName, getPosition());
     }
 
     // this method outputs position of the encoder to the smartDashBoard, useful for
     // calibrating the encoder offsets
     public double getPosition() {
-        return angleEncoder.getPosition() * 180;
+        return MathUtil.mod(angleEncoder.getAbsolutePosition() * 180 - encoderOffset, 360);
     }
 
     public void stop() {
@@ -125,20 +126,20 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         calibrateMode = calibrateState.getEntry().getBoolean(false);
     }
 
-    public double autoCali() {
-        if (calibrateMode) {
-            double offset = (angleEncoder.getAbsolutePosition() + 180) % 360;
-            setZero(offset);
-            return offset;
-        } else {
-            return 0;
-        }
-    }
+    // public double autoCali() {
+    //     if (calibrateMode) {
+    //         double offset = (angleEncoder.getAbsolutePosition() + 180) % 360;
+    //         setZero(offset);
+    //         return offset;
+    //     } else {
+    //         return 0;
+    //     }
+    // }
 
-    public double autoCaliZero(){
-        setZero(0);
-        return 0;
-    }
+    // public double autoCaliZero(){
+    //     setZero(0);
+    //     return 0;
+    // }
 
     // private double unitsToDegrees(double units){
     //     units = units / 26227 * 360 ;
