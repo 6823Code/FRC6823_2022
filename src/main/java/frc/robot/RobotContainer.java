@@ -111,7 +111,7 @@ public class RobotContainer {
         //Shuffleboard.getTab("Preferences").add("Auto Turn PID", RotateToAngle.angleController);
 
         //limeLightSubsystem.setServoAngle(35);
-        limeLightSubsystem.setPipeline(0);
+        limeLightSubsystem.setPipeline(1); //set back to 0 for target space about tower
         RotateToZero.setInitialAngle(navX.getAngleRad());
         navX.setInitialAngle();
         fieldSpaceDriveCommand.zero();
