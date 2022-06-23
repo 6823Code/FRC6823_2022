@@ -161,7 +161,7 @@ public class RobotContainer {
         joystickHandler4.button(3).whileActiveContinuous(() -> conveyorSubsystem.backConvey(), conveyorSubsystem)
                 .whenInactive(conveyorSubsystem::stopConvey);
 
-        joystickHandler4.button(7).whenPressed(() -> swerveDriveSubsystem.autoCali(), swerveDriveSubsystem);
+        //joystickHandler4.button(7).whenPressed(() -> swerveDriveSubsystem.autoCali(), swerveDriveSubsystem);
         // joystickHandler4.button(8).whileHeld(() ->
         // shooterSubsystem.setShooterAngle(30), shooterSubsystem);
         joystickHandler3.button(1).whileHeld(() ->
