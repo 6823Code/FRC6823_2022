@@ -5,10 +5,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class Wait extends CommandBase {
     //Waits a given duration in seconds
-    private int seconds;
+    private double seconds;
     private Timer timer;
 
-    public Wait(int seconds) {
+    public Wait(double seconds) {
         this.seconds = seconds;
         timer = new Timer();
     }

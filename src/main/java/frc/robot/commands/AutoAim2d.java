@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.LimeLightSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
@@ -8,9 +9,12 @@ public class AutoAim2d extends CommandBase {
     private SwerveDriveSubsystem swerveDriveSubsystem;
     private LimeLightSubsystem limeLightSubsystem;
     private boolean isFinished = false;
-    private final double MARGIN = 0.05; // margin of degrees
+    private final double MARGIN = 5; // margin of degrees
+    private final double P = 1;
+    private final double I = 0.01;
     private double tX;
     private int pipeline;
+    private PIDController pid;
 
     public AutoAim2d(SwerveDriveSubsystem swerveDriveSubsystem, LimeLightSubsystem limeLightSubsystem,
             int pipeline) {
@@ -19,6 +23,7 @@ public class AutoAim2d extends CommandBase {
         addRequirements(swerveDriveSubsystem, limeLightSubsystem);
         this.pipeline = pipeline;
         tX = 0;
+        pid = new PIDController(P, I, 0);
     }
 
     @Override
@@ -33,8 +38,8 @@ public class AutoAim2d extends CommandBase {
             if (currentAngle != 0){
                 tX = currentAngle / Math.PI;
             }
-            swerveDriveSubsystem.drive(0, 0, tX);
-            if (Math.abs(currentAngle) < MARGIN) {
+            swerveDriveSubsystem.drive(0, 0, pid.calculate(4 * tX, 0));
+            if (Math.abs(limeLightSubsystem.getTx()) < MARGIN) {
                 isFinished = true;
             }
         }
