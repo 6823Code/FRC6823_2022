@@ -35,7 +35,7 @@ public class AutoCommandGroup extends SequentialCommandGroup {
             addCommands(new HammerDrop(intakeSubsystem, 0.1));
             addCommands(new GoBackwards(swerveDriveSubsystem, 0.1, 0.5));
             addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, intakeSubsystem, 0, 0.6, 1500, 1500));
-            addCommands(new Wait(3));
+            addCommands(new Wait(5));
             addCommands(new FullHalt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem, intakeSubsystem));
             addCommands(new ServoTuck(limeLightSubsystem));
             addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 0.5));
@@ -74,6 +74,32 @@ public class AutoCommandGroup extends SequentialCommandGroup {
         //     // addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
         //     addCommands(new ServoTuck(limeLightSubsystem));
         //     // addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 0.5));
+        // }else if (selection.toUpperCase().equals("REDSEARCH")){
+        //  addCommands(new AutoAim2d(swerveDriveSubsystem, limeLightSubsystem, 0));
+        //  addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, shooterSubsystem.getShooterRPMLeft()*20, shooterSubsystem.getShooterRPMRight()*20));
+        //  addCommands(new Wait(3));
+        //  addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
+            // addCommands(new AutoSearchRight(swerveDriveSubsystem, limeLightSubsystem, 1));
+            // addCommands(new PickUpBall(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem, 1));
+            // addCommands(new AutoSearchLeft(swerveDriveSubsystem, limeLightSubsystem, 0));
+            // addCommands(new AutoAim2d(swerveDriveSubsystem, limeLightSubsystem, 0));
+            // addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, shooterSubsystem.getShooterRPMLeft()*20, shooterSubsystem.getShooterRPMRight()*20));
+            // addCommands(new Wait(3));
+            // addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
+            // addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 1));
+        // }else if (selection.toUpperCase().equals("BLUESEARCH")){
+        //  addCommands(new AutoAim2d(swerveDriveSubsystem, limeLightSubsystem, 0));
+        //  addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, shooterSubsystem.getShooterRPMLeft()*20, shooterSubsystem.getShooterRPMRight()*20));
+        //  addCommands(new Wait(3));
+        //  addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
+            // addCommands(new AutoSearchRight(swerveDriveSubsystem, limeLightSubsystem, 2));
+            // addCommands(new PickUpBall(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem, 2));
+            // addCommands(new AutoSearchLeft(swerveDriveSubsystem, limeLightSubsystem, 0));
+            // addCommands(new AutoAim2d(swerveDriveSubsystem, limeLightSubsystem, 0));
+            // addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, shooterSubsystem.getShooterRPMLeft()*20, shooterSubsystem.getShooterRPMRight()*20));
+            // addCommands(new Wait(3));
+            // addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
+            // addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 1));
         }else if (selection.toUpperCase().equals("BALL 4") || selection.toUpperCase().equals("BALL 10")){
             addCommands(new ServoTuck(limeLightSubsystem));
             addCommands(new HammerDrop(intakeSubsystem, 0.15));
@@ -82,7 +108,7 @@ public class AutoCommandGroup extends SequentialCommandGroup {
             addCommands(new GoBackwards(swerveDriveSubsystem, -0.2, 0.5));
             addCommands(new Wait(.1));
             addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, intakeSubsystem, 0, 0.6, 1812, 1812)); //About 5000 rpm, 2.76 rpm/unit
-            addCommands(new Wait(3));
+            addCommands(new Wait(5));
             addCommands(new FullHalt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem, intakeSubsystem));
             addCommands(new ServoTuck(limeLightSubsystem));
             addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 0.5));
@@ -90,11 +116,11 @@ public class AutoCommandGroup extends SequentialCommandGroup {
             addCommands(new ServoTuck(limeLightSubsystem));
             addCommands(new HammerDrop(intakeSubsystem, 0.15));
             addCommands(new PickUpSeconds(swerveDriveSubsystem, intakeSubsystem, 0.2, 2.2));
-            addCommands(new RotateToAngle(swerveDriveSubsystem, navX, Math.PI));
+            addCommands(new RotateToAngle(swerveDriveSubsystem, navX, 177 * Constants.degToRad));
             addCommands(new GoBackwards(swerveDriveSubsystem, -0.2, 0.5));
             addCommands(new Wait(.1));
             addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, intakeSubsystem, 0, 0.6, 1812, 1812)); //About 5000 rpm, 2.76 rpm/unit
-            addCommands(new Wait(3));
+            addCommands(new Wait(5));
             addCommands(new FullHalt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem, intakeSubsystem));
             addCommands(new ServoTuck(limeLightSubsystem));
             addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 0.5));
@@ -106,7 +132,7 @@ public class AutoCommandGroup extends SequentialCommandGroup {
             addCommands(new GoBackwards(swerveDriveSubsystem, -0.2, 0.5));
             addCommands(new Wait(.1));
             addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, intakeSubsystem, 0, 0.6, 1812, 1812)); //About 5000 rpm, 2.76 rpm/unit
-            addCommands(new Wait(3));
+            addCommands(new Wait(5));
             addCommands(new FullHalt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem, intakeSubsystem));
             addCommands(new ServoTuck(limeLightSubsystem));
             addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 0.5));
@@ -147,6 +173,18 @@ public class AutoCommandGroup extends SequentialCommandGroup {
             addCommands(new AutoSearchRight(swerveDriveSubsystem, limeLightSubsystem, 0));
             addCommands(new PickUpUntilSize(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem, 0));
             addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, intakeSubsystem, 0, 0.6, 1812, 1812));
+            addCommands(new ServoTuck(limeLightSubsystem));
+            addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 0.5));
+        }else if (selection.toUpperCase().equals("NAV")){
+            addCommands(new ServoTuck(limeLightSubsystem));
+            addCommands(new HammerDrop(intakeSubsystem, 0.15));
+            addCommands(new PickUpSeconds(swerveDriveSubsystem, intakeSubsystem, 0.2, 2.2));
+            addCommands(new RotateToAngle(swerveDriveSubsystem, navX, Math.PI));
+            addCommands(new GoBackwards(swerveDriveSubsystem, -0.2, 0.5));
+            addCommands(new Wait(.1));
+            addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, intakeSubsystem, 0, 0.6, 1812, 1812)); //About 5000 rpm, 2.76 rpm/unit
+            addCommands(new Wait(5));
+            addCommands(new FullHalt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem, intakeSubsystem));
             addCommands(new ServoTuck(limeLightSubsystem));
             addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 0.5));
         }else if(selection.toUpperCase().equals("DEBUG")){

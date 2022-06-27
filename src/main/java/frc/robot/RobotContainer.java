@@ -11,7 +11,6 @@ import frc.robot.commands.RotateToAngle;
 import frc.robot.commands.RotateToZero;
 import frc.robot.commands.ServoTuck;
 import frc.robot.commands.Shoot;
-import frc.robot.commands.SwitchPipelineCommand;
 import frc.robot.commands.TargetSpaceDrive;
 import frc.robot.commands.Load;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -96,7 +95,7 @@ public class RobotContainer {
         shooterSubsystem.setDefaultCommand(shoot); // Check shoot for shoot button mapping
 
         autoSelect = new SendableChooser<String>();
-        autoSelect.setDefaultOption("1 Ball", "1Ball");
+        autoSelect.setDefaultOption("1 Ball", "1Ball"); //Look into if default not working
         autoSelect.addOption("Taxi", "Taxi");
         autoSelect.addOption("Ball 1", "Ball 1");
         autoSelect.addOption("Ball 2", "Ball 2");
@@ -106,6 +105,7 @@ public class RobotContainer {
         autoSelect.addOption("Ball 10", "Ball 10");
         autoSelect.addOption("4 Ball Red", "4 Red");
         autoSelect.addOption("4 Ball Blue", "4 Blue");
+        autoSelect.addOption("NavX", "Nav");
         autoSelect.addOption("None", "None");
         autoSelect.addOption("Debug", "Debug");
 
@@ -113,7 +113,7 @@ public class RobotContainer {
         //Shuffleboard.getTab("Preferences").add("Auto Turn PID", RotateToAngle.angleController);
 
         //limeLightSubsystem.setServoAngle(35);
-        limeLightSubsystem.setPipeline(0);
+        limeLightSubsystem.setPipeline(1); //set back to 0 for target space about tower
         RotateToZero.setInitialAngle(navX.getAngleRad());
         navX.setInitialAngle();
         fieldSpaceDriveCommand.zero();
@@ -122,7 +122,10 @@ public class RobotContainer {
     }
 
     public AutoCommandGroup getAutoCommandGroup() {
-        auton = new AutoCommandGroup(this, autoSelect.getSelected());
+        if (autoSelect.getSelected() != null)
+            auton = new AutoCommandGroup(this, autoSelect.getSelected());
+        else
+            auton = new AutoCommandGroup(this, "None");
         return auton;
     }
 
@@ -160,7 +163,7 @@ public class RobotContainer {
         joystickHandler4.button(3).whileActiveContinuous(() -> conveyorSubsystem.backConvey(), conveyorSubsystem)
                 .whenInactive(conveyorSubsystem::stopConvey);
 
-        joystickHandler4.button(7).whenPressed(() -> swerveDriveSubsystem.autoCali(), swerveDriveSubsystem);
+        //joystickHandler4.button(7).whenPressed(() -> swerveDriveSubsystem.autoCali(), swerveDriveSubsystem);
         // joystickHandler4.button(8).whileHeld(() ->
         // shooterSubsystem.setShooterAngle(30), shooterSubsystem);
         joystickHandler3.button(1).whileHeld(() ->
@@ -193,7 +196,7 @@ public class RobotContainer {
 
         joystickHandler3.button(7).whenPressed(new 
         ServoTuck(limeLightSubsystem));
-        joystickHandler3.button(7).whenPressed(new 
-        SwitchPipelineCommand(limeLightSubsystem, 1));
+        joystickHandler3.button(7).whenPressed(() -> 
+        limeLightSubsystem.setPipeline(1), limeLightSubsystem);
     }
 }
