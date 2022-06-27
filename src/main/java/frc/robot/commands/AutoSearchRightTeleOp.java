@@ -5,15 +5,15 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.LimeLightSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 
-public class AutoSearchRight extends CommandBase {
+public class AutoSearchRightTeleOp extends CommandBase {
     private SwerveDriveSubsystem swerveDriveSubsystem;
     private LimeLightSubsystem limeLightSubsystem;
     private boolean isFinished = false;
-    private double margin = 1; // margin of degrees
+    // private double margin = 1; // margin of degrees
     private PIDController angleController;
     private int pipeline;
 
-    public AutoSearchRight(SwerveDriveSubsystem swerveDriveSubsystem, LimeLightSubsystem limeLightSubsystem,
+    public AutoSearchRightTeleOp(SwerveDriveSubsystem swerveDriveSubsystem, LimeLightSubsystem limeLightSubsystem,
             int pipeline) {
 
         this.swerveDriveSubsystem = swerveDriveSubsystem;
@@ -38,12 +38,9 @@ public class AutoSearchRight extends CommandBase {
             // }
             
             rotateCommand = limeLightSubsystem.getTxRad();
-
-            if (Math.abs(limeLightSubsystem.getTx()) < margin) {
-                isFinished = true;
-            }
         }
         swerveDriveSubsystem.drive(0, 0, rotateCommand);
+        isFinished = true;
     }
 
     @Override
@@ -60,6 +57,6 @@ public class AutoSearchRight extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        swerveDriveSubsystem.stop();
+        // swerveDriveSubsystem.stop();
     }
 }

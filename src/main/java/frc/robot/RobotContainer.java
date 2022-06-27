@@ -4,7 +4,8 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.commands.AutoCommandGroup;
 import frc.robot.commands.AutoSearchLeft;
-import frc.robot.commands.AutoSearchRight;
+// import frc.robot.commands.AutoSearchRight;
+import frc.robot.commands.AutoSearchRightTeleOp;
 import frc.robot.commands.FieldSpaceDrive;
 import frc.robot.commands.RobotSpaceDrive;
 import frc.robot.commands.RotateToAngle;
@@ -15,7 +16,7 @@ import frc.robot.commands.TargetSpaceDrive;
 import frc.robot.commands.Load;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
-import frc.robot.util.EstimateDistance;
+//import frc.robot.util.EstimateDistance;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LiftSubsystem;
@@ -190,9 +191,10 @@ public class RobotContainer {
         joystickHandler3.button(13).whenPressed(new 
         AutoSearchLeft(swerveDriveSubsystem, 
         limeLightSubsystem, 0), false);
-        joystickHandler3.button(14).whenPressed(new 
-        AutoSearchRight(swerveDriveSubsystem, 
-        limeLightSubsystem, 1), false);
+        joystickHandler3.button(14).whileHeld(new //Instantaneous button for targeting
+        AutoSearchRightTeleOp(swerveDriveSubsystem, 
+        limeLightSubsystem, 1), false)
+        .whenInactive(swerveDriveSubsystem::stop);
 
         joystickHandler3.button(7).whenPressed(new 
         ServoTuck(limeLightSubsystem));
