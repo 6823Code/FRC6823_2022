@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimeLightSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
+import frc.robot.util.EstimateDistance;
 
 public class PickUpUntilSize extends CommandBase {
     private SwerveDriveSubsystem swerveDriveSubsystem;
@@ -17,6 +18,7 @@ public class PickUpUntilSize extends CommandBase {
     private int pipeline;
     private boolean isItFinished;
     private final double MARGIN = 5;
+    private final double DIST = 100; //In cm
 
     public PickUpUntilSize(SwerveDriveSubsystem swerveDriveSubsystem, IntakeSubsystem intakeSubsystem,
             LimeLightSubsystem limeLightSubsystem, int pipeline) {
@@ -38,11 +40,18 @@ public class PickUpUntilSize extends CommandBase {
 
         limeLightSubsystem.setPipeline(pipeline);
 
-        swerveDriveSubsystem.drive(0, -distCommand, aimCommand * -1);
+        if(limeLightSubsystem.hasTarget()){
+            swerveDriveSubsystem.drive(0, -distCommand, aimCommand * -1);
+            intakeSubsystem.intake();
+        }else{
+            swerveDriveSubsystem.stop();
+            intakeSubsystem.stopIntake();
+        }
 
-        intakeSubsystem.intake();
-
-        if (Math.abs(limeLightSubsystem.getTy()) < MARGIN){
+        // if (Math.abs(limeLightSubsystem.getTy()) < MARGIN){
+        //     isItFinished = true;
+        // }
+        if (Math.abs(EstimateDistance.getDistance(12.065, 0, limeLightSubsystem.getTyRad()) - DIST) < MARGIN){
             isItFinished = true;
         }
     }
@@ -63,6 +72,7 @@ public class PickUpUntilSize extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         swerveDriveSubsystem.stop();
+        intakeSubsystem.stopIntake();
         isItFinished = false;
     }
 }

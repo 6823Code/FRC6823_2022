@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.util.EstimateDistance;
 import frc.robot.util.LimelightTools;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -28,9 +29,9 @@ public class LimeLightSubsystem extends SubsystemBase {
     public void setPipeline(int pipeline) {
         table.getEntry("pipeline").setNumber(pipeline);
         if (pipeline == 0)
-            setServoAngle(70);
+            setServoAngle(65); //was 70
         else
-            setServoAngle(30); //ground
+            setServoAngle(25); //ground
     }
 
     public double getServoAngle() {
@@ -96,5 +97,7 @@ public class LimeLightSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("ty", getTy());
         SmartDashboard.putNumber("pipeline", table.getEntry("pipeline").getDouble(0));
         SmartDashboard.putNumber("Dist from tower", LimelightTools.distFromTower(getTyRad() / Math.PI));
+        setPipeline(2);
+        EstimateDistance.getDistance(12.065, -Math.PI / 36, getTyRad()); //Debug for ball distance measurement
     }
 }

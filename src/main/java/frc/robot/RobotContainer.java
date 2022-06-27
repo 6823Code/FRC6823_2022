@@ -15,6 +15,7 @@ import frc.robot.commands.TargetSpaceDrive;
 import frc.robot.commands.Load;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
+import frc.robot.util.EstimateDistance;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LiftSubsystem;
@@ -106,6 +107,7 @@ public class RobotContainer {
         autoSelect.addOption("4 Ball Blue", "4 Blue");
         autoSelect.addOption("NavX", "Nav");
         autoSelect.addOption("None", "None");
+        autoSelect.addOption("Debug", "Debug");
 
         Shuffleboard.getTab("Preferences").add("Auto Select", autoSelect);
         //Shuffleboard.getTab("Preferences").add("Auto Turn PID", RotateToAngle.angleController);
