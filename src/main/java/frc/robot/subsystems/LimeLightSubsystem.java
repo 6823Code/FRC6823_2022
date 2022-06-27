@@ -29,9 +29,9 @@ public class LimeLightSubsystem extends SubsystemBase {
     public void setPipeline(int pipeline) {
         table.getEntry("pipeline").setNumber(pipeline);
         if (pipeline == 0)
-            setServoAngle(65); //was 70
+            setServoAngle(60); //was 70
         else
-            setServoAngle(25); //ground
+            setServoAngle(20); //ground
     }
 
     public double getServoAngle() {
@@ -97,7 +97,7 @@ public class LimeLightSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("ty", getTy());
         SmartDashboard.putNumber("pipeline", table.getEntry("pipeline").getDouble(0));
         SmartDashboard.putNumber("Dist from tower", LimelightTools.distFromTower(getTyRad() / Math.PI));
-        setPipeline(2);
+        // setPipeline(2);
         EstimateDistance.getDistance(12.065, -Math.PI / 36, getTyRad()); //Debug for ball distance measurement
     }
 }
