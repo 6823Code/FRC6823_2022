@@ -30,7 +30,7 @@ public class LimeLightSubsystem extends SubsystemBase {
         if (pipeline == 0)
             setServoAngle(70);
         else
-            setServoAngle(30); //ground
+            setServoAngle(0); //ground //was 30
     }
 
     public double getServoAngle() {
