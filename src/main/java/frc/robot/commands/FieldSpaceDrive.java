@@ -85,6 +85,5 @@ public class FieldSpaceDrive extends CommandBase {
 
     public void zero() { //Zeroes direction
         this.fieldAngle = navXHandler.getAngleRad(); // + Math.PI
-        swerveDrive.setFieldAngle(fieldAngle);
     }
 }

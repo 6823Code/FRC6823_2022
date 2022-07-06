@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -30,20 +29,12 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     private SwerveWheelModuleSubsystem frontRight;
     private SwerveWheelModuleSubsystem frontLeft;
 
-    private PIDController angleController;
-    private double fieldangle = 0; //
     // private SimpleWidget FLAngle;
     // private SimpleWidget FRAngle;
     // private SimpleWidget BLAngle;
     // private SimpleWidget BRAngle;
     private SimpleWidget calibrateWidget;
     private SimpleWidget invertWidget;
-
-    public void setFieldAngle(double fieldangle) {
-        this.fieldangle = fieldangle;
-        angleController.setSetpoint(this.fieldangle);
-
-    }
 
     public SwerveDriveSubsystem() {
         calibrateWidget = Shuffleboard.getTab("Preferences").addPersistent("Calibrate?", false)
@@ -64,9 +55,6 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
         SendableRegistry.addLW(this, "Swerve Drive Subsystem");
 
-        angleController = new PIDController(.3, 0, 0);
-        angleController.enableContinuousInput(0, Math.PI * 2);
-        angleController.setSetpoint(0);
         //SmartDashboard.putString("Ready Call", "Autobots, Roll Out!");
         // FLAngle = Shuffleboard.getTab("Calibrate").addPersistent("FLAngle", 0).withWidget(BuiltInWidgets.kNumberSlider)
         //         .withProperties(Map.of("min", 0, "max", 360));

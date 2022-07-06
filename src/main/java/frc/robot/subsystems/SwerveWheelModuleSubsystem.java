@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.util.MathUtil;
 
 public class SwerveWheelModuleSubsystem extends SubsystemBase {
-    private final double P = .008;
-    private final double I = .00001;
+    private final double P = .007;
+    private final double I = .00004;
 
     private TalonFX angleMotor;
     private TalonFX speedMotor;
@@ -75,10 +75,10 @@ public class SwerveWheelModuleSubsystem extends SubsystemBase {
         // Set a variable to hold wheel position in degrees or one to hold
         // units/rotation
         
-        // if (MathUtil.getCyclicalDistance(unitsToDegrees(currentEncoderValue), angle, 360) > 90) {
-        //     speed *= -1;
-        //     angle = (angle + 180) % 360;
-        // }
+        if (Math.abs(currentEncoderValue - angle) > 90 && Math.abs(currentEncoderValue - angle) < 270) {
+            speed *= -1;
+            angle = (angle + 180) % 360;
+        }
 
         speedMotor.set(ControlMode.PercentOutput, speed); // sets motor speed //22150 units/100 ms at 12.4V
         //SmartDashboard.putNumber("Speed " + angleEncoderChannel, speed);

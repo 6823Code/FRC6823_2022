@@ -28,8 +28,8 @@ public class AutoSearchRightTeleOp extends CommandBase {
         if (!limeLightSubsystem.hasTarget()) {
             rotateCommand = -0.2;
         }else{
-            // double currentAngle = limeLightSubsystem.getTxRad();
-            // rotateCommand = angleController.calculate(currentAngle);
+            double currentAngle = limeLightSubsystem.getTxRad();
+            rotateCommand = angleController.calculate(currentAngle);
 
             // if (rotateCommand > 0.4) {
             //     rotateCommand = 0.4;
@@ -37,7 +37,7 @@ public class AutoSearchRightTeleOp extends CommandBase {
             //     rotateCommand = -0.4;
             // }
             
-            rotateCommand = limeLightSubsystem.getTxRad();
+            //rotateCommand = -limeLightSubsystem.getTxRad();
         }
         swerveDriveSubsystem.drive(0, 0, rotateCommand);
         isFinished = true;
@@ -51,7 +51,7 @@ public class AutoSearchRightTeleOp extends CommandBase {
     @Override
     public void initialize() {
         limeLightSubsystem.setPipeline(pipeline);
-        angleController = new PIDController(1, 0, 0);
+        angleController = new PIDController(1, 0.001, 0);
         angleController.setSetpoint(0);
     }
 
