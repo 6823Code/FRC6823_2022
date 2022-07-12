@@ -16,6 +16,7 @@ import frc.robot.commands.TargetSpaceDrive;
 import frc.robot.commands.Load;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
+import frc.robot.util.Constants;
 //import frc.robot.util.EstimateDistance;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -114,7 +115,7 @@ public class RobotContainer {
         //Shuffleboard.getTab("Preferences").add("Auto Turn PID", RotateToAngle.angleController);
 
         //limeLightSubsystem.setServoAngle(35);
-        limeLightSubsystem.setPipeline(1); //set back to 0 for target space about tower
+        limeLightSubsystem.setPipeline(Constants.redPipeline); //set back to 0 for target space about tower
         RotateToZero.setInitialAngle(navX.getAngleRad());
         navX.setInitialAngle();
         fieldSpaceDriveCommand.zero();
@@ -190,15 +191,15 @@ public class RobotContainer {
 
         joystickHandler3.button(13).whenPressed(new 
         AutoSearchLeft(swerveDriveSubsystem, 
-        limeLightSubsystem, 0), false);
+        limeLightSubsystem, Constants.towerPipeline), false);
         joystickHandler3.button(14).whileHeld(new //Instantaneous button for targeting
         AutoSearchRightTeleOp(swerveDriveSubsystem, 
-        limeLightSubsystem, 1), false)
+        limeLightSubsystem, Constants.redPipeline), false)
         .whenInactive(swerveDriveSubsystem::stop);
 
         joystickHandler3.button(7).whenPressed(new 
         ServoTuck(limeLightSubsystem));
         joystickHandler3.button(7).whenPressed(() -> 
-        limeLightSubsystem.setPipeline(1), limeLightSubsystem);
+        limeLightSubsystem.setPipeline(Constants.redPipeline), limeLightSubsystem);
     }
 }

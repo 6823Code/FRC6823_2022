@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.util.Constants;
 import frc.robot.util.EstimateDistance;
 import frc.robot.util.LimelightTools;
 import edu.wpi.first.networktables.NetworkTable;
@@ -28,7 +29,7 @@ public class LimeLightSubsystem extends SubsystemBase {
 
     public void setPipeline(int pipeline) {
         table.getEntry("pipeline").setNumber(pipeline);
-        if (pipeline == 0)
+        if (pipeline == Constants.towerPipeline)
             setServoAngle(60); //was 70
         else
             setServoAngle(20); //ground
@@ -82,6 +83,10 @@ public class LimeLightSubsystem extends SubsystemBase {
     // this is the 3d strafe
     public double getX() {
         return lastKnownX;
+    }
+
+    public double getTa() {
+        return table.getEntry("ta").getDouble(0);
     }
 
     public boolean hasTarget() {

@@ -147,11 +147,11 @@ public class AutoCommandGroup extends SequentialCommandGroup {
             addCommands(new Wait(3));
             addCommands(new FullHalt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem, intakeSubsystem));
             addCommands(new RotateToAngle(swerveDriveSubsystem, navX, 0));
-            addCommands(new AutoSearchRight(swerveDriveSubsystem, limeLightSubsystem, 2));
-            addCommands(new PickUpUntilSize(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem, 2));
+            addCommands(new AutoSearchRight(swerveDriveSubsystem, limeLightSubsystem, Constants.bluePipeline));
+            addCommands(new PickUpUntilSize(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem, Constants.bluePipeline));
             addCommands(new Wait(2));
-            addCommands(new AutoSearchRight(swerveDriveSubsystem, limeLightSubsystem, 0));
-            addCommands(new PickUpUntilSize(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem, 0));
+            addCommands(new AutoSearchRight(swerveDriveSubsystem, limeLightSubsystem, Constants.towerPipeline));
+            addCommands(new PickUpUntilSize(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem, Constants.towerPipeline));
             addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, intakeSubsystem, 0, 0.6, 1812, 1812));
             addCommands(new ServoTuck(limeLightSubsystem));
             addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 0.5));
@@ -167,11 +167,11 @@ public class AutoCommandGroup extends SequentialCommandGroup {
             addCommands(new FullHalt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem, intakeSubsystem));
             addCommands(new RotateToAngle(swerveDriveSubsystem, navX, 0));
             addCommands(new Wait(0.1));
-            addCommands(new AutoSearchRight(swerveDriveSubsystem, limeLightSubsystem, 1));
-            addCommands(new PickUpUntilSize(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem, 1));
+            addCommands(new AutoSearchRight(swerveDriveSubsystem, limeLightSubsystem, Constants.redPipeline));
+            addCommands(new PickUpUntilSize(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem, Constants.redPipeline));
             addCommands(new Wait(2));
-            addCommands(new AutoSearchRight(swerveDriveSubsystem, limeLightSubsystem, 0));
-            addCommands(new PickUpUntilSize(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem, 0));
+            addCommands(new AutoSearchRight(swerveDriveSubsystem, limeLightSubsystem, Constants.towerPipeline));
+            addCommands(new PickUpUntilSize(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem, Constants.towerPipeline));
             addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, intakeSubsystem, 0, 0.6, 1812, 1812));
             addCommands(new ServoTuck(limeLightSubsystem));
             addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 0.5));
@@ -188,12 +188,23 @@ public class AutoCommandGroup extends SequentialCommandGroup {
             addCommands(new ServoTuck(limeLightSubsystem));
             addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 0.5));
         }else if(selection.toUpperCase().equals("DEBUG")){
-            addCommands(new ServoTuck(limeLightSubsystem));
-            addCommands(new Wait(1));
-            addCommands(new PickUpUntilSize(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem, 2));
-            // addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, intakeSubsystem, 0, 0.6, 1812, 1812));
-            // addCommands(new Wait(3));
-            // addCommands(new FullHalt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem, intakeSubsystem));
+            addCommands(new PickUpSeconds(swerveDriveSubsystem, intakeSubsystem, 0.2, 2.2));
+            addCommands(new RotateToAngle(swerveDriveSubsystem, navX, 160 * Constants.degToRad));
+            addCommands(new GoBackwards(swerveDriveSubsystem, 0.2, 0.5));
+            addCommands(new Wait(.1));
+            addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, intakeSubsystem, 0, 0.6, 1812, 1812)); //About 5000 rpm, 2.76 rpm/unit
+            addCommands(new Wait(3));
+            addCommands(new FullHalt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem, intakeSubsystem));
+            addCommands(new RotateToAngle(swerveDriveSubsystem, navX, 0));
+            addCommands(new Wait(0.1));
+            addCommands(new GoBackwards(swerveDriveSubsystem, -0.2, 2));
+            addCommands(new AutoSearchRight(swerveDriveSubsystem, limeLightSubsystem, Constants.redPipeline));
+            addCommands(new DriveUntilSize(swerveDriveSubsystem, limeLightSubsystem, Constants.redPipeline));
+            addCommands(new PickUpSeconds(swerveDriveSubsystem, intakeSubsystem, 0.2, 2));
+            addCommands(new Wait(2));
+            addCommands(new RotateToAngle(swerveDriveSubsystem, navX, 160 * Constants.degToRad));
+            // addCommands(new DriveUntilSize(swerveDriveSubsystem, limeLightSubsystem, Constants.towerPipeline));
+            addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, intakeSubsystem, 0, 0.6, 1812, 1812));
         }
     }
 

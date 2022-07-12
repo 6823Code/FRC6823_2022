@@ -23,7 +23,9 @@ public class Constants {
     //
     // Limelight Constants
     //
-
+        public static final int towerPipeline = 0;
+        public static final int redPipeline = 3;
+        public static final int bluePipeline = 2;
 
     //
     // Field-Specific Constants

@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.JoystickHandler;
@@ -13,6 +14,7 @@ public class TargetSpaceDrive extends CommandBase {
     private JoystickHandler joystickHandler;
     private NavXHandler navXHandler;
     private LimeLightSubsystem limelight;
+    private PIDController angleController;
 
     private double fieldAngle; //Angle of away from driver from zero
     private double tX;
@@ -26,6 +28,8 @@ public class TargetSpaceDrive extends CommandBase {
         this.navXHandler = navXHandler;
         this.limelight = limelight;
 
+        angleController = new PIDController(1, 0.001, 0);
+
         fieldAngle = 0;
         tX = 0;
 
@@ -35,8 +39,8 @@ public class TargetSpaceDrive extends CommandBase {
     @Override
     public void execute() {
         navXHandler.printEverything();
-        if (limelight.getTxRad() != 0){
-            tX = limelight.getTxRad() / Math.PI;
+        if (limelight.hasTarget()){
+            tX = limelight.getTxRad();
         }
 
         //Set speed and turn rates for full throttle and not full throttle
@@ -50,9 +54,9 @@ public class TargetSpaceDrive extends CommandBase {
         // }
 
         //Set xval, yval, spinval to the scaled values from the joystick, bounded on [-1, 1]
-        double xval = Math.max(Math.min(joystickHandler.getAxis0() * speedRate, 1), -1);
-        double yval = Math.max(Math.min(joystickHandler.getAxis1() * - speedRate, 1), -1);
-        double spinval = -tX; //Raise to a power?
+        double xval = -Math.max(Math.min(joystickHandler.getAxis0() * speedRate, 1), -1);
+        double yval = -Math.max(Math.min(joystickHandler.getAxis1() * - speedRate, 1), -1);
+        double spinval = angleController.calculate(tX, 0); //Raise to a power?
 
         //xval *= -1; //Left right swap
         

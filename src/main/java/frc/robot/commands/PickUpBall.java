@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimeLightSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
+import frc.robot.util.Constants;
 
 public class PickUpBall extends CommandBase {
     private SwerveDriveSubsystem swerveDriveSubsystem;
@@ -81,7 +82,7 @@ public class PickUpBall extends CommandBase {
 
     @Override
     public void initialize() {
-        limeLightSubsystem.setPipeline(1);
+        limeLightSubsystem.setPipeline(Constants.redPipeline);
         aimController = new PIDController(.016, 0, 0);
         distController = new PIDController(.05, 0, 0);
 

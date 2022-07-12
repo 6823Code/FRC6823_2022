@@ -2,13 +2,11 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimeLightSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 
-public class PickUpUntilSize extends CommandBase {
+public class DriveUntilSize extends CommandBase {
     private SwerveDriveSubsystem swerveDriveSubsystem;
-    private IntakeSubsystem intakeSubsystem;
     private LimeLightSubsystem limeLightSubsystem;
 
     private PIDController aimController;
@@ -18,17 +16,16 @@ public class PickUpUntilSize extends CommandBase {
     private boolean isItFinished;
     private final double SIZE = 0.9; //in % of picture
 
-    public PickUpUntilSize(SwerveDriveSubsystem swerveDriveSubsystem, IntakeSubsystem intakeSubsystem,
+    public DriveUntilSize(SwerveDriveSubsystem swerveDriveSubsystem,
             LimeLightSubsystem limeLightSubsystem, int pipeline) {
 
         this.swerveDriveSubsystem = swerveDriveSubsystem;
-        this.intakeSubsystem = intakeSubsystem;
         this.limeLightSubsystem = limeLightSubsystem;
 
         this.pipeline = pipeline;
         isItFinished = false;
 
-        addRequirements(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem);
+        addRequirements(swerveDriveSubsystem, limeLightSubsystem);
     }
 
     @Override
@@ -40,10 +37,8 @@ public class PickUpUntilSize extends CommandBase {
 
         if(limeLightSubsystem.hasTarget()){
             swerveDriveSubsystem.drive(0, -distCommand, aimCommand * -1);
-            intakeSubsystem.intake();
         }else{
             swerveDriveSubsystem.stop();
-            intakeSubsystem.stopIntake();
         }
 
         if (limeLightSubsystem.getTa() > SIZE){
@@ -67,7 +62,6 @@ public class PickUpUntilSize extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         swerveDriveSubsystem.stop();
-        intakeSubsystem.stopIntake();
         isItFinished = false;
     }
 }

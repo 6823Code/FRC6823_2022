@@ -64,7 +64,7 @@ public class RotateToAngle extends CommandBase {
 
     @Override
     public void initialize() {
-        angleController = new PIDController(.35, .001, 0);
+        angleController = new PIDController(1, .001, 0);
         angleController.enableContinuousInput(0, Math.PI * 2);
         angleController.setSetpoint(MathUtil.mod(initialDegrees + angle, 2 * Math.PI));
     }
