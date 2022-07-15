@@ -44,8 +44,6 @@ public class RotateToAngle extends CommandBase {
             rotateCommand = -0.4;
         }
 
-        //Print rotate power and rotate at that power
-        //SmartDashboard.putNumber("ROTATE", rotateCommand);
         swerveDriveSubsystem.drive(0, 0, -rotateCommand);
 
         SmartDashboard.putNumber("NavX Angle", currentAngle);

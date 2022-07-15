@@ -42,64 +42,6 @@ public class AutoCommandGroup extends SequentialCommandGroup {
         }else if (selection.toUpperCase().equals("TAXI")){
             addCommands(new ServoTuck(limeLightSubsystem));
             addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 0.5));
-        // }else if (selection.toUpperCase().equals("RED")){
-        //     addCommands(new ServoTuck(limeLightSubsystem));
-        //     addCommands(new HammerDrop(intakeSubsystem, 0.1));
-        //     addCommands(new GoBackwards(swerveDriveSubsystem, 0.1, 0.5));
-        //     addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, intakeSubsystem, 0, 0.6, 1500, 1500));
-        //     addCommands(new Wait(3));
-        //     addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
-        //     addCommands(new AutoSearchRight(swerveDriveSubsystem, limeLightSubsystem, 1));
-        //     addCommands(new PickUpSeconds(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem, 1, 0.3, 0.5));
-        //     addCommands(new AutoSearchLeft(swerveDriveSubsystem, limeLightSubsystem, 0));
-        //     addCommands(new LineUpToShoot(swerveDriveSubsystem, limeLightSubsystem, 2));
-        //     // addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, 1500, 1500));
-        //     // addCommands(new Wait(3));
-        //     // addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
-        //     addCommands(new ServoTuck(limeLightSubsystem));
-        //     // addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 0.5));
-        // }else  if (selection.toUpperCase().equals("BLUE")){
-        //     addCommands(new ServoTuck(limeLightSubsystem));
-        //     addCommands(new HammerDrop(intakeSubsystem, 0.1));
-        //     addCommands(new GoBackwards(swerveDriveSubsystem, 0.1, 0.5));
-        //     addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, intakeSubsystem, 0, 0.6, 1500, 1500));
-        //     addCommands(new Wait(3));
-        //     addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
-        //     addCommands(new AutoSearchRight(swerveDriveSubsystem, limeLightSubsystem, 2));
-        //     // addCommands(new PickUpBall(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem, 2));
-        //     // addCommands(new AutoSearchLeft(swerveDriveSubsystem, limeLightSubsystem, 0));
-        //     // addCommands(new LineUpToShoot(swerveDriveSubsystem, limeLightSubsystem, 2));
-        //     // addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, 1500, 1500));
-        //     // addCommands(new Wait(3));
-        //     // addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
-        //     addCommands(new ServoTuck(limeLightSubsystem));
-        //     // addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 0.5));
-        // }else if (selection.toUpperCase().equals("REDSEARCH")){
-        //  addCommands(new AutoAim2d(swerveDriveSubsystem, limeLightSubsystem, 0));
-        //  addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, shooterSubsystem.getShooterRPMLeft()*20, shooterSubsystem.getShooterRPMRight()*20));
-        //  addCommands(new Wait(3));
-        //  addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
-            // addCommands(new AutoSearchRight(swerveDriveSubsystem, limeLightSubsystem, 1));
-            // addCommands(new PickUpBall(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem, 1));
-            // addCommands(new AutoSearchLeft(swerveDriveSubsystem, limeLightSubsystem, 0));
-            // addCommands(new AutoAim2d(swerveDriveSubsystem, limeLightSubsystem, 0));
-            // addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, shooterSubsystem.getShooterRPMLeft()*20, shooterSubsystem.getShooterRPMRight()*20));
-            // addCommands(new Wait(3));
-            // addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
-            // addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 1));
-        // }else if (selection.toUpperCase().equals("BLUESEARCH")){
-        //  addCommands(new AutoAim2d(swerveDriveSubsystem, limeLightSubsystem, 0));
-        //  addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, shooterSubsystem.getShooterRPMLeft()*20, shooterSubsystem.getShooterRPMRight()*20));
-        //  addCommands(new Wait(3));
-        //  addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
-            // addCommands(new AutoSearchRight(swerveDriveSubsystem, limeLightSubsystem, 2));
-            // addCommands(new PickUpBall(swerveDriveSubsystem, intakeSubsystem, limeLightSubsystem, 2));
-            // addCommands(new AutoSearchLeft(swerveDriveSubsystem, limeLightSubsystem, 0));
-            // addCommands(new AutoAim2d(swerveDriveSubsystem, limeLightSubsystem, 0));
-            // addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, 0, 0.6, shooterSubsystem.getShooterRPMLeft()*20, shooterSubsystem.getShooterRPMRight()*20));
-            // addCommands(new Wait(3));
-            // addCommands(new Halt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem));
-            // addCommands(new GoBackwards(swerveDriveSubsystem, 0.6, 1));
         }else if (selection.toUpperCase().equals("BALL 4") || selection.toUpperCase().equals("BALL 10")){
             addCommands(new ServoTuck(limeLightSubsystem));
             addCommands(new HammerDrop(intakeSubsystem, 0.15));

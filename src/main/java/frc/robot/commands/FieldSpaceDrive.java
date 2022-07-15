@@ -40,31 +40,10 @@ public class FieldSpaceDrive extends CommandBase {
         double speedRate = speedRateWidget.getEntry().getDouble(0.5);
         double turnRate = turnRateWidget.getEntry().getDouble(0.5);
 
-        // if (joystickHandler.isFullThrottle()) {
-        //     speedRate = 1;
-        //     turnRate = .6;
-        // }
-
         //Set xval, yval, spinval to the scaled values from the joystick, bounded on [-1, 1]
         double xval = Math.max(Math.min(joystickHandler.getAxis0() * -speedRate, 1), -1);
         double yval = Math.max(Math.min(joystickHandler.getAxis1() * speedRate, 1), -1);
         double spinval = Math.max(Math.min(joystickHandler.getAxis5() * turnRate, 1), -1);
-        
-        //spinval = -Math.pow(spinval, 3);
-        
-        // if (xval >= 0){
-        //     xval = Math.pow(xval, 2);
-        // }else{
-        //     xval = -Math.pow(xval, 2);
-        // }
-        // if (yval >= 0){
-        //     yval = Math.pow(yval, 2);
-        // }else{
-        //     yval = -Math.pow(yval, 2);
-        // }
-
-        //xval *= -1; //Left right swap
-        
 
         double robotAngle = navXHandler.getAngleRad() - fieldAngle;
 

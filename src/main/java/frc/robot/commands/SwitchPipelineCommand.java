@@ -19,33 +19,15 @@ public class SwitchPipelineCommand extends CommandBase {
     @Override
     public void execute() {
         limeLightSubsystem.setPipeline(pipeline);
-        //Adjusts servo to angle appropriate for selected pipeline
-        // if (pipeline == 0)
-        //     limeLightSubsystem.setServoAngle(65);
-        // else if (pipeline == 1)
-        //     limeLightSubsystem.setServoAngle(15);
-        // if (pipeline == 1 && Math.abs(limeLightSubsystem.getServoAngle() - 15) < 1)
-        //     isFinished = true;
-        // else if (pipeline == 0 && Math.abs(limeLightSubsystem.getServoAngle() - 65) < 1)
-        //     isFinished = true;
-        //     SmartDashboard.putNumber("The Servo Angle", limeLightSubsystem.getPipeline());
-
     }
 
     @Override
     public void initialize() {
         limeLightSubsystem.setPipeline(pipeline);
-        // if (pipeline == 0)
-        //     limeLightSubsystem.setServoAngle(65);
-        // else if (pipeline == 1)
-        //     limeLightSubsystem.setServoAngle(15);
-        //SmartDashboard.putNumber("The Servo Angle", limeLightSubsystem.getPipeline());
-
     }
 
     @Override
     public boolean isFinished() {
-        //SmartDashboard.putNumber("The Servo Angle", limeLightSubsystem.getPipeline());
         return isFinished;
     }
 

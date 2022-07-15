@@ -44,18 +44,10 @@ public class TargetSpaceDrive extends CommandBase {
             Preferences.setDouble("Speed Rate", 0.5);
         double speedRate = Preferences.getDouble("Speed Rate", 0.5);
 
-        // if (joystickHandler.isFullThrottle()) {
-        //     speedRate = 1;
-        //     turnRate = .6;
-        // }
-
         //Set xval, yval, spinval to the scaled values from the joystick, bounded on [-1, 1]
         double xval = Math.max(Math.min(joystickHandler.getAxis0() * speedRate, 1), -1);
         double yval = Math.max(Math.min(joystickHandler.getAxis1() * - speedRate, 1), -1);
         double spinval = -tX; //Raise to a power?
-
-        //xval *= -1; //Left right swap
-        
 
         double robotAngle = navXHandler.getAngleRad() - fieldAngle;
 

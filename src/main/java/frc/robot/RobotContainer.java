@@ -8,7 +8,6 @@ import frc.robot.commands.AutoSearchRight;
 import frc.robot.commands.FieldSpaceDrive;
 import frc.robot.commands.RobotSpaceDrive;
 import frc.robot.commands.RotateToAngle;
-import frc.robot.commands.RotateToZero;
 import frc.robot.commands.ServoTuck;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.TargetSpaceDrive;
@@ -108,11 +107,7 @@ public class RobotContainer {
         autoSelect.addOption("None", "None");
 
         Shuffleboard.getTab("Preferences").add("Auto Select", autoSelect);
-        //Shuffleboard.getTab("Preferences").add("Auto Turn PID", RotateToAngle.angleController);
-
-        //limeLightSubsystem.setServoAngle(35);
         limeLightSubsystem.setPipeline(0);
-        RotateToZero.setInitialAngle(navX.getAngleRad());
         navX.setInitialAngle();
         fieldSpaceDriveCommand.zero();
 
@@ -129,7 +124,6 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
         RotateToAngle.setInitialAngle(navX.getAngleRad());
-        RotateToZero.setInitialAngle(navX.getAngleRad());
         // Hold button 8 to set the swerve just forward, this is for calibration
         // purposes
         joystickHandler3.button(8).whileHeld(() -> swerveDriveSubsystem.drive(0,
@@ -162,8 +156,6 @@ public class RobotContainer {
                 .whenInactive(conveyorSubsystem::stopConvey);
 
         joystickHandler4.button(7).whenPressed(() -> swerveDriveSubsystem.autoCali(), swerveDriveSubsystem);
-        // joystickHandler4.button(8).whileHeld(() ->
-        // shooterSubsystem.setShooterAngle(30), shooterSubsystem);
         joystickHandler3.button(1).whileHeld(() ->
         liftSubsystem.liftUp(), liftSubsystem)
         .whenInactive(liftSubsystem::liftStop);

@@ -15,15 +15,6 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         robotContainer = new RobotContainer();
-
-        // rgb1 = new RGB(9);
-        // rgb2 = new RGB(9);
-        // rgb1.setPattern(0.67);
-        // rgb2.setPattern(0.87);
-
-        // PREFS.putBoolean("DEBUG_MODE", false);
-        //SmartDashboard.putBoolean("LemonPipeline", false);
-
     }
 
     @Override
@@ -34,8 +25,6 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         robotContainer.getAutoCommandGroup().schedule();
-        // robotContainer.getMoreCommands().schedule();
-
     }
 
     @Override

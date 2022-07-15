@@ -9,7 +9,6 @@ public class AutoShoot extends CommandBase {
     private ShooterSubsystem shooter;
     private ConveyorSubsystem conveyor;
     private IntakeSubsystem intake;
-    //private double aimRate;
     private double loadRate;
     private int leftShootRate;
     private int rightShootRate;

@@ -24,17 +24,8 @@ public class ShooterSubsystem extends SubsystemBase {
     private TalonFX rightMotor;
     private CANSparkMax angleMotor;
     private CANSparkMax loadMotor;
-    // private AnalogInput angleEncoder;
-    // private int offset;
     private int velocityLeft;
     private int velocityRight;
-    // private int test;
-    // private DigitalInput frontLimit;
-    // private DigitalInput backLimit;
-    // private PIDController speedController;
-    // private SparkMaxAlternateEncoder.Type altEncoderType =
-    // SparkMaxAlternateEncoder.Type.kQuadrature;
-    // private Encoder encoder;
     private int shooterRPMLeft;
     private int shooterRPMRight;
     private double shooterAnglePercentBack;
@@ -79,21 +70,13 @@ public class ShooterSubsystem extends SubsystemBase {
         velocityRight *= -1;
         leftMotor.set(ControlMode.Velocity, -velocityLeft); // velocity in encoder units per 100 ms
         rightMotor.set(ControlMode.Velocity, velocityRight);
-        //SmartDashboard.putNumber("velocityLeft target", velocityLeft);
-        //SmartDashboard.putNumber("velocityRight target", velocityRight);
     }
 
     public void shoot(int rpmLeft, int rpmRight) {
         velocityLeft = rpmLeft; // rpm * 2048 units/rotation * intervals of 100 ms per minute
         velocityRight = rpmRight; // rpm * 2048 units/rotation * intervals of 100 ms per minute
-        // velocityLeft *= -1;
-        // velocityRight *= -1;
         leftMotor.set(ControlMode.Velocity, -velocityLeft); // velocity in encoder units per 100 ms
         rightMotor.set(ControlMode.Velocity, velocityRight);
-        //SmartDashboard.putNumber("velocityLeft target", velocityLeft);
-        //SmartDashboard.putNumber("velocityRight target", velocityRight);
-        // leftMotor.getSelectedSensorVelocity();
-        // test += 100;
     }
 
     public void shootPower(double power) {
@@ -144,8 +127,6 @@ public class ShooterSubsystem extends SubsystemBase {
         pidController.setSetpoint(setpoint);
         double pidOut = pidController.calculate(currentEncoderValue, setpoint);
         angleMotor.set(-pidOut);
-        //SmartDashboard.putBoolean("settingSA", true);
-        //SmartDashboard.putNumber("shooterPIDout", pidOut);
     }
 
     @Override
@@ -164,13 +145,8 @@ public class ShooterSubsystem extends SubsystemBase {
         
         loadPercent = loadWidget.getEntry().getDouble(-1);
 
-        // SmartDashboard.putNumber("Left shoot rpm",
-        // leftMotor.getSelectedSensorVelocity() / 600 / 2048);
-        // SmartDashboard.putNumber("Right shoot rpm",
-        // rightMotor.getSelectedSensorVelocity() / 600 / 2048);
         SmartDashboard.putNumber("Left shoot rpm", leftMotor.getSelectedSensorVelocity());
         SmartDashboard.putNumber("Right shoot rpm", rightMotor.getSelectedSensorVelocity());
         SmartDashboard.putNumber("shooter angle", encoder.get());
     }
-
 }
