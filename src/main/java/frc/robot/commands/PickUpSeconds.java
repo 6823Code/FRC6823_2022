@@ -72,7 +72,7 @@ public class PickUpSeconds extends CommandBase {
     @Override
     public void execute() {
         if (limeLightSubsystem != null){
-            double aimCommand = aimController.calculate(limeLightSubsystem.getTx());
+            double aimCommand = aimController.calculate(limeLightSubsystem.getTx()); //Limelight functions never used; clean up
 
             limeLightSubsystem.setPipeline(pipeline);
 
