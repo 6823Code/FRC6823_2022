@@ -9,6 +9,7 @@ import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
+import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.util.Map;
@@ -29,6 +30,8 @@ public class IntakeSubsystem extends SubsystemBase {
     private SimpleWidget angleWidget;
     //private PIDController pid;
 
+    private SingleJointedArmSim hammerSim;
+
     public IntakeSubsystem() {
         this.angleMotor = new CANSparkMax(10, CANSparkMaxLowLevel.MotorType.kBrushless);
         this.intakeMotor = new CANSparkMax(9, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -43,6 +46,8 @@ public class IntakeSubsystem extends SubsystemBase {
         // downPos = 0.32;
 
         // pid = new PIDController(P, I, 0);
+
+        hammerSim = new SingleJointedArmSim(angleMotor, 69.3, jKgMetersSquared, 0.47, 0, 2, 5, true)
 
         SendableRegistry.addChild(this, angleMotor);
         SendableRegistry.addChild(this, intakeMotor);
