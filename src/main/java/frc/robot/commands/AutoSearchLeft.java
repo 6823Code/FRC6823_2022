@@ -5,6 +5,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.LimeLightSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 
+/**
+ * A Command class for searching for an object to the left using limelight.
+ *
+ * <p>This class uses limelight to search counterclockwise to center the view on a limelight target
+ */
 public class AutoSearchLeft extends CommandBase {
     private SwerveDriveSubsystem swerveDriveSubsystem;
     private LimeLightSubsystem limeLightSubsystem;
@@ -13,6 +18,13 @@ public class AutoSearchLeft extends CommandBase {
     private PIDController angleController;
     private int pipeline;
 
+    /**
+    * A constructor for the AutoSearchLeft command.
+    *
+    * @param swerveDriveSubsystem the swerve drive subsystem that runs this command
+    * @param limeLightSubsystem the limelight subsystem that this command reads from
+    * @param pipeline the pipeline to use to search for a target
+    */
     public AutoSearchLeft(SwerveDriveSubsystem swerveDriveSubsystem, LimeLightSubsystem limeLightSubsystem,
             int pipeline) {
 

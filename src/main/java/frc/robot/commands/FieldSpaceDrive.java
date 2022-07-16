@@ -8,6 +8,11 @@ import frc.robot.JoystickHandler;
 import frc.robot.NavXHandler;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 
+/**
+ * A Command class for driving the robot in field space mode
+ *
+ * <p>This command is run periodically in teleoperated mode.
+ */
 public class FieldSpaceDrive extends CommandBase {
     //Declare subsystem, Joystick Handler, NavX
     private SwerveDriveSubsystem swerveDrive;
@@ -18,9 +23,16 @@ public class FieldSpaceDrive extends CommandBase {
 
     private double fieldAngle = 0; //Angle of away from driver from zero
 
+    /**
+    * A constructor for the FieldSpaceDrive class.
+    *
+    * @param subsystem the swerve drive subsystem to drive
+    * @param joystickHandler the joystick to use as inputs
+    * @param navxHandler the NavX to use to determine robot orientation
+    */
     public FieldSpaceDrive(SwerveDriveSubsystem subsystem, 
     JoystickHandler joystickHandler, NavXHandler navXHandler) {
-        //Instantiate subsystem, Joystick Handler, NavX
+        //Instantiate subsystem, Joystick Handler, NavX, Widgets for spped rate and turn rate
         this.swerveDrive = subsystem;
         this.joystickHandler = joystickHandler;
         this.navXHandler = navXHandler;
@@ -28,6 +40,7 @@ public class FieldSpaceDrive extends CommandBase {
         .withWidget(BuiltInWidgets.kNumberSlider);
         this.turnRateWidget = Shuffleboard.getTab("Preferences").addPersistent("Turn Rate", 0.5)
         .withWidget(BuiltInWidgets.kNumberSlider);
+        //adds the requirement that the swerve drive is
         addRequirements(swerveDrive);
     }
 

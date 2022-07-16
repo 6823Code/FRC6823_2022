@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.util;
 
 public class EstimateDistance {
     private static double cameraHeight = 33.5;

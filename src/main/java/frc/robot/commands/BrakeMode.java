@@ -5,12 +5,21 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 
+/**
+ * A Command class for momentarily setting the drive motors to brake mode
+ */
 public class BrakeMode extends CommandBase {
     private SwerveDriveSubsystem swerveDrive;
     private boolean isFinished;
     private double seconds;
     private Timer timer;
 
+    /**
+    * A constructor for the BrakeMode class
+    *
+    * @param swerveDriive the swerve drive subsystem to set to brake mode
+    * @param seconds the duraion in which to be in brake mode
+    */
     public BrakeMode(SwerveDriveSubsystem swerveDrive, double seconds) {
         //Instantiate subsystem, Joystick Handler
         this.swerveDrive = swerveDrive;

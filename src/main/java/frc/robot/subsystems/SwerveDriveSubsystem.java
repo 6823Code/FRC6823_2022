@@ -55,7 +55,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         frontRight = new SwerveWheelModuleSubsystem(5, 4, 2, "FR", calibrateWidget);
         frontLeft = new SwerveWheelModuleSubsystem(7, 6, 3, "FL", calibrateWidget);// The order is angle, speed,
                                                                                    // encoder, offset
-        // (offset gets changed by calibration.)
+        // Adds the swerve drive modules as children objects of the subsystem (test what these lines actually do?)
         SendableRegistry.addChild(this, backRight);
         SendableRegistry.addChild(this, backLeft);
         SendableRegistry.addChild(this, frontRight);
