@@ -110,6 +110,7 @@ public class RobotContainer {
         autoSelect.addOption("NavX", "Nav");
         autoSelect.addOption("None", "None");
         autoSelect.addOption("Debug", "Debug");
+        autoSelect.addOption("Test", "Test");
 
         Shuffleboard.getTab("Preferences").add("Auto Select", autoSelect);
         //Shuffleboard.getTab("Preferences").add("Auto Turn PID", RotateToAngle.angleController);

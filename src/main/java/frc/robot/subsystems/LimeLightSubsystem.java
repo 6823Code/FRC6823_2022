@@ -7,8 +7,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.util.Constants;
 import frc.robot.util.EstimateDistance;
 import frc.robot.util.LimelightTools;
+import frc.robot.util.MovingAverage;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+
 
 public class LimeLightSubsystem extends SubsystemBase {
 
@@ -19,12 +21,14 @@ public class LimeLightSubsystem extends SubsystemBase {
     private NetworkTable table;
     private double lastKnownZ;
     private double lastKnownX;
+    private MovingAverage limeLightTxMovingAverage;
 
     public LimeLightSubsystem(int servo) {
         //Instantiate Network Table to limelight Network Table and servo
         table = NetworkTableInstance.getDefault().getTable("limelight");
         this.servo = new Servo(servo);
         SendableRegistry.addLW(this, "LimeLight Subsystem");
+        limeLightTxMovingAverage = new MovingAverage(10);
     }
 
     public void setPipeline(int pipeline) {
@@ -60,6 +64,11 @@ public class LimeLightSubsystem extends SubsystemBase {
 
     public double getTxRad() {
         return (table.getEntry("tx").getDouble(0) / 360.0) * (2.0 * Math.PI);
+    }
+
+    public double getAvgTx()
+    {
+        return limeLightTxMovingAverage.get();
     }
 
     public double getTy() {
@@ -104,5 +113,9 @@ public class LimeLightSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Dist from tower", LimelightTools.distFromTower(getTyRad() / Math.PI));
         // setPipeline(2);
         EstimateDistance.getDistance(12.065, -Math.PI / 36, getTyRad()); //Debug for ball distance measurement
+        if (hasTarget())
+        {
+            limeLightTxMovingAverage.nextVal(getTx());
+        }
     }
 }

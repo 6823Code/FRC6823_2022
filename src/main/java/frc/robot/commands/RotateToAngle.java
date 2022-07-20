@@ -52,7 +52,9 @@ public class RotateToAngle extends CommandBase {
 
         //If within margin of error, set isFinished to true
         if (Math.abs((currentAngle - (initialDegrees + angle)) % (2 * Math.PI)) < MARGIN) {
+            swerveDriveSubsystem.drive(0, 0, 0);
             isFinished = true;
+            System.out.println("rotated");
         }
 
     }
@@ -64,7 +66,7 @@ public class RotateToAngle extends CommandBase {
 
     @Override
     public void initialize() {
-        angleController = new PIDController(0.65, .001, 0);
+        angleController = new PIDController(0.65, .001, .01); // d is typically 0
         angleController.enableContinuousInput(0, Math.PI * 2);
         angleController.setSetpoint(MathUtil.mod(initialDegrees + angle, 2 * Math.PI));
     }

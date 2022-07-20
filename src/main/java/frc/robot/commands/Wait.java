@@ -7,10 +7,15 @@ public class Wait extends CommandBase {
     //Waits a given duration in seconds
     private double seconds;
     private Timer timer;
+    // added on July 20, 2022
+    
+    
 
     public Wait(double seconds) {
         this.seconds = seconds;
         timer = new Timer();
+        // added on July 20, 2022
+
     }
 
     @Override
