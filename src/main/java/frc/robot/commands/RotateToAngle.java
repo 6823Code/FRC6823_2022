@@ -12,7 +12,7 @@ public class RotateToAngle extends CommandBase {
     private SwerveDriveSubsystem swerveDriveSubsystem;
     private NavXHandler navXHandler;
     private boolean isFinished = false;
-    private final double MARGIN = 0.03; // margin in radians
+    private final double MARGIN = 0.05; // margin in radians
     private PIDController angleController;
 
     private double angle;
@@ -35,7 +35,8 @@ public class RotateToAngle extends CommandBase {
     public void execute() {
         //Get angle and power proportional to angle left to travel
         double currentAngle = MathUtil.mod(navXHandler.getAngleRad(), 2 * Math.PI);
-        double rotateCommand = angleController.calculate(currentAngle);
+        //double rotateCommand = angleController.calculate(currentAngle);
+        double rotateCommand = 0.3;
 
         //Bound power on {-0.4, 0,4]
         if (rotateCommand > 0.4) {

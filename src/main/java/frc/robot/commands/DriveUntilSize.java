@@ -14,7 +14,7 @@ public class DriveUntilSize extends CommandBase {
 
     private int pipeline;
     private boolean isItFinished;
-    private final double SIZE = 0.9; //in % of picture
+    private final double SIZE = 0.85; //in % of picture
 
     public DriveUntilSize(SwerveDriveSubsystem swerveDriveSubsystem,
             LimeLightSubsystem limeLightSubsystem, int pipeline) {
@@ -31,19 +31,24 @@ public class DriveUntilSize extends CommandBase {
     @Override
     public void execute() {
         double aimCommand = aimController.calculate(limeLightSubsystem.getTx());
-        double distCommand = distController.calculate(limeLightSubsystem.getTy());
+        //double distCommand = distController.calculate(limeLightSubsystem.getTy());
 
-        limeLightSubsystem.setPipeline(pipeline);
+        //limeLightSubsystem.setPipeline(pipeline);
 
         if(limeLightSubsystem.hasTarget()){
-            swerveDriveSubsystem.drive(0, -distCommand, aimCommand * -1);
-        }else{
-            swerveDriveSubsystem.stop();
-        }
-
+            swerveDriveSubsystem.drive(0, -0.2, 0); // mid used to be -distCommand; last 0 used to be aimCommand * -1
+        } //else 
         if (limeLightSubsystem.getTa() > SIZE){
+            swerveDriveSubsystem.stop();
+            System.out.println("getTa");
             isItFinished = true;
         }
+        //{
+            //isItFinished = true;
+            //swerveDriveSubsystem.stop();
+        //}
+
+        
     }
 
     @Override

@@ -210,7 +210,31 @@ public class AutoCommandGroup extends SequentialCommandGroup {
             addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, intakeSubsystem, 0, 0.6, 1812, 1812));
             addCommands(new Wait(2));
         }else if(selection.toUpperCase().equals("TEST")){
+            addCommands(new PickUpSeconds(swerveDriveSubsystem, intakeSubsystem, 0.2, 2.2));
+            addCommands(new RotateToAngle(swerveDriveSubsystem, navX, 160 * Constants.degToRad));
+            addCommands(new GoBackwards(swerveDriveSubsystem, -0.2, 0.5)); // was 0.2, 0.5
+            addCommands(new Wait(.1));
+            addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, intakeSubsystem, 0, 0.6, 1812, 1812)); //About 5000 rpm, 2.76 rpm/unit
+            addCommands(new Wait(3));
+            addCommands(new FullHalt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem, intakeSubsystem));
+            addCommands(new Wait(1));
+            addCommands(new RotateToAngle(swerveDriveSubsystem, navX, 0));
+            addCommands(new Wait(1));
+            addCommands(new GoBackwards(swerveDriveSubsystem, -0.2, 2));
+            addCommands(new Wait(1));
             addCommands(new AutoSearchRight(swerveDriveSubsystem, limeLightSubsystem, Constants.redPipeline));
+            addCommands(new Wait(1));
+            addCommands(new DriveUntilSize(swerveDriveSubsystem, limeLightSubsystem, Constants.redPipeline));
+            addCommands(new Wait(1));
+            addCommands(new PickUpSeconds(swerveDriveSubsystem, intakeSubsystem, 0.2, 2));
+            addCommands(new Wait(2));
+            addCommands(new RotateToAngle(swerveDriveSubsystem, navX, 160 * Constants.degToRad));
+            addCommands(new Wait(2));
+            addCommands(new FullHalt(swerveDriveSubsystem, shooterSubsystem, conveyorSubsystem, intakeSubsystem));
+            addCommands(new Wait(2));
+            // addCommands(new DriveUntilSize(swerveDriveSubsystem, limeLightSubsystem, Constants.towerPipeline));
+            addCommands(new AutoShoot(shooterSubsystem, conveyorSubsystem, intakeSubsystem, 0, 0.6, 1812, 1812));
+            addCommands(new Wait(2));
         }
     }
 
